@@ -1,0 +1,98 @@
+# %%
+import tushare as ts
+from sqlalchemy import create_engine
+import pandas as pd
+import  datetime
+
+#%%
+ts.set_token('803f1548c1f25bf44c56644e4527a6d8cd3dbd8517e7c59e3aa1f6d0')
+pro = ts.pro_api()
+
+# %%
+df = pro.daily(ts_code='000001.sz', start_date='20180901', end_date='20180918')
+df
+
+# %%
+engine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/test?charset=utf8")
+df.to_sql("daily", con=engine, if_exists="append")
+
+# %%
+# df["ts_code"] = df["ts_code"].astype("string")
+# df["trade_date"] = df["trade_date"].astype("string")
+
+# %% 
+df2 = df.set_index(["ts_code", "trade_date"])
+df2.to_sql(name="daily", con=engine, if_exists="append")
+df2
+
+# %%
+sqlstr = "SELECT ts_code,list_date FROM test.stockdata"
+stockList = pd.read_sql_query(sqlstr, con=engine) 
+stockList
+
+# %%
+sqlstr = "SELECT max(trade_date) as maxdate FROM stock.daily2021"
+maxdate = pd.read_sql_query(sqlstr, con=engine).loc[0, 'maxdate']
+maxdate
+
+# %%
+for index, row in stockList.iterrows():
+    print(row["ts_code"])
+
+# %%
+date = stockList[stockList.ts_code == '000002.SZ']["list_date"].to_numpy()[0]
+date
+
+
+# %%
+codes = stockList["ts_code"].to_numpy()
+for code in codes: 
+    print(code)
+
+# %%
+dfweek = pro.weekly(ts_code='000001.sz', start_date='20210101', end_date='20291231')
+dfweek
+
+# %%
+df3 = pro.weekly(trade_date='20140613')
+df3 = df3.set_index(["ts_code", "trade_date"])
+df3
+
+# %%
+begin = datetime.date(2014, 6, 1)
+end = datetime.date(2014, 6, 7)
+d = begin
+delta = datetime.timedelta(days=1)
+while d <= end:
+    year = d.strftime(("%Y"))
+    print(year)
+    print(d.strftime("%Y%m%d"))
+    d += delta
+
+# %%
+df4 = pro.monthly(ts_code='000001.SZ')
+df4 = df4["trade_date"]
+df4
+
+# %%
+df5 = pro.monthly(ts_code='000002.SZ')
+df5 = df5["trade_date"]
+df5
+
+
+# %%
+df6 = pro.fina_mainbz(ts_code='000002.SZ', type='P', start_date='19901210', end_date='20210228')
+df6
+
+# %%
+df7 = df6.drop_duplicates(['ts_code', 'end_date'])
+df7
+
+# %%
+df7 = df7.set_index(["ts_code", "end_date"])
+df7.to_sql(name='finance', con=engine, if_exists="append")
+
+
+
+# %%

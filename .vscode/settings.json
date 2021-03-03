@@ -1,0 +1,21 @@
+{
+    "python.pythonPath": "C:\\Program Files (x86)\\python\\python.exe",
+    "jupyter.jupyterServerType": "local",
+    "python.autoComplete.addBrackets": true,
+    "python.autoComplete.extraPaths": [
+        "C:\\Program Files (x86)\\python\\Lib",
+        "C:\\Program Files (x86)\\python\\Lib\\site-packages",
+        "C:\\Program Files (x86)\\python\\DLLs",
+        "C:\\Program Files (x86)\\python\\Scripts",
+    ],
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "python.analysis.extraPaths": [
+        "C:\\Program Files (x86)\\python\\Lib",
+        "C:\\Program Files (x86)\\python\\Lib\\site-packages",
+        "C:\\Program Files (x86)\\python\\DLLs",
+        "C:\\Program Files (x86)\\python\\Scripts"
+    ],
+    "python.analysis.completeFunctionParens": true,
+    "jupyter.allowUnauthorizedRemoteConnection": true,
+    "jupyter.interactiveWindowMode": "single",
+}
