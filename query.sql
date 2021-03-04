@@ -1,3 +1,6 @@
+create database stock; 
+use stock; 
+
 -- create stock daily data table
 CREATE TABLE `daily` (
   `trade_date` varchar(20) DEFAULT NULL,
@@ -435,4 +438,43 @@ CREATE TABLE `finance` (
   `q_op_qoq` double DEFAULT NULL,
   `equity_yoy` double DEFAULT NULL,
   UNIQUE KEY `idx_cashflow_end_date_ts_code` (`ts_code`,`end_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- create main_business table
+CREATE TABLE `mainbusiness` (
+  `ts_code` varchar(20),
+  `end_date` varchar(20),
+  `bz_item` varchar(200),
+  `type` varchar(10),
+  `bz_sales` double DEFAULT NULL,
+  `bz_profit` double DEFAULT NULL,
+  `bz_cost` double DEFAULT NULL,
+  `curr_type` varchar(10),
+  UNIQUE KEY `idx_mainbusiness_end_date_ts_code_type` (`ts_code`,`end_date`, `type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- create adjust factor table
+CREATE TABLE `adjustfactor` (
+  `ts_code` varchar(20),
+  `trade_date` varchar(20),
+  `adj_factor` double DEFAULT NULL,
+  UNIQUE KEY `idx_adjustfactor_trade_date_ts_code` (`ts_code`,`trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+----------------------------------------------------------------------------
+create database indexdata; 
+use indexdata; 
+
+CREATE TABLE `indexdata` (
+  `ts_code` varchar(20),
+  `name` text,
+  `market` text,
+  `publisher` text,
+  `category` text,
+  `base_date` text,
+  `base_point` double DEFAULT NULL,
+  `list_date` text,
+  UNIQUE KEY `idx_indexdata_ts_code` (`ts_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

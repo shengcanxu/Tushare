@@ -19,6 +19,15 @@ createTableStrTemp = """CREATE TABLE `%s` (
   UNIQUE KEY `idx_daily_trade_date_ts_code` (`ts_code`,`trade_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"""
 
+createAdjustFactorTableStrTemp = """
+CREATE TABLE `%s` (
+  `ts_code` varchar(20),
+  `trade_date` varchar(20),
+  `adj_factor` double DEFAULT NULL,
+  UNIQUE KEY `idx_adjustfactor_trade_date_ts_code` (`ts_code`,`trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+
 # create daily table
 for year in range(1990, 2022):
     tableName = "daily" + str(year)
@@ -35,3 +44,9 @@ for year in ['199X', '200X', '201X', '202X']:
 tableName = "monthly"
 createTableStr = createTableStrTemp % tableName
 engine.execute(createTableStr)
+
+# create adjust factor table
+for year in range(1990, 2022):
+    tableName = "adjustfactor" + str(year)
+    createTableStr = createAdjustFactorTableStrTemp % tableName
+    engine.execute(createTableStr)

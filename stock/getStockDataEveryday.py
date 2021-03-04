@@ -8,6 +8,7 @@ import pandas as pd
 from getStockDaily import getDailyOnDate
 from getStockWeekly import getWeeklyOnDate
 from getStockMonthly import getMonthlyOnDate
+from getStockAdjustFactor import getAdjustFactorOnDate
 
 ts.set_token('803f1548c1f25bf44c56644e4527a6d8cd3dbd8517e7c59e3aa1f6d0')
 pro = ts.pro_api()
@@ -17,7 +18,7 @@ engine = create_engine(
 
 sqlstr = "SELECT max(trade_date) as maxdate FROM stock.daily2021"
 maxDate = pd.read_sql_query(sqlstr, con=engine).loc[0, 'maxdate']
-print("previous crawle date is %s, start updating!" % maxDate)
+print("previous stock data crawle date is %s, start updating!" % maxDate)
 
 begin = datetime.datetime.strptime(maxDate, '%Y%m%d')
 end = datetime.datetime.now()
@@ -30,5 +31,18 @@ while date < end:
     time.sleep(1)
     getWeeklyOnDate(date, pro, engine)
     time.sleep(1)
+    getMonthlyOnDate(date, pro, engine)
+    time.sleep(1)
+
+# update adjust factor crawling
+sqlstr = "SELECT max(trade_date) as maxdate FROM stock.adjustfactor2021"
+maxDate = pd.read_sql_query(sqlstr, con=engine).loc[0, 'maxdate']
+print("previous adjust factor crawle date is %s, start updating!" % maxDate)
+
+begin = datetime.datetime.strptime(maxDate, '%Y%m%d')
+end = datetime.datetime.now()
+date = begin
+delta = datetime.timedelta(days=1)
+while date < end:
     getMonthlyOnDate(date, pro, engine)
     time.sleep(1)

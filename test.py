@@ -14,7 +14,7 @@ df
 
 # %%
 engine = create_engine(
-    "mysql+pymysql://root:4401821211@localhost:3306/test?charset=utf8")
+    "mysql+pymysql://root:4401821211@localhost:3306/stock?charset=utf8")
 df.to_sql("daily", con=engine, if_exists="append")
 
 # %%
@@ -50,14 +50,14 @@ codes = stockList["ts_code"].to_numpy()
 for code in codes: 
     print(code)
 
-# %%
-dfweek = pro.weekly(ts_code='000001.sz', start_date='20210101', end_date='20291231')
-dfweek
 
 # %%
-df3 = pro.weekly(trade_date='20140613')
-df3 = df3.set_index(["ts_code", "trade_date"])
+df3 = pro.adj_factor(trade_date='19901231')
 df3
+
+# %% 
+df3 = df3.set_index(["ts_code", "trade_date"])
+df3.to_sql(name='adjustfactor1990', con=engine, if_exists="append")
 
 # %%
 begin = datetime.date(2014, 6, 1)
@@ -70,15 +70,6 @@ while d <= end:
     print(d.strftime("%Y%m%d"))
     d += delta
 
-# %%
-df4 = pro.monthly(ts_code='000001.SZ')
-df4 = df4["trade_date"]
-df4
-
-# %%
-df5 = pro.monthly(ts_code='000002.SZ')
-df5 = df5["trade_date"]
-df5
 
 
 # %%
@@ -87,12 +78,18 @@ df6
 
 # %%
 df7 = df6.drop_duplicates(['ts_code', 'end_date'])
+df7["type"] = "P"
 df7
 
 # %%
 df7 = df7.set_index(["ts_code", "end_date"])
-df7.to_sql(name='finance', con=engine, if_exists="append")
+df7.to_sql(name='mainbusiness', con=engine, if_exists="append")
 
+# %%
+indexEngine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/indexdata?charset=utf8")
 
-
+# %%
+indexDaily = pro.index_daily(ts_code='399300.SZ')
+indexDaily
 # %%
