@@ -15,7 +15,7 @@ df
 # %%
 engine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/stock?charset=utf8")
-df.to_sql("daily", con=engine, if_exists="append")
+# df.to_sql("daily", con=engine, if_exists="append")
 
 # %%
 # df["ts_code"] = df["ts_code"].astype("string")
@@ -92,4 +92,21 @@ indexEngine = create_engine(
 # %%
 indexDaily = pro.index_daily(ts_code='399300.SZ')
 indexDaily
+
+# %%
+count = pd.read_sql_query("select count(ts_code) as c from daily1;", con=engine)
+count.loc[0,'c']
+
+# %%
+stockDaily = pro.daily(trade_date='20210225')
+stockDaily
+
+# %%
+stockDaily.loc[stockDaily['ts_code'].str.slice(4, 6).isin(['01','02'])]
+
+# %%
+len(stockDaily)
+
+# %%
+stockDaily.shape
 # %%

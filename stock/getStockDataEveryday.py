@@ -29,20 +29,20 @@ while date < end:
 
     getDailyOnDate(date, pro, engine)
     time.sleep(1)
-    getWeeklyOnDate(date, pro, engine)
-    time.sleep(1)
-    getMonthlyOnDate(date, pro, engine)
-    time.sleep(1)
+    # getWeeklyOnDate(date, pro, engine)
+    # time.sleep(1)
+    # getMonthlyOnDate(date, pro, engine)
+    # time.sleep(1)
 
-# update adjust factor crawling
-sqlstr = "SELECT max(trade_date) as maxdate FROM stock.adjustfactor2021"
-maxDate = pd.read_sql_query(sqlstr, con=engine).loc[0, 'maxdate']
-print("previous adjust factor crawle date is %s, start updating!" % maxDate)
+# # update adjust factor crawling
+# sqlstr = "SELECT max(trade_date) as maxdate FROM stock.adjustfactor2021"
+# maxDate = pd.read_sql_query(sqlstr, con=engine).loc[0, 'maxdate']
+# print("previous adjust factor crawle date is %s, start updating!" % maxDate)
 
-begin = datetime.datetime.strptime(maxDate, '%Y%m%d')
-end = datetime.datetime.now()
-date = begin
-delta = datetime.timedelta(days=1)
-while date < end:
-    getMonthlyOnDate(date, pro, engine)
-    time.sleep(1)
+# begin = datetime.datetime.strptime(maxDate, '%Y%m%d')
+# end = datetime.datetime.now()
+# date = begin
+# delta = datetime.timedelta(days=1)
+# while date < end:
+#     getMonthlyOnDate(date, pro, engine)
+#     time.sleep(1)

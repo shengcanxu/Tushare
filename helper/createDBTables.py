@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 
 engine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/stock?charset=utf8")
-createTableStrTemp = """CREATE TABLE `%s` (
+createDailyTableStrTemp = """CREATE TABLE `%s` (
   `trade_date` varchar(20) DEFAULT NULL,
   `ts_code` varchar(20) DEFAULT NULL,
   `open` double DEFAULT NULL,
@@ -28,25 +28,25 @@ CREATE TABLE `%s` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-# create daily table
-for year in range(1990, 2022):
-    tableName = "daily" + str(year)
-    createTableStr = createTableStrTemp % tableName
-    engine.execute(createTableStr)
+# # create daily table
+# for num in range(0, 30):
+#     tableName = "daily" + str(num)
+#     createTableStr = createDailyTableStrTemp % tableName
+#     engine.execute(createTableStr)
 
-# create weekly table
-for year in ['199X', '200X', '201X', '202X']:
-    tableName = "weekly" + year
-    createTableStr = createTableStrTemp % tableName
-    engine.execute(createTableStr)
+# # create weekly table
+# for text in ['0', '1', '2', '3', '4', '5']:
+#     tableName = "weekly" + text
+#     createTableStr = createDailyTableStrTemp % tableName
+#     engine.execute(createTableStr)
 
-# create monthly table
-tableName = "monthly"
-createTableStr = createTableStrTemp % tableName
-engine.execute(createTableStr)
+# # create monthly table
+# tableName = "monthly"
+# createTableStr = createTableStrTemp % tableName
+# engine.execute(createTableStr)
 
-# create adjust factor table
-for year in range(1990, 2022):
-    tableName = "adjustfactor" + str(year)
-    createTableStr = createAdjustFactorTableStrTemp % tableName
-    engine.execute(createTableStr)
+# # create adjust factor table
+# for num in range(0, 30):
+#     tableName = "adjustfactor" + str(num)
+#     createTableStr = createAdjustFactorTableStrTemp % tableName
+#     engine.execute(createTableStr)

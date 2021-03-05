@@ -1,4 +1,4 @@
-# 指数日线数据
+# 日线数据
 
 import tushare as ts
 from sqlalchemy import create_engine
@@ -7,18 +7,24 @@ import datetime
 
 ts.set_token('803f1548c1f25bf44c56644e4527a6d8cd3dbd8517e7c59e3aa1f6d0')
 pro = ts.pro_api()
-indexEngine = create_engine("mysql+pymysql://root:4401821211@localhost:3306/indexdata?charset=utf8")
+engine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/indexdata?charset=utf8")
 
 
 def getDailyOnDate(date, tushare, dbEngine):
-    year = date.strftime(("%Y"))
     date = date.strftime("%Y%m%d")
 
     try:
-        indexDaily = tushare.index_daily(trade_date=date)
-        df = indexDaily.set_index(["ts_code", "trade_date"])
-        tableName = "daily" + year
-        df.to_sql(name=tableName, con=dbEngine, if_exists="append")
+        indexDaily = tushare.index_daily(ts_code='399300.SZ', start_date='20180101', end_date='20181010')
+
+        for tail in range(0, 100):
+            r = tail % 30
+            text = str(tail) if tail >= 10 else '0' + str(tail) 
+            df = indexDaily.loc[indexDaily['ts_code'].str.slice(4, 6) == text]
+            df = df.set_index(["ts_code", "trade_date"])
+            tableName = "daily" + text
+            df.to_sql(name=tableName, con=dbEngine, if_exists="append")
+        
         print("get daily data successfully on date: %s" % date)
 
     except Exception as ex:
@@ -28,12 +34,12 @@ def getDailyOnDate(date, tushare, dbEngine):
 
 if __name__ == "__main__":
     
-    begin = datetime.date(1990, 12, 10)
+    begin = datetime.date(2021, 2, 25)
     end = datetime.date(2021, 2, 25)
     date = begin
     delta = datetime.timedelta(days=1)
     while date <= end:
         date += delta
-        getDailyOnDate(date, pro, indexEngine)
+        getDailyOnDate(date, pro, engine)
         time.sleep(0.5)
 
