@@ -1,4 +1,4 @@
-# 日线数据
+# 周线数据
 
 import tushare as ts
 from sqlalchemy import create_engine
@@ -12,30 +12,22 @@ engine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/indexdata?charset=utf8")
 
 
-def getDailyOnCode(code, tushare, dbEngine):
+def getMonthlyOnCode(code, tushare, dbEngine):
     try:
-        indexDaily = tushare.index_daily(ts_code=code, start_date='19901210', end_date='20210228')
-        if(len(indexDaily) == 0):
+        indexMonthly = tushare.index_monthly(ts_code=code, start_date='19901210', end_date='20091231')
+ 
+        if(len(indexMonthly) == 0 ):
             return
 
-        df = indexDaily.set_index(["ts_code", "trade_date"])
-        tableName = "daily" + str(getDBIndex(code))
-        print(tableName)
+        df = indexMonthly.set_index(["ts_code", "trade_date"])
+        tableName = "monthly"
         df.to_sql(name=tableName, con=dbEngine, if_exists="append")
         
-        print("get daily data successfully on code: %s with record: %d" % (code, len(indexDaily)))
+        print("get monthly data successfully on code: %s with record: %d" % (code, len(indexMonthly)))
 
     except Exception as ex:
         print(ex)
-        print("get daily data error on code: %s" % code)
-
-
-def getDBIndex(code):
-    sum = 0
-    for i in range(0, len(code)): 
-        sum = sum + ord(code[i])
-    index = sum % 30
-    return index
+        print("get monthly data error on code: %s" % code)
 
 
 if __name__ == "__main__":
@@ -43,6 +35,6 @@ if __name__ == "__main__":
     stockList = pd.read_sql_query(sqlstr, con=engine).to_numpy()
     for tsCode in stockList:
         code = tsCode[0]
-        getDailyOnCode(code, pro, engine)
+        getMonthlyOnCode(code, pro, engine)
         time.sleep(1.5) # make sure less than 60 query per minute
 

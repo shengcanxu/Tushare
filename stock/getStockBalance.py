@@ -27,7 +27,7 @@ def getBalanceOnCode(tsCode, tushare, dbEngine):
 
 
 if __name__ == "__main__":
-    sqlstr = "SELECT ts_code FROM test.stockdata"
+    sqlstr = "SELECT ts_code FROM stock.stockdata"
     stockList = pd.read_sql_query(sqlstr, con=engine).to_numpy()
     for tsCode in stockList:
         code = tsCode[0]

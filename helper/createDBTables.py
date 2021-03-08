@@ -2,8 +2,6 @@
 
 from sqlalchemy import create_engine
 
-engine = create_engine(
-    "mysql+pymysql://root:4401821211@localhost:3306/stock?charset=utf8")
 createDailyTableStrTemp = """CREATE TABLE `%s` (
   `trade_date` varchar(20) DEFAULT NULL,
   `ts_code` varchar(20) DEFAULT NULL,
@@ -28,6 +26,9 @@ CREATE TABLE `%s` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
+# engine = create_engine(
+#     "mysql+pymysql://root:4401821211@localhost:3306/stock?charset=utf8")
+
 # # create daily table
 # for num in range(0, 30):
 #     tableName = "daily" + str(num)
@@ -50,3 +51,18 @@ CREATE TABLE `%s` (
 #     tableName = "adjustfactor" + str(num)
 #     createTableStr = createAdjustFactorTableStrTemp % tableName
 #     engine.execute(createTableStr)
+
+# create index daily table
+indexEngine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/indexdata?charset=utf8")
+    
+# for num in range(0, 30):
+#     tableName = "daily" + str(num)
+#     createTableStr = createDailyTableStrTemp % tableName
+#     indexEngine.execute(createTableStr)
+
+# create weekly table
+for text in ['0', '1', '2', '3', '4', '5']:
+    tableName = "weekly" + text
+    createTableStr = createDailyTableStrTemp % tableName
+    indexEngine.execute(createTableStr)

@@ -90,23 +90,15 @@ indexEngine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/indexdata?charset=utf8")
 
 # %%
-indexDaily = pro.index_daily(ts_code='399300.SZ')
+indexDaily = pro.index_weekly(ts_code='000004.SH', start_date='19901210', end_date='20091231')
+indexDaily2 = pro.index_weekly(ts_code='000004.SH', start_date='20100101', end_date='20210228')
 indexDaily
+indexDaily2
 
 # %%
-count = pd.read_sql_query("select count(ts_code) as c from daily1;", con=engine)
-count.loc[0,'c']
+indexDaily.to_sql(name='daily', con=indexEngine, if_exists='append')
+
 
 # %%
-stockDaily = pro.daily(trade_date='20210225')
-stockDaily
-
-# %%
-stockDaily.loc[stockDaily['ts_code'].str.slice(4, 6).isin(['01','02'])]
-
-# %%
-len(stockDaily)
-
-# %%
-stockDaily.shape
+indexDaily
 # %%
