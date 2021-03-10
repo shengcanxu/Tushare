@@ -101,4 +101,18 @@ indexDaily.to_sql(name='daily', con=indexEngine, if_exists='append')
 
 # %%
 indexDaily
+
+# %%
+csv = pd.read_csv("C:/project/Tushare/index/code.csv").to_numpy()
+csv
+
+# %%
+indexWeight = pro.index_weight(index_code='399300.SZ', start_date='20180901', end_date='20180930')
+indexWeight = indexWeight.set_index(["index_code", "con_code", "trade_date"])
+indexWeight
+
+
+# %%
+indexWeight.to_sql(name='weight', con=indexEngine, if_exists='append')
+
 # %%

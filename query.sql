@@ -478,3 +478,11 @@ CREATE TABLE `indexdata` (
   `list_date` text,
   UNIQUE KEY `idx_indexdata_ts_code` (`ts_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `weight` (
+  `index_code` varchar(20),
+  `con_code` varchar(20),
+  `trade_date` varchar(20),
+  `weight` double DEFAULT NULL,
+  UNIQUE KEY `idx_weight_index_code_con_code_trade_date` (`index_code`,`con_code`, `trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

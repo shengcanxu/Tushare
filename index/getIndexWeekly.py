@@ -17,7 +17,8 @@ def getWeeklyOnCode(code, tushare, dbEngine):
         indexWeekly = tushare.index_weekly(ts_code=code, start_date='19901210', end_date='20091231')
         indexWeekly2 = tushare.index_weekly(ts_code=code, start_date='20100101', end_date='20210228')
         
-        if(len(indexWeekly) == 0 && len(indexWeekly2) == 0):
+        if(len(indexWeekly) == 0 and len(indexWeekly2) == 0):
+            print("no record on code: %s" % code)
             return
 
         df = indexWeekly.set_index(["ts_code", "trade_date"])
@@ -43,8 +44,10 @@ def getDBIndex(code):
 
 
 if __name__ == "__main__":
-    sqlstr = "SELECT ts_code FROM indexdata.indexdata"
-    stockList = pd.read_sql_query(sqlstr, con=engine).to_numpy()
+    # sqlstr = "SELECT ts_code FROM indexdata.indexdata"
+    # stockList = pd.read_sql_query(sqlstr, con=engine).to_numpy()
+    stockList = pd.read_csv("C:/project/Tushare/index/code.csv").to_numpy()
+
     for tsCode in stockList:
         code = tsCode[0]
         getWeeklyOnCode(code, pro, engine)
