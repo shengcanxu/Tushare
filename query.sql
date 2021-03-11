@@ -545,7 +545,7 @@ CREATE TABLE `fundlist` (
   `purc_startdate` text,
   `redm_startdate` text,
   `market` text,
-  KEY `ix_fundlist_index` (`ts_code`)
+  UNIQUE KEY `ix_fundlist_index` (`ts_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `company` (
@@ -567,7 +567,23 @@ CREATE TABLE `company` (
   `main_business` text,
   `org_code` text,
   `credit_code` text,
-  KEY `ix_company_index` (`index`)
+  UNIQUE KEY `ix_company_index` (`index`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `manager` (
+  `ts_code` varchar(20),
+  `name` varchar(20),
+  `ann_date` varchar(20),
+  `gender` varchar(10),
+  `birth_year` varchar(20),
+  `edu` varchar(20),
+  `nationality` varchar(20),
+  `begin_date` varchar(20),
+  `end_date` varchar(20),
+  `resume` text, 
+  UNIQUE KEY `idx_manager_ts_code` (`ts_code`, `name`, `ann_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
