@@ -154,4 +154,13 @@ company
 
 # %% 
 company.to_sql(name='company', con=fundEngine, if_exists='append')
+
+
+# %%
+manager = pro.fund_manager(ts_code='150018.SZ')
+manager 
+
+# %%
+manager = manager.set_index(['ts_code','name'])
+manager.to_sql(name='manager', con=fundEngine, if_exists='append')
 # %%

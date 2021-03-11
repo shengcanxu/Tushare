@@ -1,4 +1,4 @@
-# 日线数据
+# 基础指标数据
 
 import tushare as ts
 from sqlalchemy import create_engine

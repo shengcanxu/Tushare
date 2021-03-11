@@ -1,4 +1,4 @@
-# 日线数据
+# 指数权重
 
 import tushare as ts
 from sqlalchemy import create_engine
