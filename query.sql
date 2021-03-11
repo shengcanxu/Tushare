@@ -486,3 +486,19 @@ CREATE TABLE `weight` (
   `weight` double DEFAULT NULL,
   UNIQUE KEY `idx_weight_index_code_con_code_trade_date` (`index_code`,`con_code`, `trade_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `dailybasic` (
+  `ts_code` varchar(20),
+  `trade_date` varchar(20),
+  `total_mv` double DEFAULT NULL,
+  `float_mv` double DEFAULT NULL,
+  `total_share` double DEFAULT NULL,
+  `float_share` double DEFAULT NULL,
+  `free_share` double DEFAULT NULL,
+  `turnover_rate` double DEFAULT NULL,
+  `turnover_rate_f` double DEFAULT NULL,
+  `pe` double DEFAULT NULL,
+  `pe_ttm` double DEFAULT NULL,
+  `pb` double DEFAULT NULL, 
+  UNIQUE KEY `idx_indexdata_ts_code_trade_date` (`ts_code`, `trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -116,3 +116,10 @@ indexWeight
 indexWeight.to_sql(name='weight', con=indexEngine, if_exists='append')
 
 # %%
+indexDailyBasic = pro.index_dailybasic(trade_date='20181018')
+indexDailyBasic = indexDailyBasic.set_index(["ts_code", "trade_date"])
+indexDailyBasic
+
+# %%
+indexDailyBasic.to_sql(name='dailybasic', con=indexEngine, if_exists='append')
+
