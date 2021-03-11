@@ -502,3 +502,72 @@ CREATE TABLE `dailybasic` (
   `pb` double DEFAULT NULL, 
   UNIQUE KEY `idx_indexdata_ts_code_trade_date` (`ts_code`, `trade_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-------------------------------------------------------------------------------
+create database usstock; 
+use usstock; 
+
+CREATE TABLE `stocklist` (
+  `ts_code` varchar(20),
+  `name` varchar(40),
+  `classify` varchar(20),
+  `list_date` varchar(20),
+  `delist_date` varchar(20),
+  UNIQUE KEY `idx_indexdata_ts_code` (`ts_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+use fund; 
+
+CREATE TABLE `fundlist` (
+  `ts_code` varchar(20),
+  `name` text,
+  `management` text,
+  `custodian` text,
+  `fund_type` text,
+  `found_date` text,
+  `due_date` text,
+  `list_date` text,
+  `issue_date` text,
+  `delist_date` text,
+  `issue_amount` double DEFAULT NULL,
+  `m_fee` double DEFAULT NULL,
+  `c_fee` double DEFAULT NULL,
+  `duration_year` double DEFAULT NULL,
+  `p_value` double DEFAULT NULL,
+  `min_amount` double DEFAULT NULL,
+  `exp_return` text,
+  `benchmark` text,
+  `status` text,
+  `invest_type` text,
+  `type` text,
+  `trustee` text,
+  `purc_startdate` text,
+  `redm_startdate` text,
+  `market` text,
+  KEY `ix_fundlist_index` (`ts_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `company` (
+  `index` bigint DEFAULT NULL,
+  `name` text,
+  `shortname` text,
+  `province` text,
+  `city` text,
+  `address` text,
+  `phone` text,
+  `office` text,
+  `website` text,
+  `chairman` text,
+  `manager` text,
+  `reg_capital` double DEFAULT NULL,
+  `setup_date` text,
+  `end_date` text,
+  `employees` double DEFAULT NULL,
+  `main_business` text,
+  `org_code` text,
+  `credit_code` text,
+  KEY `ix_company_index` (`index`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+

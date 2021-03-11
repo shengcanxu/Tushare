@@ -123,3 +123,35 @@ indexDailyBasic
 # %%
 indexDailyBasic.to_sql(name='dailybasic', con=indexEngine, if_exists='append')
 
+
+#%% 
+
+
+# %%
+usEngine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/usstock?charset=utf8")
+
+# %%
+usStockList = pro.us_basic(offset=18000, limit=6000)
+usStockList = usStockList.set_index(["ts_code"])
+usStockList.to_sql(name='stocklist', con=usEngine, if_exists='append')
+
+# %% 
+usStockList
+
+# %%
+usDaily = pro.us_daily(trade_date='20210309', offset=6000, limit=6000)
+usDaily
+
+# %% 
+fundEngine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/fund?charset=utf8")
+
+
+# %%
+company = pro.fund_company()
+company
+
+# %% 
+company.to_sql(name='company', con=fundEngine, if_exists='append')
+# %%
