@@ -517,6 +517,7 @@ CREATE TABLE `stocklist` (
   UNIQUE KEY `idx_indexdata_ts_code` (`ts_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create database fund; 
 use fund; 
 
 CREATE TABLE `fundlist` (
@@ -584,6 +585,18 @@ CREATE TABLE `manager` (
   `resume` text, 
   UNIQUE KEY `idx_manager_ts_code` (`ts_code`, `name`, `ann_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `share` (
+  `ts_code` varchar(20),
+  `trade_date` varchar(20),
+  `fd_share` double DEFAULT NULL,
+  `fund_type` varchar(10),
+  `market` varchar(10),
+  UNIQUE KEY `idx_share_ts_code_trade_date` (`ts_code`, `trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 
 

@@ -124,9 +124,6 @@ indexDailyBasic
 indexDailyBasic.to_sql(name='dailybasic', con=indexEngine, if_exists='append')
 
 
-#%% 
-
-
 # %%
 usEngine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/usstock?charset=utf8")
@@ -149,11 +146,12 @@ fundEngine = create_engine(
 
 
 # %%
-company = pro.fund_company()
+company = pro.fund_basic(market='O')
 company
 
 # %% 
-company.to_sql(name='company', con=fundEngine, if_exists='append')
+company = company.set_index("ts_code")
+company.to_sql(name='fundlist', con=fundEngine, if_exists='append')
 
 
 # %%
@@ -163,4 +161,18 @@ manager
 # %%
 manager = manager.set_index(['ts_code','name'])
 manager.to_sql(name='manager', con=fundEngine, if_exists='append')
+
+# %%
+shares = pro.fund_share(ts_code='150018.SZ')
+shares = shares.set_index(['ts_code', 'trade_date'])
+shares
+
+# %%
+shares.to_sql(name='share', con=fundEngine, if_exists='append')
+
+# %%
+stockList = pd.read_csv("C:/project/Tushare/fund/code.csv").to_numpy()
+stockList
+
+
 # %%
