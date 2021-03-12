@@ -171,8 +171,12 @@ shares
 shares.to_sql(name='share', con=fundEngine, if_exists='append')
 
 # %%
-stockList = pd.read_csv("C:/project/Tushare/fund/code.csv").to_numpy()
-stockList
+divident = pro.fund_div(ts_code='165509.SZ')
+divident
 
+
+# %%
+divident = divident.set_index(['ts_code', 'ann_date'])
+divident.to_sql(name="divident", con=fundEngine, if_exists='append')
 
 # %%

@@ -596,6 +596,40 @@ CREATE TABLE `share` (
   UNIQUE KEY `idx_share_ts_code_trade_date` (`ts_code`, `trade_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `nav` (
+  `ts_code` varchar(20),
+  `end_date` varchar(20),
+  `ann_date` varchar(20),
+  `unit_nav` double DEFAULT NULL,
+  `accum_nav` double DEFAULT NULL,
+  `accum_div` varchar(20),
+  `net_asset` double DEFAULT NULL,
+  `total_netasset` double DEFAULT NULL,
+  `adj_nav` double DEFAULT NULL,
+  `update_flag` varchar(20),
+  UNIQUE KEY `idx_nav_ts_code_end_date` (`ts_code`, `end_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `divident` (
+  `ts_code` varchar(20),
+  `ann_date` varchar(20),
+  `imp_anndate` varchar(20),
+  `base_date` varchar(20),
+  `div_proc` varchar(20),
+  `record_date` varchar(20),
+  `ex_date` varchar(20),
+  `pay_date` varchar(20),
+  `earpay_date` varchar(20),
+  `net_ex_date` varchar(20),
+  `div_cash` double DEFAULT NULL,
+  `base_unit` double DEFAULT NULL,
+  `ear_distr` double DEFAULT NULL,
+  `ear_amount` double DEFAULT NULL,
+  `account_date` varchar(20),
+  `base_year` varchar(20),
+  UNIQUE KEY `idx_divident_ts_code_ann_date` (`ts_code`, `ann_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 
