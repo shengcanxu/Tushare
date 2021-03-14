@@ -12,33 +12,26 @@ engine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/fund?charset=utf8")
 
 
-def getFundDividendOnCode(code, tushare, dbEngine):
+def getFundDividendOnDate(date, tushare, dbEngine):
     try:
-        dividend = tushare.fund_div(ts_code=code)    
-        dividend = dividend.set_index(["ts_code", "end_date"])
-        tableName = "dividend" + str(getDBIndex(code))
-        print(tableName)
+        dividend = tushare.fund_div(ann_date=date)    
+        dividend = dividend.set_index(["ts_code", "ann_date"])
+        tableName = "dividend"
         dividend.to_sql(name=tableName, con=dbEngine, if_exists="append")
     
-        print("get fund dividend data successfully on code: %s with record: %d" % (code, len(dividend)))
+        print("get fund dividend data successfully on date: %s with record: %d" % (date, len(dividend)))
 
     except Exception as ex:
         print(ex)
-        print("get fund dividend data error on code: %s" % code)
-
-
-def getDBIndex(code):
-    index = code[len(code)-5:len(code)-3]
-    index = int(index) % 30
-    return index
+        print("get fund dividend data error on code: %s" % date)
 
 
 if __name__ == "__main__":
-    stockList = pd.read_csv("C:/project/Tushare/fund/code.csv").to_numpy()
-
-    for tsCode in stockList:
-        code = tsCode[0]
-
-        getFundDividendOnCode(code, pro, engine)
-        time.sleep(1.5) # make sure less than 60 query per minute
-
+    begin = datetime.date(1990, 12, 10)
+    end = datetime.date(2021, 2, 25)
+    date = begin
+    delta = datetime.timedelta(days=1)
+    while date <= end:
+        date += delta
+        getFundDividendOnDate(date.strftime("%Y%m%d"), pro, engine)
+        time.sleep(1)

@@ -171,7 +171,7 @@ shares
 shares.to_sql(name='share', con=fundEngine, if_exists='append')
 
 # %%
-divident = pro.fund_div(ts_code='970005.OF')
+divident = pro.fund_div(ann_date='20181018')
 divident
 
 
