@@ -12,19 +12,19 @@ engine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/fund?charset=utf8")
 
 
-def getFundDividentOnCode(code, tushare, dbEngine):
+def getFundDividendOnCode(code, tushare, dbEngine):
     try:
-        divident = tushare.fund_div(ts_code=code)    
-        divident = divident.set_index(["ts_code", "end_date"])
-        tableName = "divident" + str(getDBIndex(code))
+        dividend = tushare.fund_div(ts_code=code)    
+        dividend = dividend.set_index(["ts_code", "end_date"])
+        tableName = "dividend" + str(getDBIndex(code))
         print(tableName)
-        divident.to_sql(name=tableName, con=dbEngine, if_exists="append")
+        dividend.to_sql(name=tableName, con=dbEngine, if_exists="append")
     
-        print("get fund divident data successfully on code: %s with record: %d" % (code, len(divident)))
+        print("get fund dividend data successfully on code: %s with record: %d" % (code, len(dividend)))
 
     except Exception as ex:
         print(ex)
-        print("get fund divident data error on code: %s" % code)
+        print("get fund dividend data error on code: %s" % code)
 
 
 def getDBIndex(code):
@@ -39,6 +39,6 @@ if __name__ == "__main__":
     for tsCode in stockList:
         code = tsCode[0]
 
-        getFundDividentOnCode(code, pro, engine)
+        getFundDividendOnCode(code, pro, engine)
         time.sleep(1.5) # make sure less than 60 query per minute
 

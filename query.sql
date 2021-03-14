@@ -607,10 +607,10 @@ CREATE TABLE `nav` (
   `total_netasset` double DEFAULT NULL,
   `adj_nav` double DEFAULT NULL,
   `update_flag` varchar(20),
-  UNIQUE KEY `idx_nav_ts_code_end_date` (`ts_code`, `end_date`)
+  UNIQUE KEY `idx_nav_ts_code_end_date_adj_nav` (`ts_code`, `end_date`, `adj_nav`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `divident` (
+CREATE TABLE `dividend` (
   `ts_code` varchar(20),
   `ann_date` varchar(20),
   `imp_anndate` varchar(20),
@@ -627,7 +627,7 @@ CREATE TABLE `divident` (
   `ear_amount` double DEFAULT NULL,
   `account_date` varchar(20),
   `base_year` varchar(20),
-  UNIQUE KEY `idx_divident_ts_code_ann_date` (`ts_code`, `ann_date`)
+  UNIQUE KEY `idx_dividend_ts_code_ann_date` (`ts_code`, `ann_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

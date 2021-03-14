@@ -163,15 +163,15 @@ manager = manager.set_index(['ts_code','name'])
 manager.to_sql(name='manager', con=fundEngine, if_exists='append')
 
 # %%
-shares = pro.fund_share(ts_code='150018.SZ')
-shares = shares.set_index(['ts_code', 'trade_date'])
+shares = pro.fund_share(ts_code='501022.SH')
+# shares = shares.set_index(['ts_code', 'trade_date'])
 shares
 
 # %%
 shares.to_sql(name='share', con=fundEngine, if_exists='append')
 
 # %%
-divident = pro.fund_div(ts_code='165509.SZ')
+divident = pro.fund_div(ts_code='970005.OF')
 divident
 
 
@@ -179,4 +179,9 @@ divident
 divident = divident.set_index(['ts_code', 'ann_date'])
 divident.to_sql(name="divident", con=fundEngine, if_exists='append')
 
+# %%
+nav = pro.fund_nav(ts_code='000010.OF')
+nav
+# %%
+nav.to_csv("C:/project/Tushare/fund/nav.csv")
 # %%

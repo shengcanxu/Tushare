@@ -26,17 +26,6 @@ CREATE TABLE `%s` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-createFundShareTableStrTemp = """
-CREATE TABLE `%s` (
-  `ts_code` varchar(20),
-  `trade_date` varchar(20),
-  `fd_share` double DEFAULT NULL,
-  `fund_type` varchar(10),
-  `market` varchar(10),
-  UNIQUE KEY `idx_share_ts_code_trade_date` (`ts_code`, `trade_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-"""
-
 # engine = create_engine(
 #     "mysql+pymysql://root:4401821211@localhost:3306/stock?charset=utf8")
 
@@ -80,12 +69,29 @@ indexEngine = create_engine(
 #     indexEngine.execute(createTableStr)
 
 
+createFundNavTableStrTemplate = """
+CREATE TABLE `%s` (
+  `ts_code` varchar(20),
+  `end_date` varchar(20),
+  `ann_date` varchar(20),
+  `unit_nav` double DEFAULT NULL,
+  `accum_nav` double DEFAULT NULL,
+  `accum_div` varchar(20),
+  `net_asset` double DEFAULT NULL,
+  `total_netasset` double DEFAULT NULL,
+  `adj_nav` double DEFAULT NULL,
+  `update_flag` varchar(20),
+  KEY `idx_nav_ts_code_end_date_adj_nav` (`ts_code`, `end_date`, `adj_nav`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+
 # fund engine
 fundEngine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/fund?charset=utf8")
 
-# create fund share table
+# create nav table  
 for num in range(0, 30):
-    tableName = "share" + str(num)
-    createTableStr = createFundShareTableStrTemp % tableName
+    tableName = "nav" + str(num)
+    createTableStr = createFundNavTableStrTemplate % tableName
     fundEngine.execute(createTableStr)
+

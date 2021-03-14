@@ -26,7 +26,7 @@ def getFundShareOnCode(code, startDate, endDate, tushare, dbEngine):
 
             share = tushare.fund_share(ts_code=code, start_date=sd, end_date=ed)    
             share = share.set_index(["ts_code", "trade_date"])
-            tableName = "share" + str(getDBIndex(code))
+            tableName = "share" 
             print(tableName)
             share.to_sql(name=tableName, con=dbEngine, if_exists="append")
         
@@ -37,10 +37,25 @@ def getFundShareOnCode(code, startDate, endDate, tushare, dbEngine):
         print("get fund share data error on code: %s" % code)
 
 
-def getDBIndex(code):
-    index = code[len(code)-5:len(code)-3]
-    index = int(index) % 30
-    return index
+def getFundShareOnCode2(code, tushare, dbEngine):
+    try:
+        share = tushare.fund_share(ts_code=code)    
+        share = share.set_index(["ts_code", "trade_date"])
+        tableName = "share" 
+        print(tableName)
+        share.to_sql(name=tableName, con=dbEngine, if_exists="append")
+    
+        if len(share) >= 2000:
+            print("more record on code: %s" % code)
+
+        print("get fund share data successfully on code: %s with record: %d" % (code, len(share)))
+
+    except Exception as ex:
+        print(ex)
+        print("get fund share data error on code: %s" % code)
+
+
+
 
 
 if __name__ == "__main__":
@@ -51,6 +66,17 @@ if __name__ == "__main__":
         startDate = str(tsCode[1])
         endDate = str(tsCode[2])
 
-        getFundShareOnCode(code, startDate, endDate,  pro, engine)
+        getFundShareOnCode(code, startDate, endDate, pro, engine)
         time.sleep(1.5) # make sure less than 60 query per minute
+
+    # step = 10
+    # stockList = [stockList[i: i+step] for i in range(0, len(stockList), step)]
+    # for tsCodes in stockList:
+    #     code = ""
+    #     for c in tsCodes:
+    #         code = code + c[0] + ','
+    #     code = code[0:len(code)-1]
+    #     getFundShareOnCode2(code, pro, engine)
+    #     time.sleep(1.5) # make sure less than 60 query per minute
+
 

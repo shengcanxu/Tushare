@@ -20,7 +20,7 @@ def getFundNavOnCode(code, tushare, dbEngine):
         print(tableName)
         nav.to_sql(name=tableName, con=dbEngine, if_exists="append")
     
-        print("get fund nav data successfully on code: %s with record: %d" % (code, len(share)))
+        print("get fund nav data successfully on code: %s with record: %d" % (code, len(nav)))
 
     except Exception as ex:
         print(ex)
