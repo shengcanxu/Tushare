@@ -630,6 +630,123 @@ CREATE TABLE `dividend` (
   UNIQUE KEY `idx_dividend_ts_code_ann_date` (`ts_code`, `ann_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `portfolio` (
+  `ts_code` varchar(20),
+  `ann_date` varchar(20),
+  `symbol` varchar(20),
+  `end_date` varchar(20),
+  `mkv` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `stk_mkv_ratio` double DEFAULT NULL,
+  `stk_float_ratio` double DEFAULT NULL,
+  UNIQUE KEY `idx_portfolio_ts_code_ann_date_symbol` (`ts_code`, `ann_date`, `symbol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+create database macro; 
+use macro; 
+
+CREATE TABLE `shibor` (
+  `date` varchar(20),
+  `on` double DEFAULT NULL,
+  `1w` double DEFAULT NULL,
+  `2w` double DEFAULT NULL,
+  `1m` double DEFAULT NULL,
+  `3m` double DEFAULT NULL,
+  `6m` double DEFAULT NULL,
+  `9m` double DEFAULT NULL,
+  `1y` double DEFAULT NULL,
+  unique KEY `idx_shibor_date` (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `shiborquote` (
+  `date` varchar(20),
+  `bank` varchar(40),
+  `on_b` double DEFAULT NULL,
+  `on_a` double DEFAULT NULL,
+  `1w_b` double DEFAULT NULL,
+  `1w_a` double DEFAULT NULL,
+  `2w_b` double DEFAULT NULL,
+  `2w_a` double DEFAULT NULL,
+  `1m_b` double DEFAULT NULL,
+  `1m_a` double DEFAULT NULL,
+  `3m_b` double DEFAULT NULL,
+  `3m_a` double DEFAULT NULL,
+  `6m_b` double DEFAULT NULL,
+  `6m_a` double DEFAULT NULL,
+  `9m_b` double DEFAULT NULL,
+  `9m_a` double DEFAULT NULL,
+  `1y_b` double DEFAULT NULL,
+  `1y_a` double DEFAULT NULL,
+  unique KEY `idx_shiborquote_date` (`date`, `bank`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `shiborlpr` (
+  `date` varchar(20),
+  `1y` double DEFAULT NULL,
+  unique KEY `idx_shiborlpr_date` (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `libor` (
+  `date` varchar(20),
+  `curr_type` varchar(20),
+  `on` double DEFAULT NULL,
+  `1w` double DEFAULT NULL,
+  `1m` double DEFAULT NULL,
+  `2m` double DEFAULT NULL,
+  `3m` double DEFAULT NULL,
+  `6m` double DEFAULT NULL,
+  `12m` double DEFAULT NULL,
+  KEY `idx_libor_date_curr_type` (`date`, `curr_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `hibor` (
+  `date` varchar(20),
+  `on` double DEFAULT NULL,
+  `1w` double DEFAULT NULL,
+  `2w` double DEFAULT NULL,
+  `1m` double DEFAULT NULL,
+  `2m` double DEFAULT NULL,
+  `3m` double DEFAULT NULL,
+  `6m` double DEFAULT NULL,
+  `12m` double DEFAULT NULL,
+  KEY `idx_hibor_date` (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `wzindex` (
+  `date` varchar(20),
+  `comp_rate` double DEFAULT NULL,
+  `center_rate` double DEFAULT NULL,
+  `micro_rate` double DEFAULT NULL,
+  `cm_rate` double DEFAULT NULL,
+  `sdb_rate` double DEFAULT NULL,
+  `om_rate` double DEFAULT NULL,
+  `aa_rate` double DEFAULT NULL,
+  `m1_rate` double DEFAULT NULL,
+  `m3_rate` double DEFAULT NULL,
+  `m6_rate` double DEFAULT NULL,
+  `m12_rate` double DEFAULT NULL,
+  `long_rate` double DEFAULT NULL,
+  KEY `idx_wzindex_date` (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `gzindex` (
+  `date` varchar(20),
+  `d10_rate` double DEFAULT NULL,
+  `m1_rate` double DEFAULT NULL,
+  `m3_rate` double DEFAULT NULL,
+  `m6_rate` double DEFAULT NULL,
+  `m12_rate` double DEFAULT NULL,
+  `long_rate` double DEFAULT NULL,
+  KEY `idx_gzindex_date` (`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+
 
 
 

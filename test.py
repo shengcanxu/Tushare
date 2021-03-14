@@ -171,7 +171,7 @@ shares
 shares.to_sql(name='share', con=fundEngine, if_exists='append')
 
 # %%
-divident = pro.fund_div(ann_date='20181018')
+divident = pro.fund_div(ann_date='20081018')
 divident
 
 
@@ -184,4 +184,34 @@ nav = pro.fund_nav(ts_code='000010.OF')
 nav
 # %%
 nav.to_csv("C:/project/Tushare/fund/nav.csv")
+
+
+# %%
+portfolio = pro.fund_portfolio(ts_code='001753.OF')
+portfolio
+
+# %%
+portfolio = portfolio.set_index(["ts_code", "ann_date", "symbol"])
+portfolio.to_sql(name="portfolio", con=fundEngine, if_exists='append')
+
+# %%
+portfolio.to_csv("C:/project/Tushare/fund/portfolio.csv")
+
+# %%
+portfolio = portfolio.drop_duplicates(["ts_code", "ann_date", "symbol"])
+portfolio
+
+# %% 
+macroEngine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/macro?charset=utf8")
+
+
+# %%
+shibor = pro.gz_index(start_date='20170510', end_date='20170520')
+shibor
+
+# %%
+shibor = shibor.set_index(["date"])
+shibor.to_sql(name="gzindex", con=macroEngine, if_exists='append')
+
 # %%

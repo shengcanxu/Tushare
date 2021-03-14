@@ -85,13 +85,33 @@ CREATE TABLE `%s` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
+createFundPortfolioTableStrTemp = """
+CREATE TABLE `%s` (
+  `ts_code` varchar(20),
+  `ann_date` varchar(20),
+  `symbol` varchar(20),
+  `end_date` varchar(20),
+  `mkv` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `stk_mkv_ratio` double DEFAULT NULL,
+  `stk_float_ratio` double DEFAULT NULL,
+  UNIQUE KEY `idx_portfolio_ts_code_ann_date_symbol` (`ts_code`, `ann_date`, `symbol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+
 # fund engine
 fundEngine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/fund?charset=utf8")
 
-# create nav table  
+# # create nav table  
+# for num in range(0, 30):
+#     tableName = "nav" + str(num)
+#     createTableStr = createFundNavTableStrTemplate % tableName
+#     fundEngine.execute(createTableStr)
+
+# create portfolio table  
 for num in range(0, 30):
-    tableName = "nav" + str(num)
-    createTableStr = createFundNavTableStrTemplate % tableName
+    tableName = "portfolio" + str(num)
+    createTableStr = createFundPortfolioTableStrTemp % tableName
     fundEngine.execute(createTableStr)
 
