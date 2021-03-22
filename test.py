@@ -202,16 +202,33 @@ portfolio = portfolio.drop_duplicates(["ts_code", "ann_date", "symbol"])
 portfolio
 
 # %% 
+funddaily = pro.fund_adj(ts_code='150018.SZ', start_date='20150101', end_date='20181029')
+funddaily = funddaily.drop_duplicates(["ts_code", "trade_date"])
+funddaily
+
+# %% 
+funddaily = funddaily.set_index(["ts_code", "trade_date"])
+funddaily.to_sql(name="adjust", con=fundEngine, if_exists='append')
+
+
+# %% 
 macroEngine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/macro?charset=utf8")
 
 
 # %%
-shibor = pro.gz_index(start_date='20170510', end_date='20170520')
+shibor = pro.cn_gdp(start_q='1950Q1', end_q='2020Q4')
 shibor
 
 # %%
-shibor = shibor.set_index(["date"])
-shibor.to_sql(name="gzindex", con=macroEngine, if_exists='append')
+shibor = shibor.set_index(["quarter"])
+shibor.to_sql(name="cngdp", con=macroEngine, if_exists='append')
 
+# %%
+hkStockList = pro.hk_basic(list_status='P')
+hkStockList = hkStockList.drop_duplicates("ts_code")
+hkStockList = hkStockList.set_index(["ts_code"])
+hkStockList
+# %%
+hkStockList.to_sql(name="hkdaily", con=engine, if_exists='append')
 # %%

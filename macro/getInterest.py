@@ -117,18 +117,18 @@ if __name__ == "__main__":
     #     print("get wzindex interest record: %d" % len(wzindex))
     #     time.sleep(1)
 
-    # 广州民间借贷利率
-    begin = datetime.date(1990, 12, 10)
-    end = datetime.date(2021, 2, 25)
+    # # 广州民间借贷利率
+    # begin = datetime.date(1990, 12, 10)
+    # end = datetime.date(2021, 2, 25)
 
-    date = begin
-    delta = datetime.timedelta(days=500)
-    while date <= end:
-        start = date
-        date += delta
+    # date = begin
+    # delta = datetime.timedelta(days=500)
+    # while date <= end:
+    #     start = date
+    #     date += delta
 
-        gzindex = pro.gz_index(start_date=start.strftime("%Y%m%d"), end_date=date.strftime("%Y%m%d"))
-        gzindex = gzindex.set_index(["date"])
-        gzindex.to_sql(name="gzindex", con=macroEngine, if_exists='append')
-        print("get gzindex interest record: %d" % len(gzindex))
-        time.sleep(1)
+    #     gzindex = pro.gz_index(start_date=start.strftime("%Y%m%d"), end_date=date.strftime("%Y%m%d"))
+    #     gzindex = gzindex.set_index(["date"])
+    #     gzindex.to_sql(name="gzindex", con=macroEngine, if_exists='append')
+    #     print("get gzindex interest record: %d" % len(gzindex))
+    #     time.sleep(1)

@@ -14,7 +14,8 @@ engine = create_engine(
 
 def getFundDividendOnDate(date, tushare, dbEngine):
     try:
-        dividend = tushare.fund_div(ann_date=date)    
+        dividend = tushare.fund_div(ann_date=date)
+        dividend = dividend.drop_duplicates(["ts_code", "ann_date"])
         dividend = dividend.set_index(["ts_code", "ann_date"])
         tableName = "dividend"
         dividend.to_sql(name=tableName, con=dbEngine, if_exists="append")
@@ -27,7 +28,8 @@ def getFundDividendOnDate(date, tushare, dbEngine):
 
 
 if __name__ == "__main__":
-    begin = datetime.date(1990, 12, 10)
+    # begin = datetime.date(1990, 12, 10)
+    begin = datetime.date(2014, 12, 23)
     end = datetime.date(2021, 2, 25)
     date = begin
     delta = datetime.timedelta(days=1)
