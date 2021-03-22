@@ -99,19 +99,42 @@ CREATE TABLE `%s` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
+createFundDailyTablesStrTemp = """
+CREATE TABLE `%s` (
+  `ts_code` varchar(20),
+  `trade_date` varchar(20),
+  `pre_close` double DEFAULT NULL,
+  `open` double DEFAULT NULL,
+  `high` double DEFAULT NULL,
+  `low` double DEFAULT NULL,
+  `close` double DEFAULT NULL,
+  `change` double DEFAULT NULL,
+  `pct_chg` double DEFAULT NULL,
+  `vol` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  KEY `idx_daily_ts_code_tradedate` (`ts_code`, `trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+
 # fund engine
 fundEngine = create_engine(
     "mysql+pymysql://root:4401821211@localhost:3306/fund?charset=utf8")
 
 # # create nav table  
-# for num in range(0, 30):
+# for num in range(0, 3):
 #     tableName = "nav" + str(num)
 #     createTableStr = createFundNavTableStrTemplate % tableName
 #     fundEngine.execute(createTableStr)
 
-# create portfolio table  
-for num in range(0, 30):
-    tableName = "portfolio" + str(num)
-    createTableStr = createFundPortfolioTableStrTemp % tableName
-    fundEngine.execute(createTableStr)
+# # create portfolio table  
+# for num in range(0, 3):
+#     tableName = "portfolio" + str(num)
+#     createTableStr = createFundPortfolioTableStrTemp % tableName
+#     fundEngine.execute(createTableStr)
+
+# # create fund daily table  
+# for num in range(0, 3):
+#     tableName = "daily" + str(num)
+#     createTableStr = createFundDailyTablesStrTemp % tableName
+#     fundEngine.execute(createTableStr)
 

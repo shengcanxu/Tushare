@@ -30,6 +30,7 @@ def getFundNavOnCode(code, tushare, dbEngine):
 def getDBIndex(code):
     index = code[len(code)-5:len(code)-3]
     index = int(index) % 30
+    index = int(index / 10)
     return index
 
 

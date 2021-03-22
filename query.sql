@@ -463,6 +463,23 @@ CREATE TABLE `adjustfactor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE `hkdaily` (
+  `ts_code` varchar(20) DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `fullname` text,
+  `enname` text,
+  `cn_spell` varchar(20) DEFAULT NULL,
+  `market` varchar(20) DEFAULT NULL,
+  `list_status` varchar(20) DEFAULT NULL,
+  `list_date` varchar(20) DEFAULT NULL,
+  `delist_date` varchar(20) DEFAULT NULL,
+  `trade_unit` double DEFAULT NULL,
+  `isin` varchar(20) DEFAULT NULL,
+  `curr_type` varchar(20) DEFAULT NULL,
+  UNIQUE KEY `idx_hkdaily_ts_code` (`ts_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 ----------------------------------------------------------------------------
 create database indexdata; 
 use indexdata; 
@@ -640,6 +657,29 @@ CREATE TABLE `portfolio` (
   `stk_mkv_ratio` double DEFAULT NULL,
   `stk_float_ratio` double DEFAULT NULL,
   UNIQUE KEY `idx_portfolio_ts_code_ann_date_symbol` (`ts_code`, `ann_date`, `symbol`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `daily` (
+  `ts_code` varchar(20),
+  `trade_date` varchar(20),
+  `pre_close` double DEFAULT NULL,
+  `open` double DEFAULT NULL,
+  `high` double DEFAULT NULL,
+  `low` double DEFAULT NULL,
+  `close` double DEFAULT NULL,
+  `change` double DEFAULT NULL,
+  `pct_chg` double DEFAULT NULL,
+  `vol` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  KEY `idx_daily_ts_code_tradedate` (`ts_code`, `trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `adjust` (
+  `ts_code` varchar(20),
+  `trade_date` varchar(20),
+  `adj_factor` double DEFAULT NULL,
+  KEY `idx_adjust_ts_code_trade_date` (`ts_code`, `trade_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
