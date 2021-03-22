@@ -26,8 +26,25 @@ CREATE TABLE `%s` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
 
-# engine = create_engine(
-#     "mysql+pymysql://root:4401821211@localhost:3306/stock?charset=utf8")
+createHkDailyTableStrTemp = """
+CREATE TABLE `%s` (
+  `ts_code` varchar(20),
+  `trade_date` varchar(20),
+  `open` double DEFAULT NULL,
+  `high` double DEFAULT NULL,
+  `low` double DEFAULT NULL,
+  `close` double DEFAULT NULL,
+  `pre_close` double DEFAULT NULL,
+  `change` double DEFAULT NULL,
+  `pct_chg` double DEFAULT NULL,
+  `vol` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  UNIQUE KEY `ix_hkdaily_ts_code_trade_date` (`ts_code`, `trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+
+engine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/stock?charset=utf8")
 
 # # create daily table
 # for num in range(0, 30):
@@ -51,6 +68,13 @@ CREATE TABLE `%s` (
 #     tableName = "adjustfactor" + str(num)
 #     createTableStr = createAdjustFactorTableStrTemp % tableName
 #     engine.execute(createTableStr)
+
+# # create  HK daily table  
+# for num in range(0, 10):
+#     tableName = "hkdaily" + str(num)
+#     createTableStr = createHkDailyTableStrTemp % tableName
+#     engine.execute(createTableStr)
+
 
 # create index daily table
 indexEngine = create_engine(

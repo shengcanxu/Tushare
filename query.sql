@@ -463,7 +463,7 @@ CREATE TABLE `adjustfactor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `hkdaily` (
+CREATE TABLE `hkstockdata` (
   `ts_code` varchar(20) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   `fullname` text,
@@ -477,6 +477,22 @@ CREATE TABLE `hkdaily` (
   `isin` varchar(20) DEFAULT NULL,
   `curr_type` varchar(20) DEFAULT NULL,
   UNIQUE KEY `idx_hkdaily_ts_code` (`ts_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `hkdaily` (
+  `ts_code` varchar(20),
+  `trade_date` varchar(20),
+  `open` double DEFAULT NULL,
+  `high` double DEFAULT NULL,
+  `low` double DEFAULT NULL,
+  `close` double DEFAULT NULL,
+  `pre_close` double DEFAULT NULL,
+  `change` double DEFAULT NULL,
+  `pct_chg` double DEFAULT NULL,
+  `vol` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  unique KEY `ix_hkdaily_ts_code` (`ts_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -782,6 +798,24 @@ CREATE TABLE `gzindex` (
   `long_rate` double DEFAULT NULL,
   KEY `idx_gzindex_date` (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `exchangedata` (
+  `ts_code` varchar(20),
+  `name` varchar(40),
+  `classify` varchar(20),
+  `exchange` varchar(20),
+  `min_unit` double DEFAULT NULL,
+  `max_unit` double DEFAULT NULL,
+  `pip` double DEFAULT NULL,
+  `pip_cost` double DEFAULT NULL,
+  `traget_spread` double DEFAULT NULL,
+  `min_stop_distance` double DEFAULT NULL,
+  `trading_hours` varchar(20),
+  `break_time` varchar(20),
+  UNIQUE KEY `idx_exchangedata_ts_code` (`ts_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 

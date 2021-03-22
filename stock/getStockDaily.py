@@ -19,10 +19,10 @@ def getDailyOnDate(date, tushare, dbEngine):
 
         for tail in range(0, 100):
             r = tail % 30
-            text = str(tail) if tail >= 10 else '0' + str(tail) 
+            text = str(tail) if tail >= 10 else '0' + str(tail)
             df = stockDaily.loc[stockDaily['ts_code'].str.slice(4, 6) == text]
             df = df.set_index(["ts_code", "trade_date"])
-            tableName = "daily" + text
+            tableName = "daily" + str(r)
             df.to_sql(name=tableName, con=dbEngine, if_exists="append")
         
         print("get daily data successfully on date: %s" % date)
