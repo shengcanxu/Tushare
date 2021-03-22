@@ -811,10 +811,27 @@ CREATE TABLE `exchangedata` (
   `pip_cost` double DEFAULT NULL,
   `traget_spread` double DEFAULT NULL,
   `min_stop_distance` double DEFAULT NULL,
-  `trading_hours` varchar(20),
-  `break_time` varchar(20),
+  `trading_hours` varchar(100),
+  `break_time` varchar(100),
   UNIQUE KEY `idx_exchangedata_ts_code` (`ts_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `fxdaily` (
+  `ts_code` varchar(20),
+  `trade_date` varchar(20),
+  `bid_open` double DEFAULT NULL,
+  `bid_close` double DEFAULT NULL,
+  `bid_high` double DEFAULT NULL,
+  `bid_low` double DEFAULT NULL,
+  `ask_open` double DEFAULT NULL,
+  `ask_close` double DEFAULT NULL,
+  `ask_high` double DEFAULT NULL,
+  `ask_low` double DEFAULT NULL,
+  `tick_qty` bigint DEFAULT NULL,
+  unique KEY `ix_fxdaily_ts_code_trade_date` (`ts_code`, `trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 
 

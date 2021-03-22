@@ -231,4 +231,47 @@ hkStockList = hkStockList.set_index(["ts_code"])
 hkStockList
 # %%
 hkStockList.to_sql(name="hkdaily", con=engine, if_exists='append')
+
+# %%
+stock = pro.hk_daily(trade_date='19901214')
+stock
+# %%
+stock.to_sql(name="hkdaily", con=engine, if_exists='append')
+
+# %%
+test = pd.DataFrame(data={}, columns=stock.columns)
+test
+
+#%%
+for key in stock.index:
+    row = stock.loc[key]
+    if getDBIndex(row['ts_code']) == 1:
+        test.loc[key] = row
+
+#%%
+test
+
+# %%
+def getDBIndex(code):
+    sum = 0
+    for i in range(0, len(code)): 
+        sum = sum + ord(code[i])
+    index = sum % 10
+    return index
+
+# %%
+exchange = pro.fx_obasic()
+exchange
+# %%
+exchange = exchange.set_index(["ts_code"])
+exchange.to_sql(name="exchangedata", con=macroEngine, if_exists="append")
+
+# %%
+fxDaily = pro.fx_daily(ts_code='USDCNH.FXCM', start_date='20190101', end_date='20190524')
+fxDaily
+
+
+# %%
+fxDaily = fxDaily.set_index(["ts_code", "trade_date"])
+fxDaily.to_sql(name="fxdaily", con=macroEngine, if_exists="append")
 # %%
