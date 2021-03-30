@@ -303,16 +303,36 @@ daily = daily[['timestamp', 'volume', 'open', 'high', 'low', 'close', 'chg', 'pe
 daily['ts_code'] = 'AIV'
 daily['trade_date'] = daily['timestamp'].map(lambda x: time.strftime('%Y/%m/%d', time.localtime(x/1000)))
 daily = daily.drop('timestamp', axis=1)
-daily = daily.set_index(['ts_code', 'trade_date'])
 
 # %%
-daily
+daily.dtypes
 
 # %%
 daily['pe'] = daily['pe'].astype('float64')
 
 # %%
-daily.replace(to_replace='None', value)
+daily = daily.replace(to_replace='None', value='0')
+
 # %%
 d
+# %%
+d = daily.astype({
+    "volume":         "int64",
+    "open":              "float64",
+    "high":               "float64",
+    "low":                "float64",
+    "close":              "float64",
+    "chg":                 "float64",
+    "percent":             "float64",
+    "turnoverrate":        "float64",
+    "amount":              "float64",
+    "pe":                  "float64",
+    "pb":                  "float64",
+    "ps":                  "float64",
+    "pcf":                 "float64",
+    "market_capital":      "float64",
+    "ts_code":             "object",
+    "trade_date":          "object"
+})
+
 # %%
