@@ -8,7 +8,7 @@ usEngine = create_engine(
 
 
 def parseUSDaily(code):
-    path = "C:/project/Tushare/data/UShistory/%s.csv" % code
+    path = "C:/project/stockdata/UShistory/%s.csv" % code
     daily = pd.read_csv(path)
     
     daily = daily[['timestamp', 'volume', 'open', 'high', 'low', 'close', 'chg', 'percent', 'turnoverrate', 'amount', 'pe', 'pb', 'ps', 'pcf', 'market_capital']]

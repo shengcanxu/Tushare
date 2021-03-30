@@ -3,6 +3,7 @@ import tushare as ts
 from sqlalchemy import create_engine
 import pandas as pd
 import  datetime
+import time
 
 #%%
 ts.set_token('803f1548c1f25bf44c56644e4527a6d8cd3dbd8517e7c59e3aa1f6d0')
@@ -295,30 +296,23 @@ stockList = pd.read_csv("C:/project/Tushare/usstock/code.csv")
 errorList = pd.read_csv("C:/project/Tushare/usstock/get_error_ts_code.csv")
 
 # %%
-path = "C:/project/Tushare/data/UShistory/%s.csv" % 'AIV'
+path = "C:/project/stockdata/UShistory/%s.csv" % 'APT'
 daily = pd.read_csv(path)
-daily
 
-# %%
 daily = daily[['timestamp', 'volume', 'open', 'high', 'low', 'close', 'chg', 'percent', 'turnoverrate', 'amount', 'pe', 'pb', 'ps', 'pcf', 'market_capital']]
-daily
-
-# %%
 daily['ts_code'] = 'AIV'
-daily
-
-# %%
-usEngine = create_engine(
-    "mysql+pymysql://root:4401821211@localhost:3306/usstock?charset=utf8")
-daily.to_sql(name="daily", con=usEngine, if_exists="append")
-
-# %%
-import time
-daily['trade_ate'] = daily['timestamp'].map(lambda x: time.strftime('%Y/%m/%d', time.localtime(x/1000)))
-daily
-
-
-# %%
+daily['trade_date'] = daily['timestamp'].map(lambda x: time.strftime('%Y/%m/%d', time.localtime(x/1000)))
 daily = daily.drop('timestamp', axis=1)
+daily = daily.set_index(['ts_code', 'trade_date'])
+
+# %%
 daily
+
+# %%
+daily['pe'] = daily['pe'].astype('float64')
+
+# %%
+daily.replace(to_replace='None', value)
+# %%
+d
 # %%
