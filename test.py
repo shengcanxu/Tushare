@@ -274,4 +274,51 @@ fxDaily
 # %%
 fxDaily = fxDaily.set_index(["ts_code", "trade_date"])
 fxDaily.to_sql(name="fxdaily", con=macroEngine, if_exists="append")
+
+# %%
+usDaily = pro.us_daily(ts_code='AAPL', start_date='19980101', end_date='20210328')
+usDaily
+
+# %%
+tradecal = pro.us_tradecal(start_date='19800101', end_date='20040923')
+tradecal
+
+# %%
+usstock = pro.us_basic(offset=18000, limit=6000)
+usstock
+
+# %%
+usstock.to_csv("C:/project/Tushare/usstock/stock3.csv")
+
+# %%
+stockList = pd.read_csv("C:/project/Tushare/usstock/code.csv")
+errorList = pd.read_csv("C:/project/Tushare/usstock/get_error_ts_code.csv")
+
+# %%
+path = "C:/project/Tushare/data/UShistory/%s.csv" % 'AIV'
+daily = pd.read_csv(path)
+daily
+
+# %%
+daily = daily[['timestamp', 'volume', 'open', 'high', 'low', 'close', 'chg', 'percent', 'turnoverrate', 'amount', 'pe', 'pb', 'ps', 'pcf', 'market_capital']]
+daily
+
+# %%
+daily['ts_code'] = 'AIV'
+daily
+
+# %%
+usEngine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/usstock?charset=utf8")
+daily.to_sql(name="daily", con=usEngine, if_exists="append")
+
+# %%
+import time
+daily['trade_ate'] = daily['timestamp'].map(lambda x: time.strftime('%Y/%m/%d', time.localtime(x/1000)))
+daily
+
+
+# %%
+daily = daily.drop('timestamp', axis=1)
+daily
 # %%

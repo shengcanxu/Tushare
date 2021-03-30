@@ -162,3 +162,35 @@ fundEngine = create_engine(
 #     createTableStr = createFundDailyTablesStrTemp % tableName
 #     fundEngine.execute(createTableStr)
 
+
+createUsStockDailyTableStrTemp = """
+CREATE TABLE `%s` (
+  `ts_code` varchar(20), 
+  `trade_date` varchar(20),
+  `volume` bigint DEFAULT NULL,
+  `open` double DEFAULT NULL,
+  `high` double DEFAULT NULL,
+  `low` double DEFAULT NULL,
+  `close` double DEFAULT NULL,
+  `chg` double DEFAULT NULL,
+  `percent` double DEFAULT NULL,
+  `turnoverrate` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `pe` double DEFAULT NULL,
+  `pb` double DEFAULT NULL,
+  `ps` double DEFAULT NULL,
+  `pcf` double DEFAULT NULL,
+  `market_capital` double DEFAULT NULL,
+  UNIQUE KEY `ix_daily_ts_code_trade_date` (`ts_code`, `trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+"""
+
+# us stock engine
+usEngine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/usstock?charset=utf8")
+
+# # create us stock daily table  
+# for num in range(0, 30):
+#     tableName = "daily" + str(num)
+#     createTableStr = createUsStockDailyTableStrTemp % tableName
+#     usEngine.execute(createTableStr)

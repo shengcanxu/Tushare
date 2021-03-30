@@ -1,0 +1,3 @@
+2021-03-30 10:19:01,113 parseUSDaily.py_43(INFO): running on code: A
+2021-03-30 10:19:01,113 parseUSDaily.py_47(ERROR): parseUSDaily() missing 1 required positional argument: 'code'
+2021-03-30 10:19:01,114 parseUSDaily.py_48(ERROR): write data to Database error on code: A

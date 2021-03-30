@@ -832,6 +832,28 @@ CREATE TABLE `fxdaily` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+create database usstock; 
+use usstock; 
+
+CREATE TABLE `daily` (
+  `ts_code` varchar(20), 
+  `trade_date` varchar(20),
+  `volume` bigint DEFAULT NULL,
+  `open` double DEFAULT NULL,
+  `high` double DEFAULT NULL,
+  `low` double DEFAULT NULL,
+  `close` double DEFAULT NULL,
+  `chg` double DEFAULT NULL,
+  `percent` double DEFAULT NULL,
+  `turnoverrate` double DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `pe` double DEFAULT NULL,
+  `pb` double DEFAULT NULL,
+  `ps` double DEFAULT NULL,
+  `pcf` double DEFAULT NULL,
+  `market_capital` double DEFAULT NULL,
+  UNIQUE KEY `ix_daily_ts_code_trade_date` (`ts_code`, `trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 

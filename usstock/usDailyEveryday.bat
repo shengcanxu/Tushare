@@ -1,0 +1,1 @@
+python getUSDailyEveryday.py
