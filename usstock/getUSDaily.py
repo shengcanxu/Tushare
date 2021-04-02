@@ -35,7 +35,7 @@ COOKIES = {
 }
 
 
-# history stock data till 2019/09/10
+# history stock data till 2021/03/24
 def crawlHistory(code) -> bool:
     link = "https://stock.xueqiu.com/v5/stock/chart/kline.json?symbol=%s&begin=1616585707592&period=day&type=before&count=-100000&indicator=kline,pe,pb,ps,pcf,market_capital,agt,ggt,balance" % code
     session = HTMLSession()

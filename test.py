@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 import  datetime
 import time
+import json
 
 #%%
 ts.set_token('803f1548c1f25bf44c56644e4527a6d8cd3dbd8517e7c59e3aa1f6d0')
@@ -295,44 +296,38 @@ usstock.to_csv("C:/project/Tushare/usstock/stock3.csv")
 stockList = pd.read_csv("C:/project/Tushare/usstock/code.csv")
 errorList = pd.read_csv("C:/project/Tushare/usstock/get_error_ts_code.csv")
 
-# %%
-path = "C:/project/stockdata/UShistory/%s.csv" % 'APT'
-daily = pd.read_csv(path)
-
-daily = daily[['timestamp', 'volume', 'open', 'high', 'low', 'close', 'chg', 'percent', 'turnoverrate', 'amount', 'pe', 'pb', 'ps', 'pcf', 'market_capital']]
-daily['ts_code'] = 'AIV'
-daily['trade_date'] = daily['timestamp'].map(lambda x: time.strftime('%Y/%m/%d', time.localtime(x/1000)))
-daily = daily.drop('timestamp', axis=1)
 
 # %%
-daily.dtypes
+def readFile(filePath):
+    try:
+        fp = open(filePath, 'r')
+        content = fp.read()
+        return content
+    except Exception as ex:
+        FileLogger.error("read file error on path: %s" % filePath)
+        FileLogger.error(ex)
+        return False
 
 # %%
-daily['pe'] = daily['pe'].astype('float64')
+path = "C:/project/stockdata/USIncome/%s.json" % 'AAPL'
+text = readFile(path)
 
 # %%
-daily = daily.replace(to_replace='None', value='0')
+jsonObj = json.loads(text)
+jsonData = jsonObj['data']
+jsonObjList = jsonData['list']
 
 # %%
-d
+del jsonData['list']
+
 # %%
-d = daily.astype({
-    "volume":         "int64",
-    "open":              "float64",
-    "high":               "float64",
-    "low":                "float64",
-    "close":              "float64",
-    "chg":                 "float64",
-    "percent":             "float64",
-    "turnoverrate":        "float64",
-    "amount":              "float64",
-    "pe":                  "float64",
-    "pb":                  "float64",
-    "ps":                  "float64",
-    "pcf":                 "float64",
-    "market_capital":      "float64",
-    "ts_code":             "object",
-    "trade_date":          "object"
-})
+obj = jsonObjList[1]
+obj['total_revenue']
+
+# %%
+BASE_COLUMNS = ('annual_settle_date', 'currency', 'currency_name', 'last_report_name', 'org_type', 'quote_name', 'sas', 'statuses', 'tip')
+cashflowBaseDF = pd.DataFrame(columns=BASE_COLUMNS)
+# %%
+cashflowBaseDF.append(jsonData, ignore_index=True)
 
 # %%

@@ -24,16 +24,16 @@ COOKIES = {
 }
 
 
-# history balance data till 2021/03/24
-def crawlBalance(code):
-    link = "https://stock.xueqiu.com/v5/stock/finance/us/balance.json?symbol=%s&type=all&is_detail=true&count=1000&timestamp=1616585707592" % code
+# history cash data till 2021/03/24
+def crawlCashflow(code):
+    link = "https://stock.xueqiu.com/v5/stock/finance/us/cash_flow.json?symbol=%s&type=all&is_detail=true&count=1000&timestamp=1568630651971" % code
     session = HTMLSession()
     r = session.get(link, headers=HEADERS, cookies=COOKIES)
 
     content = json.dumps(json.loads(r.content))
-    path = "C:/project/stockdata/USBalance/%s.json" % code
+    path = "C:/project/stockdata/USCashflow/%s.json" % code
     write2File(path, content)
-    FileLogger.info("get balance of code: %s in size: %d" % (code, len(content)))
+    FileLogger.info("get cashflow of code: %s in size: %d" % (code, len(content)))
 
 
 def write2File(filePath, content, mode="w+") -> bool:
@@ -60,10 +60,10 @@ if __name__ == "__main__":
     for code in stockList:
         FileLogger.info("running on code: %s" % code)
         try:
-            crawlBalance(code)
+            crawlCashflow(code)
             time.sleep(1)
 
         except Exception as ex:
             FileLogger.error(ex)
-            FileLogger.error("crawl balance error on code: %s" % code)
+            FileLogger.error("crawl cashflow error on code: %s" % code)
             time.sleep(3)

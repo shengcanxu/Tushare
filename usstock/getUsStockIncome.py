@@ -29,9 +29,9 @@ COOKIES = {
 }
 
 
-# history income data till 2019/09/10
+# history income data till 2021/03/24
 def crawlIncome(code):
-    link = "https://stock.xueqiu.com/v5/stock/finance/us/income.json?symbol=%s&type=all&is_detail=true&count=1000&timestamp=1568620992516" % code
+    link = "https://stock.xueqiu.com/v5/stock/finance/us/income.json?symbol=%s&type=all&is_detail=true&count=1000&timestamp=1616585707592" % code
     session = HTMLSession()
     r = session.get(link, headers=HEADERS, cookies=COOKIES)
 
@@ -71,4 +71,4 @@ if __name__ == "__main__":
         except Exception as ex:
             FileLogger.error(ex)
             FileLogger.error("crawl income error on code: %s" % code)
-            time.sleep(5)
+            time.sleep(3)
