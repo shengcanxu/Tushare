@@ -12,6 +12,7 @@ BASE_COLUMNS = ('ts_code', 'annual_settle_date', 'currency', 'currency_name',
                 'statuses', 'tip')
 
 COLUMNS = (
+    "ts_code",
     "report_date",
     "report_name",
     "ctime",
@@ -168,14 +169,12 @@ if __name__ == "__main__":
 
     # parseBalanceBaseList(stockList)
 
-    parseUSBalance('AAPL')
-    parseUSBalance('SQ')
-    # for code in stockList:
-    #     FileLogger.info("running on code: %s" % code)
-    #     try:
-    #         parseUSBalance(code)
+    for code in stockList:
+        FileLogger.info("running on code: %s" % code)
+        try:
+            parseUSBalance(code)
 
-    #     except Exception as ex:
-    #         FileLogger.error(ex)
-    #         FileLogger.error("write data to Database error on code: %s" % code)
-    #         time.sleep(1)
+        except Exception as ex:
+            FileLogger.error(ex)
+            FileLogger.error("write data to Database error on code: %s" % code)
+            time.sleep(1)
