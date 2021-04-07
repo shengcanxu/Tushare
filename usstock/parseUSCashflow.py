@@ -103,14 +103,14 @@ if __name__ == "__main__":
     stockdf = pd.read_csv("C:/project/stockdata/USCashflow/code.csv")
     stockList = stockdf['code'].to_numpy()
 
-    # parseCashflowBaseList(stockList)
+    parseCashflowBaseList(stockList)
 
-    for code in stockList:
-        FileLogger.info("running on code: %s" % code)
-        try:
-            parseUSCashflow(code)
+    # for code in stockList:
+    #     FileLogger.info("running on code: %s" % code)
+    #     try:
+    #         parseUSCashflow(code) 
 
-        except Exception as ex:
-            FileLogger.error(ex)
-            FileLogger.error("write data to Database error on code: %s" % code)
-            time.sleep(1)
+    #     except Exception as ex:
+    #         FileLogger.error(ex)
+    #         FileLogger.error("write data to Database error on code: %s" % code)
+    #         time.sleep(1)

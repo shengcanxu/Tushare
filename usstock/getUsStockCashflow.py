@@ -14,19 +14,20 @@ HEADERS = {
 
 COOKIES = {
     "device_id": "24700f9f1986800ab4fcc880530dd0ed",
-    "xq_a_token": "a4b3e3e158cfe9745b677915691ecd794b4bf2f9",
-    "xqat": "a4b3e3e158cfe9745b677915691ecd794b4bf2f9",
-    "xq_r_token": "b80d3232bf315f8710d36ad2370bc777b24d5001",
-    "xq_id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1aWQiOi0xLCJpc3MiOiJ1YyIsImV4cCI6MTYxNzc2MzQxOCwiY3RtIjoxNjE1MTg1MTM2ODU5LCJjaWQiOiJkOWQwbjRBWnVwIn0.AHJmRdGTwxGe7sgZelbUQfL_LkE49Dx4VCXv8qMvAaIVdO3qq1WRuBEUqMwhnozhlhr0Kq95ed1_lWRMyvew1uRRcZ3YoZh1FFejWadiNlFlWNdOTUqAeZSdj175ZqRSaahYfZiMhI73myOppsMuzdFSKTxGoSCQDeePZUcYwJfCP67bpUiE-KNZTjEMyc80BPvMfSexZtYa-rH4hNrjtO9xsh-nYTZP7xUbUi42qXP8bBW6SfyYp3TNSOd6wo_aM2KS3InfLJK_rhA90WuBWUPGmSoE2z6PSl_fIV044mhFL4x2cYQBq2xMSzJ7Sn3wLtN3Ge3glDY-k4B_YMIWVA",
-    "u": "651615185139134",
-    "Hm_lvt_1db88642e346389874251b5a1eded6e3": "1613914037,1614050366,1614653940,1615605267",
-    "Hm_lpvt_1db88642e346389874251b5a1eded6e3": "1616468172"
+    "Hm_lvt_1db88642e346389874251b5a1eded6e3": "1615605267", 
+    "s": "du115uv2rh", 
+    "xq_a_token": "cc6a2aedef8a96868eb7257aef4a2ba6e222d2c6", 
+    "xqat": "cc6a2aedef8a96868eb7257aef4a2ba6e222d2c6", 
+    "xq_r_token": "3e168659e8b7d1863aff7a493cfc3398f438abe3", 
+    "xq_id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1aWQiOi0xLCJpc3MiOiJ1YyIsImV4cCI6MTYxOTkyMzQ2NiwiY3RtIjoxNjE3NjkzOTUwMTk5LCJjaWQiOiJkOWQwbjRBWnVwIn0.HXeHCs4v3axsiPWbMJ68aY509Hk4yWQRM4DUrTpUCTA4OS-beIOQqV1JaQsUAea2HrgmZI4ljBAckOJFmd0KgXVIS_pifKHFTCUYJvQ5tyPevIdKmOm3zENjR9r7-T0vL0pYhl_sDs5EJ-wtEiat6tvsDkSXiJ0d1otQxlhdghCkZoEWhayP5ZAH7FBRkipMPbu3Z0CTLETWVWWiZBUPwS7PkIC3vUV3aGiJeIeC48hpuOR1m3WkN7ftFg-XcCRm5-z1Omc6GKUAkIl4fcpE11BooyXiWGzxIo6Ku0jqkvkKFI1b7YtDJpYKAZtrgnAWdIl97dO-XgyWu5rA2ZQ3aw", 
+    "u": "611617693997058", 
+    "Hm_lpvt_1db88642e346389874251b5a1eded6e3": "1617694417"
 }
 
 
 # history cash data till 2021/03/24
 def crawlCashflow(code):
-    link = "https://stock.xueqiu.com/v5/stock/finance/us/cash_flow.json?symbol=%s&type=all&is_detail=true&count=1000&timestamp=1568630651971" % code
+    link = "https://stock.xueqiu.com/v5/stock/finance/us/cash_flow.json?symbol=%s&type=all&is_detail=true&count=1000&timestamp=1616585707592" % code
     session = HTMLSession()
     r = session.get(link, headers=HEADERS, cookies=COOKIES)
 

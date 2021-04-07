@@ -5,6 +5,7 @@ import pandas as pd
 import  datetime
 import time
 import json
+import pymysql
 
 #%%
 ts.set_token('803f1548c1f25bf44c56644e4527a6d8cd3dbd8517e7c59e3aa1f6d0')
@@ -330,4 +331,15 @@ cashflowBaseDF = pd.DataFrame(columns=BASE_COLUMNS)
 # %%
 cashflowBaseDF.append(jsonData, ignore_index=True)
 
+# %%
+conn = pymysql.connect(host='localhost', user='root', password='4401821211', database='usstock', charset='utf8')
+cursor = conn.cursor()
+sql = "select * from daily16 where ts_code = 'AAPL'"
+
+# %%
+cursor.execute(sql)
+# %%
+result = cursor.fetchall()
+# %%
+result
 # %%
