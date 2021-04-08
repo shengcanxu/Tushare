@@ -1266,5 +1266,17 @@ CREATE TABLE `balance` (
   unique KEY `ix_balance_ts_code_report_date` (`ts_code`, `report_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `divident` (
+  `ts_code` varchar(20),
+  `announce_date` varchar(20) DEFAULT NULL,
+  `explain` text,
+  `dividend_date` varchar(20) DEFAULT NULL,
+  `exright_date` varchar(20) DEFAULT NULL,
+  `money` double DEFAULT NULL,
+  `currency` varchar(20) DEFAULT NULL,
+  unique KEY `ix_divident_ts_code_announce_date` (`ts_code`, `announce_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 

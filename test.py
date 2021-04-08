@@ -340,6 +340,21 @@ sql = "select * from daily16 where ts_code = 'AAPL'"
 cursor.execute(sql)
 # %%
 result = cursor.fetchall()
+
 # %%
-result
+time.localtime(1612501200000/1000)
+
+# %%
+explain = '每股ADR分配0.1771美元'
+moneyStr = ""
+pos = 0
+for index in range(0, len(explain)):
+    char = explain[index]
+    if char.isnumeric() or char == '.': 
+        moneyStr += char
+        pos = index
+
+print(moneyStr)
+print(explain[pos+1:])
+    
 # %%
