@@ -17,6 +17,28 @@ CREATE TABLE `daily` (
   UNIQUE KEY `idx_daily_trade_date_ts_code` (`ts_code`,`trade_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `dailybasic` (
+  `ts_code` varchar(20) DEFAULT NULL,
+  `trade_date` varchar(20) DEFAULT NULL,
+  `close` double DEFAULT NULL,
+  `turnover_rate` double DEFAULT NULL,
+  `turnover_rate_f` double DEFAULT NULL,
+  `volume_ratio` double DEFAULT NULL,
+  `pe` double DEFAULT NULL,
+  `pe_ttm` double DEFAULT NULL,
+  `pb` double DEFAULT NULL,
+  `ps` double DEFAULT NULL,
+  `ps_ttm` double DEFAULT NULL,
+  `dv_ratio` double DEFAULT NULL,
+  `dv_ttm` double DEFAULT NULL,
+  `total_share` double DEFAULT NULL,
+  `float_share` double DEFAULT NULL,
+  `free_share` double DEFAULT NULL,
+  `total_mv` double DEFAULT NULL,
+  `circ_mv` double DEFAULT NULL,
+  UNIQUE KEY `idx_dailybasic_trade_date_ts_code` (`ts_code`,`trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- create income table 
 CREATE TABLE `income` (

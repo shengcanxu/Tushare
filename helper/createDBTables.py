@@ -17,6 +17,29 @@ createDailyTableStrTemp = """CREATE TABLE `%s` (
   UNIQUE KEY `idx_daily_trade_date_ts_code` (`ts_code`,`trade_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"""
 
+createDailyBasicTablesStrTemp = """
+CREATE TABLE `%s` (
+  `ts_code` varchar(20) DEFAULT NULL,
+  `trade_date` varchar(20) DEFAULT NULL,
+  `close` double DEFAULT NULL,
+  `turnover_rate` double DEFAULT NULL,
+  `turnover_rate_f` double DEFAULT NULL,
+  `volume_ratio` double DEFAULT NULL,
+  `pe` double DEFAULT NULL,
+  `pe_ttm` double DEFAULT NULL,
+  `pb` double DEFAULT NULL,
+  `ps` double DEFAULT NULL,
+  `ps_ttm` double DEFAULT NULL,
+  `dv_ratio` double DEFAULT NULL,
+  `dv_ttm` double DEFAULT NULL,
+  `total_share` double DEFAULT NULL,
+  `float_share` double DEFAULT NULL,
+  `free_share` double DEFAULT NULL,
+  `total_mv` double DEFAULT NULL,
+  `circ_mv` double DEFAULT NULL,
+  UNIQUE KEY `idx_dailybasic_trade_date_ts_code` (`ts_code`,`trade_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;"""
+
 createAdjustFactorTableStrTemp = """
 CREATE TABLE `%s` (
   `ts_code` varchar(20),
@@ -50,6 +73,12 @@ engine = create_engine(
 # for num in range(0, 30):
 #     tableName = "daily" + str(num)
 #     createTableStr = createDailyTableStrTemp % tableName
+#     engine.execute(createTableStr)
+
+# # create daily basic  table
+# for num in range(0, 30):
+#     tableName = "dailybasic" + str(num)
+#     createTableStr = createDailyBasicTablesStrTemp % tableName
 #     engine.execute(createTableStr)
 
 # # create weekly table
