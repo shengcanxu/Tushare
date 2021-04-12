@@ -3,9 +3,8 @@
 # 爬取链接为： "https://stock.xueqiu.com/v5/stock/chart/kline.json?symbol=" + self.code + "&begin=1568252412387&period=day&type=before&count=-100000&indicator=kline,pe,pb,ps,pcf,market_capital,agt,ggt,balance"
 
 from requests_html import HTMLSession
-from logger import FileLogger
+from helper.logger import FileLogger
 import time
-import os
 import json
 import pandas as pd
 

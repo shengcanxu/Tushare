@@ -1,5 +1,5 @@
 from requests_html import HTMLSession
-from logger import FileLogger
+from helper.logger import FileLogger
 import time
 import json
 import pandas as pd

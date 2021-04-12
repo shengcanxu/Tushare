@@ -35,7 +35,7 @@ def getDailyBasicOnDate(date, tushare, dbEngine):
 if __name__ == "__main__":
     
     begin = datetime.date(1990, 12, 10)
-    end = datetime.date(2021, 2, 25)
+    end = datetime.date(1993, 12, 11)
     date = begin
     delta = datetime.timedelta(days=1)
     while date <= end:

@@ -6,6 +6,11 @@ import  datetime
 import time
 import json
 import pymysql
+import pyecharts
+
+from helper.getDataFromDB import getDataFromDB
+from helper.plot import createPlotLine
+
 
 #%%
 ts.set_token('803f1548c1f25bf44c56644e4527a6d8cd3dbd8517e7c59e3aa1f6d0')
@@ -357,4 +362,33 @@ for index in range(0, len(explain)):
 print(moneyStr)
 print(explain[pos+1:])
     
+# %%
+sqlstr = "select * from  `dailybasic15` where ts_code = '300015.SZ'"
+dayList = pd.read_sql_query(sqlstr, con=engine) 
+dayList
+
+
+# %%
+from pyecharts.charts import Line, Bar
+from pyecharts import options as opts
+
+
+line = (
+    Line()
+    .add_xaxis(dayList['trade_date'].tolist())
+    .add_yaxis("pe", dayList['pe'].tolist())
+    .add_yaxis("ps", dayList['ps'].tolist())
+    .set_global_opts(tooltip_opts=opts.TooltipOpts(trigger='axis'),title_opts=opts.TitleOpts("title"))
+)
+line.render_notebook()
+
+
+# %%
+result = getDataFromDB('002271.SZ', 'dailybasic11', ['trade_date', 'pe', 'ps'])
+result
+
+# %%
+line = createPlotLine(result, 'trade_date', ['pe', 'ps'])
+line.render_notebook()
+
 # %%
