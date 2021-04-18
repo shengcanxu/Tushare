@@ -1,0 +1,8 @@
+2021-04-18 17:50:54,969 getDataFromDB.py_34(ERROR): (pymysql.err.OperationalError) (1049, "Unknown database '*'")
+[SQL: select stock from  `*`.`daily11` where ts_code = '002271.SZ' and trade_date between '19901210' and '20210418']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-04-18 17:50:54,970 getDataFromDB.py_35(ERROR): read from db error!
+2021-04-18 17:52:42,285 getDataFromDB.py_34(ERROR): (pymysql.err.OperationalError) (1049, "Unknown database '*'")
+[SQL: select stock from  `*`.`daily11` where ts_code = '002271.SZ' and trade_date between '19901210' and '20210418']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-04-18 17:52:42,291 getDataFromDB.py_35(ERROR): read from db error!
