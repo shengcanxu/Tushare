@@ -3,13 +3,13 @@ from pyecharts import options as opts
 import helper.getDataFromDB as DBLib
 
 
-def createPlotLines(df, xAxisTitle, yAxisTitles, title=None):
-    if not type(yAxisTitles) == list:
-        print("yAxisTitles shoulf be an array!")
+def createPlotLines(df, xAxisColumn, yAxisColumns, title=None):
+    if not type(yAxisColumns) == list:
+        print("yAxisColumns shoulf be an array!")
 
     line = Line()
-    line.add_xaxis(df[xAxisTitle].tolist())
-    for yTitle in yAxisTitles:
+    line.add_xaxis(df[xAxisColumn].tolist())
+    for yTitle in yAxisColumns:
         line.add_yaxis(yTitle, df[yTitle].tolist())
     
     if not title:
@@ -192,6 +192,100 @@ def createKlineOfData(ts_code, startDate=None, endDate=None):
             bar,
             grid_opts=opts.GridOpts(pos_left="10%", pos_right="8%", pos_top="63%", height="16%"),
         )
-    ) 
+    )
 
     return grid_chart
+
+
+# leftDf and rightDf format: [date, data]
+def createDiffLines(leftDf, rightDf, leftName=None, rightName=None):
+    if not leftName:
+        leftName = leftDf.columns[1]
+    if not rightName:
+        rightName = rightDf.columns[1]
+
+    line1 = (
+        Line()
+        .add_xaxis(leftDf.iloc[:, 0].tolist())
+        .add_yaxis(
+            leftName,
+            leftDf.iloc[:, 1].tolist(),
+            yaxis_index=0,
+            linestyle_opts=opts.LineStyleOpts(color='#DC143C'),
+            is_symbol_show=False,
+        )
+        .extend_axis(yaxis=opts.AxisOpts(position='right'))
+        .set_global_opts(
+            tooltip_opts=opts.TooltipOpts(trigger='axis', axis_pointer_type='cross'),
+            title_opts=opts.TitleOpts(title=leftDf.columns[1])
+        )
+    )
+
+    line2 = (
+        Line()
+        .add_xaxis(rightDf.iloc[:, 0].tolist())
+        .add_yaxis(
+            rightName,
+            rightDf.iloc[:, 1].tolist(),
+            yaxis_index=1,
+            linestyle_opts=opts.LineStyleOpts(color="#1E90FF"),
+            is_symbol_show=False,
+        )
+    )
+
+    line1.overlap(line2)
+    return line1
+
+
+# leftDf and rightDf format: [date, open, close, low, high]
+def createDiffKlines(leftDf, rightDf, leftName, rightName):
+    kline1_data = [[i[1], i[2], i[3], i[4]] for i in leftDf.to_numpy()]
+    kline2_data = [[i[1], i[2], i[3], i[4]] for i in rightDf.to_numpy()]
+    kline1 = (
+        Kline()
+        .add_xaxis(leftDf.iloc[:, 0].tolist())
+        .add_yaxis(
+            series_name=leftName,
+            y_axis=kline1_data,
+            yaxis_index=0,
+            itemstyle_opts=opts.ItemStyleOpts(color="#ec0000", color0="#00da3c"),
+        )
+        .extend_axis(yaxis=opts.AxisOpts(position='right'))
+        .set_global_opts(
+            title_opts=opts.TitleOpts(title="%s -- %s" % (leftName, rightName)),
+            yaxis_opts=opts.AxisOpts(
+                is_scale=True,
+                splitarea_opts=opts.SplitAreaOpts(
+                    is_show=True, areastyle_opts=opts.AreaStyleOpts(opacity=1)
+                ),
+            ),
+            xaxis_opts=opts.AxisOpts(is_scale=True),
+            datazoom_opts=[
+                opts.DataZoomOpts(
+                    type_="inside",
+                    range_start=int((len(leftDf)-60)/len(leftDf)*100),
+                    range_end=100,
+                ),
+                opts.DataZoomOpts(
+                    type_="slider",
+                    range_start=int((len(leftDf)-60)/len(leftDf)*100),
+                    range_end=100,
+                ),
+            ],
+            tooltip_opts=opts.TooltipOpts(trigger='axis', axis_pointer_type='cross'),
+        )
+    )
+
+    kline2 = (
+        Kline()
+        .add_xaxis(rightDf.iloc[:, 0].tolist())
+        .add_yaxis(
+            series_name=rightName,
+            y_axis=kline2_data,
+            yaxis_index=1,
+            itemstyle_opts=opts.ItemStyleOpts(color="#ec0000", color0="#00da3c"),
+        )
+    )
+
+    kline1.overlap(kline2)
+    return kline1
