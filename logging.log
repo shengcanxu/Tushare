@@ -198,3 +198,92 @@
 2021-06-22 11:02:37,399 getEastMoneyBalance.py_53(INFO): no more data on SZ000001 at dates: 2021-03-31%2C2020-12-31%2C2020-09-30%2C2020-06-30%2C2020-03-31
 2021-06-22 11:02:38,412 getEastMoneyBalance.py_86(INFO): running on code: SZ000100
 2021-06-22 11:02:52,351 getEastMoneyBalance.py_58(INFO): get income of code: SZ000100 in size: 5
+2021-06-29 23:06:32,546 parseEastMoneyIncome.py_52(INFO): running on code: SZ0000002
+2021-06-29 23:06:32,547 parseEastMoneyIncome.py_30(ERROR): [Errno 2] No such file or directory: 'SZ0000002'
+2021-06-29 23:07:23,448 parseEastMoneyIncome.py_52(INFO): running on code: SZ0000002
+2021-06-29 23:07:23,448 parseEastMoneyIncome.py_30(ERROR): [Errno 2] No such file or directory: 'SZ0000002'
+2021-06-29 23:07:44,894 parseEastMoneyIncome.py_52(INFO): running on code: SZ000002
+2021-06-29 23:07:44,895 parseEastMoneyIncome.py_30(ERROR): [Errno 2] No such file or directory: 'SZ000002'
+2021-06-29 23:08:59,987 parseEastMoneyIncome.py_52(INFO): running on code: SZ000002
+2021-06-29 23:11:43,237 parseEastMoneyIncome.py_57(INFO): running on code: SZ000002
+2021-06-29 23:15:00,303 parseEastMoneyIncome.py_62(INFO): running on code: SZ000002
+2021-06-29 23:15:17,263 parseEastMoneyIncome.py_62(INFO): running on code: SZ000002
+2021-06-29 23:16:58,524 parseEastMoneyIncome.py_68(INFO): running on code: SZ000002
+2021-06-29 23:17:47,679 parseEastMoneyIncome.py_68(INFO): running on code: SZ000002
+2021-06-29 23:17:54,992 parseEastMoneyIncome.py_68(INFO): running on code: SZ000002
+2021-06-29 23:18:22,662 parseEastMoneyIncome.py_68(INFO): running on code: SZ000002
+2021-06-29 23:18:38,781 parseEastMoneyIncome.py_68(INFO): running on code: SZ000002
+2021-06-29 23:18:45,097 parseEastMoneyIncome.py_68(INFO): running on code: SZ000002
+2021-06-29 23:30:30,316 parseEastMoneyIncome.py_81(INFO): running on code: SZ000002
+2021-06-29 23:31:21,529 parseEastMoneyIncome.py_80(INFO): running on code: SZ000002
+2021-06-29 23:31:21,576 parseEastMoneyIncome.py_90(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'CURRENCY' in 'field list'")
+[SQL: insert into eastmoney.income(SECUCODE,SECURITY_NAME_ABBR,REPORT_DATE,REPORT_TYPE,UPDATE_DATE,CURRENCY) values('SZ000002','万科A','2021-03-31','一季报','2021-04-23','CNY')]
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-06-29 23:31:21,580 parseEastMoneyIncome.py_91(ERROR): parse income error on code: SZ000002
+2021-06-29 23:32:06,689 parseEastMoneyIncome.py_80(INFO): running on code: SZ000002
+2021-06-29 23:32:06,714 parseEastMoneyIncome.py_90(ERROR): This result object does not return rows. It has been closed automatically.
+2021-06-29 23:32:06,714 parseEastMoneyIncome.py_91(ERROR): parse income error on code: SZ000002
+2021-06-29 23:32:50,599 parseEastMoneyIncome.py_81(INFO): running on code: SZ000002
+2021-06-29 23:32:50,628 parseEastMoneyIncome.py_91(ERROR): (pymysql.err.IntegrityError) (1062, "Duplicate entry 'SZ000002-2021-03-31' for key 'income.idx_income_SECUCODE_REPORT_DATE'")
+[SQL: insert into eastmoney.income(SECUCODE,SECURITY_NAME_ABBR,REPORT_DATE,REPORT_TYPE,UPDATE_DATE,CURRENCY) values('SZ000002','万科A','2021-03-31','一季报','2021-04-23','CNY')]
+(Background on this error at: http://sqlalche.me/e/13/gkpj)
+2021-06-29 23:32:50,629 parseEastMoneyIncome.py_92(ERROR): parse income error on code: SZ000002
+2021-06-29 23:33:22,619 parseEastMoneyIncome.py_81(INFO): running on code: SZ000002
+2021-06-29 23:33:22,653 parseEastMoneyIncome.py_91(ERROR): This result object does not return rows. It has been closed automatically.
+2021-06-29 23:33:22,653 parseEastMoneyIncome.py_92(ERROR): parse income error on code: SZ000002
+2021-06-29 23:34:57,026 parseEastMoneyIncome.py_81(INFO): running on code: SZ000002
+2021-06-29 23:34:57,033 parseEastMoneyIncome.py_91(ERROR): module 'pandas' has no attribute 'execute'
+2021-06-29 23:34:57,034 parseEastMoneyIncome.py_92(ERROR): parse income error on code: SZ000002
+2021-06-29 23:35:43,149 parseEastMoneyIncome.py_81(INFO): running on code: SZ000002
+2021-06-29 23:48:43,043 parseEastMoneyIncome.py_87(INFO): running on code: SZ000002
+2021-06-29 23:48:43,051 parseEastMoneyIncome.py_105(ERROR): 'Engine' object has no attribute 'read_sql_query'
+2021-06-29 23:48:43,051 parseEastMoneyIncome.py_106(ERROR): parse income error on code: SZ000002
+2021-06-29 23:51:05,455 parseEastMoneyIncome.py_87(INFO): running on code: SZ000002
+2021-06-29 23:51:22,798 parseEastMoneyIncome.py_87(INFO): running on code: SZ000002
+2021-06-29 23:54:10,641 parseEastMoneyIncome.py_88(INFO): running on code: SZ000002
+2021-06-29 23:54:27,637 parseEastMoneyIncome.py_88(INFO): running on code: SZ000002
+2021-06-29 23:54:27,660 parseEastMoneyIncome.py_106(ERROR): 'ResultProxy' object has no attribute 'fetch'
+2021-06-29 23:54:27,660 parseEastMoneyIncome.py_107(ERROR): parse income error on code: SZ000002
+2021-06-29 23:54:40,052 parseEastMoneyIncome.py_88(INFO): running on code: SZ000002
+2021-06-29 23:54:56,953 parseEastMoneyIncome.py_88(INFO): running on code: SZ000002
+2021-06-30 00:01:35,868 parseEastMoneyIncome.py_92(INFO): running on code: SZ000002
+2021-06-30 00:01:48,014 parseEastMoneyIncome.py_92(INFO): running on code: SZ000002
+2021-06-30 00:12:13,360 parseEastMoneyIncome.py_105(INFO): running on code: SZ000002
+2021-06-30 00:12:58,761 parseEastMoneyIncome.py_105(INFO): running on code: SZ000002
+2021-06-30 00:15:35,454 parseEastMoneyIncome.py_105(INFO): running on code: SZ000002
+2021-06-30 00:16:34,050 parseEastMoneyIncome.py_105(INFO): running on code: SZ000002
+2021-06-30 00:17:23,276 parseEastMoneyIncome.py_105(INFO): running on code: SZ000002
+2021-06-30 00:19:48,589 parseEastMoneyIncome.py_105(INFO): running on code: SZ000002
+2021-06-30 00:19:48,617 parseEastMoneyIncome.py_121(ERROR): (pymysql.err.ProgrammingError) (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'alert table eastmoney.income set `TOTAL_OPERATE_INCOME` = 62264095939' at line 1")
+[SQL: alert table eastmoney.income set `TOTAL_OPERATE_INCOME` = 62264095939]
+(Background on this error at: http://sqlalche.me/e/13/f405)
+2021-06-30 00:19:48,617 parseEastMoneyIncome.py_122(ERROR): parse income error on code: SZ000002
+2021-06-30 00:23:09,575 parseEastMoneyIncome.py_107(INFO): running on code: SZ000002
+2021-06-30 00:23:09,612 parseEastMoneyIncome.py_123(ERROR): (pymysql.err.ProgrammingError) (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'alert table eastmoney.income set `TOTAL_OPERATE_INCOME` = 62264095939 where SECU' at line 1")
+[SQL: alert table eastmoney.income set `TOTAL_OPERATE_INCOME` = 62264095939 where SECUCODE='SZ000002' and REPORT_DATE='2021-03-31']
+(Background on this error at: http://sqlalche.me/e/13/f405)
+2021-06-30 00:23:09,613 parseEastMoneyIncome.py_124(ERROR): parse income error on code: SZ000002
+2021-06-30 00:24:29,055 parseEastMoneyIncome.py_107(INFO): running on code: SZ000002
+2021-06-30 00:24:29,088 parseEastMoneyIncome.py_123(ERROR): (pymysql.err.ProgrammingError) (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'set `TOTAL_OPERATE_INCOME` = 62264095939 where SECUCODE='SZ000002' and REPORT_DA' at line 1")
+[SQL: alter table eastmoney.income set `TOTAL_OPERATE_INCOME` = 62264095939 where SECUCODE='SZ000002' and REPORT_DATE='2021-03-31']
+(Background on this error at: http://sqlalche.me/e/13/f405)
+2021-06-30 00:24:29,088 parseEastMoneyIncome.py_124(ERROR): parse income error on code: SZ000002
+2021-06-30 00:26:29,251 parseEastMoneyIncome.py_107(INFO): running on code: SZ000002
+2021-06-30 00:26:29,275 parseEastMoneyIncome.py_123(ERROR): (pymysql.err.ProgrammingError) (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table eastmoney.income set `TOTAL_OPERATE_INCOME` = 62264095939 where SECUCODE='' at line 1")
+[SQL: update table eastmoney.income set `TOTAL_OPERATE_INCOME` = 62264095939 where SECUCODE='SZ000002' and REPORT_DATE='2021-03-31']
+(Background on this error at: http://sqlalche.me/e/13/f405)
+2021-06-30 00:26:29,275 parseEastMoneyIncome.py_124(ERROR): parse income error on code: SZ000002
+2021-06-30 00:26:49,531 parseEastMoneyIncome.py_107(INFO): running on code: SZ000002
+2021-06-30 00:28:12,913 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:30:08,539 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:33:39,250 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:35:07,496 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:37:36,186 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:39:35,647 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:42:07,663 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:45:42,341 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:49:53,801 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:54:53,918 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:56:30,512 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 00:56:57,805 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002
+2021-06-30 01:02:35,389 parseEastMoneyIncome.py_108(INFO): running on code: SZ000002

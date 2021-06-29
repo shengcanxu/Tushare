@@ -61,3 +61,10 @@ for code in stockList:
 print(notnull)
 
 # %%
+from sqlalchemy import create_engine
+engine = create_engine(
+    "mysql+pymysql://root:4401821211@localhost:3306/eastmoney?charset=utf8")
+
+stockdf = pd.read_csv("C:/project/Tushare/eastmoney/codewithcompanytype.csv")
+stockdf.to_sql(name="code", con=engine, if_exists="append")
+# %%
