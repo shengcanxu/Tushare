@@ -7,6 +7,7 @@ import time
 import json
 import pymysql
 import pyecharts
+from helper.logger import FileLogger
 
 # from helper.getDataFromDB import getDataFromDB
 import helper.getDataFromDB as DBLib
@@ -29,8 +30,10 @@ engine = create_engine(
 # df.to_sql("daily", con=engine, if_exists="append")
 
 # %%
-# df["ts_code"] = df["ts_code"].astype("string")
-# df["trade_date"] = df["trade_date"].astype("string")
+stockIncome = pro.income(ts_code="600176.SH", start_date='19901210', end_date='20210228')
+
+# %%
+stockIncome
 
 # %% 
 df2 = df.set_index(["ts_code", "trade_date"])
@@ -370,22 +373,6 @@ sqlstr = "select * from  `dailybasic15` where ts_code = '300015.SZ'"
 dayList = pd.read_sql_query(sqlstr, con=engine) 
 dayList
 
-
-# %%
-from pyecharts.charts import Line, Bar
-from pyecharts import options as opts
-
-
-line = (
-    Line()
-    .add_xaxis(dayList['trade_date'].tolist())
-    .add_yaxis("pe", dayList['pe'].tolist())
-    .add_yaxis("ps", dayList['ps'].tolist())
-    .set_global_opts(tooltip_opts=opts.TooltipOpts(trigger='axis'),title_opts=opts.TitleOpts("title"))
-)
-line.render_notebook()
-
-
 # %%
 result = DBLib.getDataFromDB('002594.SZ', 'dailybasic4', ['trade_date', 'pe', 'ps', 'pe_ttm'])
 line = plot.createPlotLine(result, 'trade_date', 'pe')
@@ -430,6 +417,55 @@ leftName = 'left'
 rightName = 'right'
 
 # %%
-kline1 = plot.createDiffKlines(leftDf,rightDf,leftName,rightName)
+kline1 = plot.createDiffKlines(leftDf, rightDf, leftName, rightName)
 kline1.render_notebook()
+
 # %%
+df = pro.income(ts_code='600519.SH', report_type=6)
+df
+
+# %%
+code = '002271.SZ'
+income = DBLib.getIncomeFromDB(code)
+income
+
+# %%
+sortedIncome = income.sort_values(by='end_date', ascending=True)
+incomeList = sortedIncome[['end_date', 'total_revenue']].to_numpy()
+
+# %%
+engine = create_engine("mysql+pymysql://root:4401821211@localhost:3306/stock?charset=utf8")
+sqlTemplate = "update `stock`.`incomerate` set `revenue_rate` = %d where `ts_code` = '%s' and `end_date` = '%s' and `report_type` = '1'"
+
+lastDate = datetime.datetime.strptime('19900101', "%Y%m%d")
+
+try:
+    for item in incomeList:
+        endDate = datetime.datetime.strptime(item[0], "%Y%m%d")
+        delta = endDate - lastDate
+        if delta > datetime.timedelta(days=135):
+            # do nothing, rate should be none
+            pass
+        else:
+            sql = sqlTemplate % (40, code, item[0])
+            print(sql)
+            engine.execute(sql)
+        lastDate = endDate
+
+except Exception as ex:
+    FileLogger.error(ex)
+    FileLogger.error("write to DB error on sql: %s" % sql)
+
+
+
+# %%
+income = DBLib.getIncomeFromDB('600176.SH')
+sortedIncome = income.sort_values(by='end_date', ascending=True)
+    
+dataList = sortedIncome[['end_date', 'total_revenue']]
+   
+# %%
+for index, row in dataList.iterrows():
+    print(row['end_date'])
+# %%
+row = dataList[dataList['end_date']=='20130630'].to_numpy()

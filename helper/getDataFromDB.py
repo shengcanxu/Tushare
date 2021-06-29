@@ -24,6 +24,16 @@ def getStockDataFromDB(value, by='ts_code'):
     return queryFromDB(sqlstr)
 
 
+def getIncomeFromDB(code, startDate=None, endDate=None):
+    if not startDate:
+        startDate = datetime.date(1990, 12, 10).strftime("%Y%m%d")
+    if not endDate:
+        endDate = datetime.datetime.now().strftime("%Y%m%d")
+
+    sqlstr = "select * from  `stock`.`income` where ts_code = '%s' and end_date between '%s' and '%s'" % (code, startDate, endDate)
+    return queryFromDB(sqlstr)
+
+
 # return dataframe result or None
 def queryFromDB(sql):
     try: 

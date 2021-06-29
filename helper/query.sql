@@ -17,6 +17,7 @@ CREATE TABLE `daily` (
   UNIQUE KEY `idx_daily_trade_date_ts_code` (`ts_code`,`trade_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 CREATE TABLE `dailybasic` (
   `ts_code` varchar(20) DEFAULT NULL,
   `trade_date` varchar(20) DEFAULT NULL,
@@ -109,6 +110,21 @@ CREATE TABLE `income` (
   `distable_profit` double DEFAULT NULL,
   UNIQUE KEY `idx_income_end_date_ts_code_report_type` (`ts_code`,`end_date`,`report_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- create income rate table 
+CREATE TABLE `incomerate` (
+  `ts_code` varchar(20),
+  `end_date` varchar(20),
+  `ann_date` varchar(20),
+  `f_ann_date` varchar(20),
+  `report_type` varchar(10),
+  UNIQUE KEY `idx_income_end_date_ts_code_report_type` (`ts_code`,`end_date`,`report_type`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table `income` add column `total_revenue_qtr` double DEFAULT NULL; 
+alter table `income` add column `revenue_qtr` double DEFAULT NULL; 
+alter table `income` add column `total_cogs_qtr` double DEFAULT NULL; 
+alter table `income` add column `oper_cost_qtr` double DEFAULT NULL; 
 
 -- create balance table
 CREATE TABLE `balance` (

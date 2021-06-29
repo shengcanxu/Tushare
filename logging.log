@@ -6,3 +6,195 @@
 [SQL: select stock from  `*`.`daily11` where ts_code = '002271.SZ' and trade_date between '19901210' and '20210418']
 (Background on this error at: http://sqlalche.me/e/13/e3q8)
 2021-04-18 17:52:42,291 getDataFromDB.py_35(ERROR): read from db error!
+2021-04-26 10:50:18,976 getDataFromDB.py_44(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'trade_date' in 'where clause'")
+[SQL: select * from  `stock`.`income` where ts_code = '002271.SZ' and trade_date between '19901210' and '20210426']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-04-26 10:50:18,977 getDataFromDB.py_45(ERROR): read from db error!
+2021-04-26 10:51:17,881 getDataFromDB.py_44(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'trade_date' in 'where clause'")
+[SQL: select * from  `stock`.`income` where ts_code = '002271.SZ' and trade_date between '19901210' and '20210426']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-04-26 10:51:17,882 getDataFromDB.py_45(ERROR): read from db error!
+2021-04-26 12:05:56,067 <ipython-input-21-0c2408c56d0b>_19(ERROR): (pymysql.err.ProgrammingError) (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SZ and `end_date` = 20080331 and `report_type` = '1'' at line 1")
+[SQL: update `stock`.`incomerate` set `revenue_rate` = 30 where `ts_code` = 002271.SZ and `end_date` = 20080331 and `report_type` = '1']
+(Background on this error at: http://sqlalche.me/e/13/f405)
+2021-04-26 12:05:56,070 <ipython-input-21-0c2408c56d0b>_20(ERROR): write to DB error on sql: update `stock`.`incomerate` set `revenue_rate` = 30 where `ts_code` = 002271.SZ and `end_date` = 20080331 and `report_type` = '1'
+2021-04-26 12:06:49,706 <ipython-input-22-7e72a8329ab5>_19(ERROR): This result object does not return rows. It has been closed automatically.
+2021-04-26 12:06:49,707 <ipython-input-22-7e72a8329ab5>_20(ERROR): write to DB error on sql: update `stock`.`incomerate` set `revenue_rate` = 30 where `ts_code` = '002271.SZ' and `end_date` = '20080331' and `report_type` = '1'
+2021-04-30 18:15:46,578 genStockIncomeRate.py_46(ERROR): 'int' object is not callable
+2021-04-30 18:21:58,802 genStockIncomeRate.py_47(ERROR): local variable 'rate' referenced before assignment
+2021-05-02 16:53:32,596 genStockIncomeRate.py_103(ERROR): '20041231'
+2021-05-11 16:41:08,072 genStockIncomeRate.py_101(ERROR): %d format: a number is required, not NoneType
+2021-05-11 16:45:28,153 genStockIncomeRate.py_101(ERROR): %d format: a number is required, not NoneType
+2021-05-11 16:52:45,296 genStockIncomeRate.py_69(ERROR): unsupported operand type(s) for -: 'NoneType' and 'int'
+2021-05-11 17:00:04,425 genStockIncomeRate.py_75(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'nan' in 'field list'")
+[SQL: update `stock`.`incomerate` set `fv_value_chg_gain_rate` = nan where `ts_code` = '600176.SH' and `end_date` = '20020331' and `report_type` = '1']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-05-11 17:00:04,426 genStockIncomeRate.py_76(ERROR): write to DB for generateQuarterRateOnData error on sql: update `stock`.`incomerate` set `fv_value_chg_gain_rate` = nan where `ts_code` = '600176.SH' and `end_date` = '20020331' and `report_type` = '1'
+2021-05-11 17:00:04,426 genStockIncomeRate.py_114(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'nan' in 'field list'")
+[SQL: update `stock`.`incomerate` set `fv_value_chg_gain_yrate` = nan where `ts_code` = '600176.SH' and `end_date` = '19971231' and `report_type` = '1']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-05-11 17:00:04,427 genStockIncomeRate.py_115(ERROR): write to DB for generateQuarterYRateOnData error on sql: update `stock`.`incomerate` set `fv_value_chg_gain_yrate` = nan where `ts_code` = '600176.SH' and `end_date` = '19971231' and `report_type` = '1'
+2021-05-11 17:02:08,574 genStockIncomeRate.py_75(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'nan' in 'field list'")
+[SQL: update `stock`.`incomerate` set `fv_value_chg_gain_rate` = nan where `ts_code` = '600176.SH' and `end_date` = '20020331' and `report_type` = '1']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-05-11 17:02:08,575 genStockIncomeRate.py_76(ERROR): write to DB for generateQuarterRateOnData error on sql: update `stock`.`incomerate` set `fv_value_chg_gain_rate` = nan where `ts_code` = '600176.SH' and `end_date` = '20020331' and `report_type` = '1'
+2021-05-11 17:06:36,671 genStockIncomeRate.py_75(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'nan' in 'field list'")
+[SQL: update `stock`.`incomerate` set `fv_value_chg_gain_rate` = nan where `ts_code` = '600176.SH' and `end_date` = '20020331' and `report_type` = '1']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-05-11 17:06:36,672 genStockIncomeRate.py_76(ERROR): write to DB for generateQuarterRateOnData error on sql: update `stock`.`incomerate` set `fv_value_chg_gain_rate` = nan where `ts_code` = '600176.SH' and `end_date` = '20020331' and `report_type` = '1'
+2021-05-11 17:11:52,983 genStockIncomeRate.py_76(ERROR): float division by zero
+2021-05-11 17:11:52,984 genStockIncomeRate.py_77(ERROR): write to DB for generateQuarterRateOnData error on sql: update `stock`.`incomerate` set `fv_value_chg_gain_rate` = -100.000000 where `ts_code` = '600176.SH' and `end_date` = '20090930' and `report_type` = '1'
+2021-05-11 17:11:58,643 genStockIncomeRate.py_76(ERROR): float division by zero
+2021-05-11 17:11:58,644 genStockIncomeRate.py_77(ERROR): write to DB for generateQuarterRateOnData error on sql: update `stock`.`incomerate` set `fv_value_chg_gain_rate` = -100.000000 where `ts_code` = '600176.SH' and `end_date` = '20090930' and `report_type` = '1'
+2021-06-07 12:24:22,592 genStockIncomeQuarter.py_55(ERROR): can only concatenate str (not "float") to str
+2021-06-07 12:24:33,038 genStockIncomeQuarter.py_55(ERROR): can only concatenate str (not "float") to str
+2021-06-10 12:08:31,321 genStockIncomeQuarter.py_57(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'revenue_qtr' in 'field list'")
+[SQL: update `stock`.`income` set `revenue_qtr` = 0.000000 where `ts_code` = '600176.SH' and `end_date` = '19961231' and `report_type` = '1']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-06-10 12:08:31,322 genStockIncomeQuarter.py_58(ERROR): write to DB for generateQuarterRateOnData error on sql: update `stock`.`income` set `revenue_qtr` = 0.000000 where `ts_code` = '600176.SH' and `end_date` = '19961231' and `report_type` = '1'
+2021-06-21 17:29:41,476 getEastMoneyIncome.py_71(INFO): running on code: SH600176
+2021-06-21 17:29:41,477 getEastMoneyIncome.py_77(ERROR): unsupported format character 'C' (0x43) at index 119
+2021-06-21 17:29:41,477 getEastMoneyIncome.py_78(ERROR): crawl income error on code: SH600176
+2021-06-21 17:30:46,366 getEastMoneyIncome.py_71(INFO): running on code: SH600176
+2021-06-21 17:30:46,714 getEastMoneyIncome.py_44(INFO): get income of code: SH600176 in size: 19049
+2021-06-21 17:32:03,009 getEastMoneyIncome.py_71(INFO): running on code: SH600176
+2021-06-21 17:34:13,494 getEastMoneyIncome.py_71(INFO): running on code: SH600176
+2021-06-21 17:34:14,318 getEastMoneyIncome.py_44(INFO): get income of code: SH600176 in size: 19049
+2021-06-21 17:34:25,081 getEastMoneyIncome.py_71(INFO): running on code: SH600176
+2021-06-21 17:34:25,322 getEastMoneyIncome.py_44(INFO): get income of code: SH600176 in size: 19049
+2021-06-21 17:41:38,459 getEastMoneyIncome.py_82(INFO): running on code: SH600176
+2021-06-21 17:41:39,212 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49684
+2021-06-21 17:41:39,803 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49486
+2021-06-21 17:41:40,149 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49596
+2021-06-21 17:41:40,568 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49806
+2021-06-21 17:41:40,986 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49652
+2021-06-21 17:41:41,263 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49621
+2021-06-21 17:41:41,613 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49504
+2021-06-21 17:41:42,053 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49470
+2021-06-21 17:41:42,387 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49403
+2021-06-21 17:41:42,730 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49335
+2021-06-21 17:41:43,018 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49466
+2021-06-21 17:41:43,401 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49122
+2021-06-21 17:41:43,734 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 49002
+2021-06-21 17:41:44,085 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 48954
+2021-06-21 17:41:44,455 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 48496
+2021-06-21 17:41:44,818 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 48568
+2021-06-21 17:41:45,057 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 38542
+2021-06-21 17:41:45,219 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 19049
+2021-06-21 17:44:45,229 getEastMoneyIncome.py_85(INFO): running on code: SH600176
+2021-06-21 17:44:45,565 getEastMoneyIncome.py_91(ERROR): 'dict' object has no attribute 'data'
+2021-06-21 17:44:45,566 getEastMoneyIncome.py_92(ERROR): crawl income error on code: SH600176
+2021-06-21 17:44:59,139 getEastMoneyIncome.py_85(INFO): running on code: SH600176
+2021-06-21 17:45:52,773 getEastMoneyIncome.py_85(INFO): running on code: SH600176
+2021-06-21 17:45:53,113 getEastMoneyIncome.py_91(ERROR): 'dict' object has no attribute 'data'
+2021-06-21 17:45:53,113 getEastMoneyIncome.py_92(ERROR): crawl income error on code: SH600176
+2021-06-21 17:46:38,543 getEastMoneyIncome.py_85(INFO): running on code: SH600176
+2021-06-21 17:46:38,726 getEastMoneyIncome.py_91(ERROR): 'dict' object has no attribute 'data'
+2021-06-21 17:46:38,726 getEastMoneyIncome.py_92(ERROR): crawl income error on code: SH600176
+2021-06-21 17:47:01,458 getEastMoneyIncome.py_85(INFO): running on code: SH600176
+2021-06-21 17:47:39,206 getEastMoneyIncome.py_85(INFO): running on code: SH600176
+2021-06-21 17:47:39,557 getEastMoneyIncome.py_91(ERROR): 'dict' object has no attribute 'data'
+2021-06-21 17:47:39,559 getEastMoneyIncome.py_92(ERROR): crawl income error on code: SH600176
+2021-06-21 17:48:33,559 getEastMoneyIncome.py_85(INFO): running on code: SH600176
+2021-06-21 17:48:33,806 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:34,025 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:34,256 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:34,535 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:34,740 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:34,918 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:35,136 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:35,375 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:35,600 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:35,829 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:36,076 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:36,267 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:36,449 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:36,685 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:36,970 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:37,200 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:48:37,409 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 4
+2021-06-21 17:48:37,599 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 2
+2021-06-21 17:49:36,526 getEastMoneyIncome.py_86(INFO): running on code: SH600176
+2021-06-21 17:49:36,688 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:37,371 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:38,041 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:38,733 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:39,390 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:40,017 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:40,651 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:41,310 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:41,975 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:42,638 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:43,347 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:44,024 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:44,682 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:45,361 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:46,021 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:46,685 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:49:47,391 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 4
+2021-06-21 17:53:52,203 getEastMoneyIncome.py_87(INFO): running on code: SH600176
+2021-06-21 17:53:52,486 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:53:53,220 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:53:53,966 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:53:54,623 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:53:55,278 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:53:56,046 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:53:56,760 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:53:57,453 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:53:58,103 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:53:58,794 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:53:59,497 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:54:00,256 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:54:01,032 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:54:01,949 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:54:02,700 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:54:03,458 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:54:04,153 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 4
+2021-06-21 17:54:04,816 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 2
+2021-06-21 17:55:20,418 getEastMoneyIncome.py_88(INFO): running on code: SH600176
+2021-06-21 17:55:21,703 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:22,413 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:23,112 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:24,263 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:24,992 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:25,804 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:26,463 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:27,312 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:27,976 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:28,664 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:29,332 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:30,013 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:31,282 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:31,976 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:32,742 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:33,430 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 5
+2021-06-21 17:55:34,144 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 4
+2021-06-21 17:55:34,761 getEastMoneyIncome.py_56(INFO): get income of code: SH600176 in size: 2
+2021-06-21 18:01:25,735 getEastMoneyIncome.py_86(INFO): running on code: SH600176
+2021-06-21 18:01:25,918 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 18:01:26,723 getEastMoneyIncome.py_55(INFO): get income of code: SH600176 in size: 5
+2021-06-21 18:06:05,771 getEastMoneyBalance.py_82(INFO): running on code: 000001.SZ
+2021-06-21 18:06:05,921 getEastMoneyBalance.py_88(ERROR): 'data'
+2021-06-21 18:06:05,921 getEastMoneyBalance.py_89(ERROR): crawl income error on code: 000001.SZ
+2021-06-21 18:11:15,027 getEastMoneyBalance.py_82(INFO): running on code: SZ000001
+2021-06-21 18:11:15,178 getEastMoneyBalance.py_88(ERROR): 'data'
+2021-06-21 18:11:15,178 getEastMoneyBalance.py_89(ERROR): crawl income error on code: SZ000001
+2021-06-21 18:11:18,195 getEastMoneyBalance.py_82(INFO): running on code: SZ000002
+2021-06-21 18:11:18,400 getEastMoneyBalance.py_55(INFO): get income of code: SZ000002 in size: 5
+2021-06-21 18:11:19,238 getEastMoneyBalance.py_55(INFO): get income of code: SZ000002 in size: 5
+2021-06-21 18:11:20,018 getEastMoneyBalance.py_55(INFO): get income of code: SZ000002 in size: 5
+2021-06-21 18:11:20,884 getEastMoneyBalance.py_55(INFO): get income of code: SZ000002 in size: 5
+2021-06-21 18:11:21,637 getEastMoneyBalance.py_55(INFO): get income of code: SZ000002 in size: 5
+2021-06-21 18:11:22,456 getEastMoneyBalance.py_55(INFO): get income of code: SZ000002 in size: 5
+2021-06-21 18:11:48,959 getEastMoneyBalance.py_82(INFO): running on code: SZ000001
+2021-06-22 10:45:00,886 getEastMoneyBalance.py_84(INFO): running on code:  SZ000001
+2021-06-22 10:47:46,607 getEastMoneyBalance.py_85(INFO): running on code:  SZ000001
+2021-06-22 10:50:04,169 getEastMoneyBalance.py_85(INFO): running on code:  SZ000001
+2021-06-22 10:50:11,576 getEastMoneyBalance.py_85(INFO): running on code:  SZ000100
+2021-06-22 11:00:26,527 getEastMoneyBalance.py_86(INFO): running on code:  SZ000001
+2021-06-22 11:00:57,899 getEastMoneyBalance.py_53(INFO): no more data on  SZ000001 at dates: 2021-03-31%2C2020-12-31%2C2020-09-30%2C2020-06-30%2C2020-03-31
+2021-06-22 11:01:02,283 getEastMoneyBalance.py_86(INFO): running on code:  SZ000100
+2021-06-22 11:02:34,607 getEastMoneyBalance.py_86(INFO): running on code: SZ000001
+2021-06-22 11:02:37,399 getEastMoneyBalance.py_53(INFO): no more data on SZ000001 at dates: 2021-03-31%2C2020-12-31%2C2020-09-30%2C2020-06-30%2C2020-03-31
+2021-06-22 11:02:38,412 getEastMoneyBalance.py_86(INFO): running on code: SZ000100
+2021-06-22 11:02:52,351 getEastMoneyBalance.py_58(INFO): get income of code: SZ000100 in size: 5
