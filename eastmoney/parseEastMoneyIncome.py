@@ -22,6 +22,7 @@ from sqlalchemy import create_engine
 
 
 ENGINE = create_engine("mysql+pymysql://root:4401821211@localhost:3306/eastmoney?charset=utf8")
+COLUMNS = {}
 
 
 # read file from filePath
@@ -70,6 +71,9 @@ def parseIncomeBasicObject(jsonObject):
 
 
 def createColunnIfNotExists(column, type='double'):
+    if column in COLUMNS:
+        return
+
     sqlstr = "select count(*) from information_schema.columns where table_schema='eastmoney' and table_name = 'income' and column_name = '%s'"
     sqlstr = sqlstr % column
     cursor = ENGINE.execute(sqlstr)
@@ -78,6 +82,7 @@ def createColunnIfNotExists(column, type='double'):
         addColumnStr = "alter table eastmoney.income add column %s %s DEFAULT NULL;"
         addColumnStr = addColumnStr % (column, type)
         ENGINE.execute(addColumnStr)
+        COLUMNS[column] = True
 
 
 # type = 'double' or 'varchar(20)'
@@ -96,60 +101,105 @@ def addColumnToDB(jsonObjects, column, type='double'):
                 ENGINE.execute(sqlstr)
 
 
+# jsonSql: {'SZ000001':{'2021-03-31':[[column1, value1],[column2,value2]]}}
+def gatherColumnInfo(jsonSql, jsonObjects, column, type='double'):
+    createColunnIfNotExists(column, type)
+    for jsonObject in jsonObjects:
+        value = jsonObject[column]
+        secucode = tidySecucode(jsonObject["SECUCODE"])
+        if secucode not in jsonSql:
+            jsonSql[secucode] = {}
+        reportDate = tidyTime(jsonObject["REPORT_DATE"])
+        if reportDate not in jsonSql[secucode]:
+            jsonSql[secucode][reportDate] = []
+
+        if value is not None:
+            if type == 'double':
+                jsonSql[secucode][reportDate].append([column, str(value)])
+            else:
+                jsonSql[secucode][reportDate].append([column, "'"+value+"'"])
+
+
+# jsonSql: {'SZ000001':{'2021-03-31':[[column1, value1],[column2,value2]]}}
+def executeSql(jsonSql):
+    for code in jsonSql.keys():
+        for date in jsonSql[code].keys():
+            columns = jsonSql[code][date]
+
+            setStr = ""
+            for column in columns:
+                if len(setStr) == 0:
+                    setStr = "set %s=%s" % (column[0], column[1])
+                else:
+                    setStr = setStr + ", %s=%s" % (column[0], column[1])
+            
+            sql = "update eastmoney.income %s where SECUCODE='%s' and REPORT_DATE='%s'" % (setStr, code, date)
+            ENGINE.execute(sql)
+
+
 if __name__ == "__main__":
     # 查询语句：SELECT ts_code FROM stock.stockdata;
-    stockdf = pd.read_csv("C:/project/Tushare/eastmoney/code.csv")
-    stockList = stockdf['ts_code'].to_numpy()
+    stockdf = pd.read_csv("C:/project/Tushare/eastmoney/codewithcompanytype.csv")
+    stockList = stockdf[['ts_code', 'companytype']].to_numpy()
 
-    stockList = ['SZ000002']
+    # stockList = [['SZ000002', 4]]
 
     # add the base info into DB
-    for code in stockList:
+    for item in stockList:
+        code = item[0]
+        companyType = item[1]
+        #need to process companyType 1-3
+        if companyType != 4:
+            continue
+
         FileLogger.info("running on code: %s" % code)
         try:
             path = "C:/project/stockdata/EastMoneyIncome/%s.json" % code
             jsonObjects = getJsonFromFile(path)
 
-            # # add the base info into DB
-            # for jsonObject in jsonObjects:
-            #     parseIncomeBasicObject(jsonObject)
+            # add the base info into DB
+            for jsonObject in jsonObjects:
+                parseIncomeBasicObject(jsonObject)
 
             # add other info into DB
-            # addColumnToDB(jsonObjects, 'TOTAL_OPERATE_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'OPERATE_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'TOTAL_OPERATE_COST', 'double')
-            # addColumnToDB(jsonObjects, 'OPERATE_COST', 'double')
-            # addColumnToDB(jsonObjects, 'RESEARCH_EXPENSE', 'double')
-            # addColumnToDB(jsonObjects, 'OPERATE_TAX_ADD', 'double')
-            # addColumnToDB(jsonObjects, 'SALE_EXPENSE', 'double')
-            # addColumnToDB(jsonObjects, 'MANAGE_EXPENSE', 'double')
-            # addColumnToDB(jsonObjects, 'FINANCE_EXPENSE', 'double')
-            # addColumnToDB(jsonObjects, 'FE_INTEREST_EXPENSE', 'double')
-            # addColumnToDB(jsonObjects, 'FE_INTEREST_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'FAIRVALUE_CHANGE_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'INVEST_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'INVEST_JOINT_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'ASSET_DISPOSAL_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'ASSET_IMPAIRMENT_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'CREDIT_IMPAIRMENT_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'OPERATE_PROFIT', 'double')
-            # addColumnToDB(jsonObjects, 'NONBUSINESS_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'NONBUSINESS_EXPENSE', 'double')
-            # addColumnToDB(jsonObjects, 'TOTAL_PROFIT', 'double')
-            # addColumnToDB(jsonObjects, 'INCOME_TAX', 'double')
-            # addColumnToDB(jsonObjects, 'NETPROFIT', 'double')
-            # addColumnToDB(jsonObjects, 'CONTINUED_NETPROFIT', 'double')
-            # addColumnToDB(jsonObjects, 'PARENT_NETPROFIT', 'double')
-            # addColumnToDB(jsonObjects, 'MINORITY_INTEREST', 'double')
-            # addColumnToDB(jsonObjects, 'DEDUCT_PARENT_NETPROFIT', 'double')
-            # addColumnToDB(jsonObjects, 'BASIC_EPS', 'double')
-            # addColumnToDB(jsonObjects, 'DILUTED_EPS', 'double')
-            # addColumnToDB(jsonObjects, 'OTHER_COMPRE_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'PARENT_OCI', 'double')
-            # addColumnToDB(jsonObjects, 'MINORITY_OCI', 'double')
-            # addColumnToDB(jsonObjects, 'TOTAL_COMPRE_INCOME', 'double')
-            # addColumnToDB(jsonObjects, 'PARENT_TCI', 'double')
-            # addColumnToDB(jsonObjects, 'MINORITY_TCI', 'double')
+            jsonSql = {}
+            gatherColumnInfo(jsonSql, jsonObjects, 'TOTAL_OPERATE_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'OPERATE_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'TOTAL_OPERATE_COST', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'OPERATE_COST', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'RESEARCH_EXPENSE', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'OPERATE_TAX_ADD', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'SALE_EXPENSE', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'MANAGE_EXPENSE', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'FINANCE_EXPENSE', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'FE_INTEREST_EXPENSE', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'FE_INTEREST_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'FAIRVALUE_CHANGE_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'INVEST_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'INVEST_JOINT_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'ASSET_DISPOSAL_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'ASSET_IMPAIRMENT_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'CREDIT_IMPAIRMENT_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'OPERATE_PROFIT', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'NONBUSINESS_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'NONBUSINESS_EXPENSE', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'TOTAL_PROFIT', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'INCOME_TAX', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'NETPROFIT', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'CONTINUED_NETPROFIT', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'PARENT_NETPROFIT', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'MINORITY_INTEREST', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'DEDUCT_PARENT_NETPROFIT', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'BASIC_EPS', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'DILUTED_EPS', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'OTHER_COMPRE_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'PARENT_OCI', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'MINORITY_OCI', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'TOTAL_COMPRE_INCOME', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'PARENT_TCI', 'double')
+            gatherColumnInfo(jsonSql, jsonObjects, 'MINORITY_TCI', 'double')
+
+            executeSql(jsonSql)
                 
             time.sleep(0.1)
 
