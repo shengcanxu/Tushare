@@ -81,6 +81,50 @@ def _genQuaterData(datadf):
 
 
 # 如果columns有值，就是仅将columns里面的列做转换，默认全部转换
+# datadf is the accumulate value, will generate quarter data in this function
+def genQoQDatas(datadf, columns=[]):
+    if len(columns) == 0:
+        columns = datadf.columns
+    if 'REPORT_DATE' not in columns:
+        FileLogger.error("REPORT_DATE must be in datadf!")
+    quarterdf = genQuarterDatas(datadf)
+
+    newDF = pd.DataFrame({})
+    for col in columns:
+        if col in TEXTCOLUMNS:
+            newDF[col] = quarterdf[col]
+            continue
+        df = quarterdf[['REPORT_DATE', col]]
+        df = _genQosData(df)
+        newDF[col] = df[col]
+
+    return newDF
+
+
+def _genQosData(quarterdf):
+    copydf = quarterdf.copy()
+    for index, row in quarterdf.iterrows():
+        date = datetime.datetime.strptime(row['REPORT_DATE'], "%Y-%m-%d")
+        
+        lastDate = None
+        if date.month == 3 and date.day == 31:
+            lastDate = '%d-12-31' % (date.year-1)
+        elif date.month == 6 and date.day == 30:
+            lastDate = '%d-03-31' % date.year
+        elif date.month == 9 and date.day == 30:
+            lastDate = '%d-06-30' % date.year
+        elif date.month == 12 and date.day == 31:
+            lastDate = '%d-09-30' % date.year
+        lastRow = quarterdf[quarterdf['REPORT_DATE'] == lastDate].to_numpy()
+        if len(lastRow) > 0 and lastRow[0][1]:
+            copydf.iloc[index, 1] = row[1] / float(lastRow[0][1]) - 1
+        else:
+            copydf.iloc[index, 1] = None
+
+    return copydf
+
+
+# 如果columns有值，就是仅将columns里面的列做转换，默认全部转换
 def genYoYDatas(datadf, columns=[]):
     if len(columns) == 0:
         columns = datadf.columns
@@ -169,9 +213,11 @@ def formatData4Show(datadf, percentColumns=[]):
 datadf = dataGetter.getDataFromIncome('SZ000002', ['REPORT_DATE', 'TOTAL_OPERATE_COST', 'TOTAL_OPERATE_INCOME'])
 print(datadf)
 # newDF = genQuarterDatas(datadf)
-# newDF = genYoYDatas(datadf)
+newDF = formatData4Show(genYoYDatas(datadf), percentColumns=['TOTAL_OPERATE_COST','TOTAL_OPERATE_INCOME'])
 # newDF = mapIncomeColumnName(datadf)
-newDF = mapIncomeColumnName(formatData4Show(datadf))
+# newDF = mapIncomeColumnName(formatData4Show(datadf))
+# newDF = formatData4Show(genQoQDatas(datadf), percentColumns=['TOTAL_OPERATE_COST','TOTAL_OPERATE_INCOME'])
+
 print(newDF)
 
 # %%
