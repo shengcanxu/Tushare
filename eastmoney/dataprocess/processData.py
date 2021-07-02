@@ -1,9 +1,11 @@
+# %%
 import sys
 sys.path.append("C:/project/Tushare")
 import pandas as pd
 import datetime
 from sqlalchemy import create_engine
 from helper.logger import FileLogger
+import eastmoney.dataprocess.getFinancailDataFromDB as dataGetter
 
 
 # datadf: the data queried from database
@@ -72,6 +74,105 @@ def _genQuaterData(datadf):
         lastRow = datadf[datadf['REPORT_DATE'] == lastDate].to_numpy()
         if len(lastRow) > 0:
             copydf.iloc[index, 1] = row[1] - lastRow[0][1]
+        else:
+            copydf.iloc[index, 1] = None
 
     return copydf
+
+
+# 如果columns有值，就是仅将columns里面的列做转换，默认全部转换
+def genYoYDatas(datadf, columns=[]):
+    if len(columns) == 0:
+        columns = datadf.columns
+    if 'REPORT_DATE' not in columns:
+        FileLogger.error("REPORT_DATE must be in datadf!")
+
+    newDF = pd.DataFrame({})
+    for col in columns:
+        if col in TEXTCOLUMNS:
+            newDF[col] = datadf[col]
+            continue
+        df = datadf[['REPORT_DATE', col]]
+        df = _genYoYData(df)
+        newDF[col] = df[col]
+
+    return newDF
+
+
+# datadf一定是[REPORT_DATE, column]
+def _genYoYData(datadf):
+    copydf = datadf.copy()
+    for index, row in datadf.iterrows():
+        date = datetime.datetime.strptime(row['REPORT_DATE'], "%Y-%m-%d")
+        
+        lastDate = '%d-%02d-%02d' % (date.year-1, date.month, date.day)
+        lastRow = datadf[datadf['REPORT_DATE'] == lastDate].to_numpy()
+        if len(lastRow) > 0 and lastRow[0][1]:
+            copydf.iloc[index, 1] = row[1] / float(lastRow[0][1]) - 1
+        else:
+            copydf.iloc[index, 1] = None
+
+    return copydf
+
+
+# 将table的名字变成中文名
+def _mapTitleName(datadf, table='income'):
+    sql = "select * from `eastmoney`.`columnname` where `table`='%s'" % table
+    columnNames = dataGetter._queryFromDB(sql)
+    columnNames = columnNames[['column', 'name']].set_index('column')
+
+    # create column mapping
+    mapping = {}
+    for col in datadf.columns:
+        mapping[col] = columnNames.loc[col, 'name']
+    # change the column name
+    datadfC = datadf.rename(columns=mapping)
+    datadfC = datadfC.set_index('报告时间')
+    return datadfC
+
+
+def mapIncomeColumnName(datadf):
+    return _mapTitleName(datadf, 'income')
+
+
+def mapBalanceColumnName(datadf):
+    return _mapTitleName(datadf, 'balance')
+
+
+def mapCashflowColumnName(datadf):
+    return _mapTitleName(datadf, 'cashflow')
+
+
+# 将dataframe里面的值用XX万，XX亿或者XX.X%来表示
+def formatData4Show(datadf, percentColumns=[]):
+    def formatFunc(x):
+        if x >= 100000000:
+            return "{:.2f}亿".format(x/100000000)
+        elif x >= 10000:
+            return "{:.1f}万".format(x/10000)
+        else:
+            return "{:.1f}".format(x)
+
+    copydf = datadf.copy()
+    for row in datadf.itertuples():
+        for column in datadf.columns:
+            if column in TEXTCOLUMNS:
+                continue
+            if column in percentColumns:
+                copydf[column] = datadf[column].map(lambda x: "{:.2f}%".format(x*100))
+            else:
+                copydf[column] = datadf[column].map(formatFunc)
+                
+    return copydf
+
+# %% main function
+datadf = dataGetter.getDataFromIncome('SZ000002', ['REPORT_DATE', 'TOTAL_OPERATE_COST', 'TOTAL_OPERATE_INCOME'])
+print(datadf)
+# newDF = genQuarterDatas(datadf)
+# newDF = genYoYDatas(datadf)
+# newDF = mapIncomeColumnName(datadf)
+newDF = mapIncomeColumnName(formatData4Show(datadf))
+print(newDF)
+
+# %%
 

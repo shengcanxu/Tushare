@@ -1,0 +1,8 @@
+2021-07-02 17:39:37,176 getFinancailDataFromDB.py_16(ERROR): (pymysql.err.ProgrammingError) (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table='income'' at line 1")
+[SQL: select * from `eastmoney`.`columnname` where table='income']
+(Background on this error at: http://sqlalche.me/e/13/f405)
+2021-07-02 17:39:37,177 getFinancailDataFromDB.py_17(ERROR): read from db error!
+2021-07-02 17:39:45,755 getFinancailDataFromDB.py_16(ERROR): (pymysql.err.ProgrammingError) (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table='income'' at line 1")
+[SQL: select * from `eastmoney`.`columnname` where table='income']
+(Background on this error at: http://sqlalche.me/e/13/f405)
+2021-07-02 17:39:45,756 getFinancailDataFromDB.py_17(ERROR): read from db error!

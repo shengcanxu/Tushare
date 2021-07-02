@@ -49,6 +49,10 @@ def createPlotLine(df, xAxisTitle, yAxisTitle, title=None):
     return line
 
 
+# 生成有MACD和成交量的K线图
+# ts_code: 要展示的股票的id， 是0000002.sz这种格式
+# startDate: 股票的开始时间
+# endDate：股票的结束时间 
 def createKlineOfData(ts_code, startDate=None, endDate=None):
     stockName = DBLib.getStockDataFromDB(ts_code).loc[0, 'name']
     index = int(ts_code[len(ts_code)-5 : len(ts_code)-3]) % 30
