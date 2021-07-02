@@ -48,6 +48,12 @@ MINORITY_TCI    归属于少数股东的综合收益总额
 
 balance 表
 
+SECUCODE    股票代码
+SECURITY_NAME_ABBR  股票名字
+REPORT_DATE 报告时间
+REPORT_TYPE 报告类型
+UPDATE_DATE 更新时间
+CURRENCY    币种
 ACCOUNTS_PAYABLE 应付账款
 ACCOUNTS_RECE 应收账款
 ADVANCE_RECEIVABLES 预收款项
@@ -114,6 +120,12 @@ USERIGHT_ASSET ??
 
 cash flow 表
 
+SECUCODE    股票代码
+SECURITY_NAME_ABBR  股票名字
+REPORT_DATE 报告时间
+REPORT_TYPE 报告类型
+UPDATE_DATE 更新时间
+CURRENCY    币种
 SALES_SERVICES 销售商品、提供劳务收到的现金
 RECEIVE_OTHER_OPERATE 收到其他与经营活动有关的现金
 TOTAL_OPERATE_INFLOW 经营活动现金流入小计
@@ -171,3 +183,4 @@ NETCASH_OPERATENOTE 经营活动产生的现金流量净额
 END_CASH 现金的期末余额
 BEGIN_CASH 现金的期初余额
 CCE_ADDNOTE 现金及现金等价物的净增加额
+OPTION_TYPE 审计意见

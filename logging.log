@@ -462,3 +462,11 @@
 2021-06-30 16:14:08,551 parseEastMoneyCashflow.py_155(INFO): running on code: SZ000002
 2021-06-30 16:50:26,390 parseEastMoneyCashflow.py_155(INFO): running on code: SZ000002
 2021-06-30 16:51:56,412 parseEastMoneyCashflow.py_155(INFO): running on code: SZ000002
+2021-07-02 10:44:28,660 getDataFromDB.py_16(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'ts_code' in 'where clause'")
+[SQL: select * from  `eastmoney`.`income` where ts_code = 'SZ000002' and end_date between '19901210' and '20210702']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-07-02 10:44:28,661 getDataFromDB.py_17(ERROR): read from db error!
+2021-07-02 11:58:42,051 getDataFromDB.py_16(ERROR): (pymysql.err.ProgrammingError) (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'REPORT_DATE', 'TOTAL_OPERATE_COST']' and '2021-07-02'' at line 1")
+[SQL: select * from  `eastmoney`.`income` where SECUCODE = 'SZ000002' and REPORT_DATE between '['REPORT_DATE', 'TOTAL_OPERATE_COST']' and '2021-07-02']
+(Background on this error at: http://sqlalche.me/e/13/f405)
+2021-07-02 11:58:42,052 getDataFromDB.py_17(ERROR): read from db error!

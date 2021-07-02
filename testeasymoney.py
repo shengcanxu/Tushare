@@ -1,6 +1,8 @@
 # %%
 import pandas as pd
 import json
+from sqlalchemy import create_engine
+engine = create_engine("mysql+pymysql://root:4401821211@localhost:3306/eastmoney?charset=utf8")
 
 
 # %%
@@ -61,10 +63,22 @@ for code in stockList:
 print(notnull)
 
 # %%
-from sqlalchemy import create_engine
-engine = create_engine(
-    "mysql+pymysql://root:4401821211@localhost:3306/eastmoney?charset=utf8")
-
 stockdf = pd.read_csv("C:/project/Tushare/eastmoney/codewithcompanytype.csv")
 stockdf.to_sql(name="code", con=engine, if_exists="append")
+
+# %%
+columnnamedf = pd.read_csv("C:/project/Tushare/eastmoney/columnName.csv")
+columnnamedf.to_sql(name="columnname", con=engine, if_exists="append")
+
+# %%
+from eastmoney.dataprocess.getDataFromDB import getDataFromIncome
+datadf = getDataFromIncome('SZ000002', ['REPORT_DATE', 'TOTAL_OPERATE_COST'])
+datadf
+
+# %%
+from eastmoney.dataprocess.processData import genQuarterDatas
+newDF = genQuarterDatas(datadf)
+newDF
+
+
 # %%
