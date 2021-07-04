@@ -19,10 +19,10 @@ import time
 import json
 import pandas as pd
 from sqlalchemy import create_engine
+import eastmoney.dataprocess.DBHelper as dataGetter
 
 
 ENGINE = create_engine("mysql+pymysql://root:4401821211@localhost:3306/eastmoney?charset=utf8")
-COLUMNS = {}
 
 
 # read file from filePath
@@ -70,24 +70,9 @@ def parseIncomeBasicObject(jsonObject):
     ENGINE.execute(sqlstr)
 
 
-def createColunnIfNotExists(column, type='double'):
-    if column in COLUMNS:
-        return
-
-    sqlstr = "select count(*) from information_schema.columns where table_schema='eastmoney' and table_name = 'income' and column_name = '%s'"
-    sqlstr = sqlstr % column
-    cursor = ENGINE.execute(sqlstr)
-    (result,) = cursor.fetchone()
-    if result == 0:
-        addColumnStr = "alter table eastmoney.income add column %s %s DEFAULT NULL;"
-        addColumnStr = addColumnStr % (column, type)
-        ENGINE.execute(addColumnStr)
-        COLUMNS[column] = True
-
-
 # type = 'double' or 'varchar(20)'
 def addColumnToDB(jsonObjects, column, type='double'):
-    createColunnIfNotExists(column, type)
+    dataGetter.createColunnIfNotExists('income', column, type)
     for jsonObject in jsonObjects:
         value = jsonObject[column]
         secucode = tidySecucode(jsonObject["SECUCODE"])
@@ -101,9 +86,10 @@ def addColumnToDB(jsonObjects, column, type='double'):
                 ENGINE.execute(sqlstr)
 
 
+# 收集要插入数据库的数据结构。不一个一个数据的插入是为了效率
 # jsonSql: {'SZ000001':{'2021-03-31':[[column1, value1],[column2,value2]]}}
 def gatherColumnInfo(jsonSql, jsonObjects, column, type='double'):
-    createColunnIfNotExists(column, type)
+    dataGetter.createColunnIfNotExists('income', column, type)
     for jsonObject in jsonObjects:
         value = jsonObject[column]
         secucode = tidySecucode(jsonObject["SECUCODE"])
@@ -138,7 +124,6 @@ def executeSql(jsonSql):
 
 
 if __name__ == "__main__":
-    # 查询语句：SELECT ts_code FROM stock.stockdata;
     stockdf = pd.read_csv("C:/project/Tushare/eastmoney/codewithcompanytype.csv")
     stockList = stockdf[['ts_code', 'companytype']].to_numpy()
 
@@ -148,7 +133,7 @@ if __name__ == "__main__":
     for item in stockList:
         code = item[0]
         companyType = item[1]
-        #need to process companyType 1-3
+        # need to process companyType 1-3
         if companyType != 4:
             continue
 

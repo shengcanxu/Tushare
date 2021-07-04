@@ -6,7 +6,7 @@ import datetime
 from helper.logger import FileLogger
 import helper.plot as plot
 import helper.getDataFromDB as DBLib
-import eastmoney.dataprocess.getFinancailDataFromDB as dataGetter
+import eastmoney.dataprocess.DBHelper as dataGetter
 
 
 datadf = dataGetter.getDataFromIncome('SZ000002')

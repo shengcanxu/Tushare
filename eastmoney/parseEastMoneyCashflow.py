@@ -19,10 +19,10 @@ import time
 import json
 import pandas as pd
 from sqlalchemy import create_engine
+import eastmoney.dataprocess.DBHelper as dataGetter
 
 
 ENGINE = create_engine("mysql+pymysql://root:4401821211@localhost:3306/eastmoney?charset=utf8")
-COLUMNS = {}
 
 
 # read file from filePath
@@ -70,24 +70,9 @@ def parseCashflowBasicObject(jsonObject):
     ENGINE.execute(sqlstr)
 
 
-def createColunnIfNotExists(column, type='double'):
-    if column in COLUMNS:
-        return
-
-    sqlstr = "select count(*) from information_schema.columns where table_schema='eastmoney' and table_name = 'cashflow' and column_name = '%s'"
-    sqlstr = sqlstr % column
-    cursor = ENGINE.execute(sqlstr)
-    (result,) = cursor.fetchone()
-    if result == 0:
-        addColumnStr = "alter table eastmoney.cashflow add column %s %s DEFAULT NULL;"
-        addColumnStr = addColumnStr % (column, type)
-        ENGINE.execute(addColumnStr)
-        COLUMNS[column] = True
-
-
 # type = 'double' or 'varchar(20)'
 def addColumnToDB(jsonObjects, column, type='double'):
-    createColunnIfNotExists(column, type)
+    dataGetter.createColunnIfNotExists('cashflow', column, type)
     for jsonObject in jsonObjects:
         value = jsonObject[column]
         secucode = tidySecucode(jsonObject["SECUCODE"])
@@ -103,7 +88,7 @@ def addColumnToDB(jsonObjects, column, type='double'):
 
 # jsonSql: {'SZ000001':{'2021-03-31':[[column1, value1],[column2,value2]]}}
 def gatherColumnInfo(jsonSql, jsonObjects, column, type='double'):
-    createColunnIfNotExists(column, type)
+    dataGetter.createColunnIfNotExists('cashflow', column, type)
     for jsonObject in jsonObjects:
         value = jsonObject[column]
         secucode = tidySecucode(jsonObject["SECUCODE"])

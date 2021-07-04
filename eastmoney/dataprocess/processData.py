@@ -5,9 +5,10 @@ import pandas as pd
 import datetime
 from sqlalchemy import create_engine
 from helper.logger import FileLogger
-import eastmoney.dataprocess.getFinancailDataFromDB as dataGetter
+import eastmoney.dataprocess.DBHelper as dataGetter
 
 
+# 仅保留年度数据
 # datadf: the data queried from database
 def keepOnlyYearData(datadf):
     if 'REPORT_DATE' not in datadf.columns:
@@ -16,6 +17,7 @@ def keepOnlyYearData(datadf):
         return datadf[datadf['REPORT_DATE'].str.find('-12-31') != -1]
 
 
+# 仅保留指定的季度的数据
 # datadf: the data queried from database, quarter: the number of quarter, Q1 = 1
 def keepOnlyQuarterData(datadf, quarter):
     if 'REPORT_DATE' not in datadf.columns:
@@ -80,6 +82,7 @@ def _genQuaterData(datadf):
     return copydf
 
 
+# 产生数据的季度同比增长比例
 # 如果columns有值，就是仅将columns里面的列做转换，默认全部转换
 # datadf is the accumulate value, will generate quarter data in this function
 def genQoQDatas(datadf, columns=[]):
@@ -124,6 +127,7 @@ def _genQosData(quarterdf):
     return copydf
 
 
+# 产生数据的年同比增长比例
 # 如果columns有值，就是仅将columns里面的列做转换，默认全部转换
 def genYoYDatas(datadf, columns=[]):
     if len(columns) == 0:
@@ -175,14 +179,17 @@ def _mapTitleName(datadf, table='income'):
     return datadfC
 
 
+# 将income table的名字变成中文名
 def mapIncomeColumnName(datadf):
     return _mapTitleName(datadf, 'income')
 
 
+# 将balance table的名字变成中文名
 def mapBalanceColumnName(datadf):
     return _mapTitleName(datadf, 'balance')
 
 
+# 将cashflow table的名字变成中文名
 def mapCashflowColumnName(datadf):
     return _mapTitleName(datadf, 'cashflow')
 
@@ -208,6 +215,7 @@ def formatData4Show(datadf, percentColumns=[]):
                 copydf[column] = datadf[column].map(formatFunc)
                 
     return copydf
+
 
 # %% main function
 datadf = dataGetter.getDataFromIncome('SZ000002', ['REPORT_DATE', 'TOTAL_OPERATE_COST', 'TOTAL_OPERATE_INCOME'])
