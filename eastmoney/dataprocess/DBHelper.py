@@ -55,7 +55,8 @@ def getDataFromFinIndex(code, columns=[], startDate=None, endDate=None):
 
 # 如果tablename里的column字段不存在，就创建它
 def createColunnIfNotExists(tableName, column, type='double'):
-    if column in COLUMNS:
+    columnIndex = "%s_%s" % (tableName, column)
+    if columnIndex in COLUMNS:
         return
 
     sqlstr = "select count(*) from information_schema.columns where table_schema='eastmoney' and table_name = '%s' and column_name = '%s'" % (tableName, column)
@@ -64,9 +65,9 @@ def createColunnIfNotExists(tableName, column, type='double'):
     if result == 0:
         addColumnStr = "alter table `eastmoney`.`%s` add column %s %s DEFAULT NULL;" % (tableName, column, type)
         ENGINE.execute(addColumnStr)
-        COLUMNS[column] = True
+        COLUMNS[columnIndex] = True
     else:
-        COLUMNS[column] = True
+        COLUMNS[columnIndex] = True
         
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ import datetime
 from sqlalchemy import create_engine
 from helper.logger import FileLogger
 import eastmoney.dataprocess.DBHelper as dataGetter
+import math
 
 
 # 仅保留年度数据
@@ -197,12 +198,20 @@ def mapCashflowColumnName(datadf):
 # 将dataframe里面的值用XX万，XX亿或者XX.X%来表示
 def formatData4Show(datadf, percentColumns=[]):
     def formatFunc(x):
-        if x >= 100000000:
+        if x is None or math.isnan(x):
+            return ""
+        elif x >= 100000000:
             return "{:.2f}亿".format(x/100000000)
         elif x >= 10000:
             return "{:.1f}万".format(x/10000)
         else:
             return "{:.1f}".format(x)
+
+    def formatPercent(x):
+        if x is None or math.isnan(x):
+            return ""
+        else:
+            return "{:.2f}%".format(x*100)
 
     copydf = datadf.copy()
     for row in datadf.itertuples():
@@ -210,7 +219,7 @@ def formatData4Show(datadf, percentColumns=[]):
             if column in TEXTCOLUMNS:
                 continue
             if column in percentColumns:
-                copydf[column] = datadf[column].map(lambda x: "{:.2f}%".format(x*100))
+                copydf[column] = datadf[column].map(formatPercent)
             else:
                 copydf[column] = datadf[column].map(formatFunc)
                 
