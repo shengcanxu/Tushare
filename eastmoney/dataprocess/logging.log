@@ -4181,3 +4181,24 @@
 [SQL: update `eastmoney`.`financialindex` set TOTAL_OPERATE_INCOME=0.30329570873681533, GROSS_PROFIT=0.20410394584315272 where SECUCODE='SZ000002' and REPORT_DATE='2021-03-31']
 (Background on this error at: http://sqlalche.me/e/13/e3q8)
 2021-07-05 12:55:30,942 <ipython-input-142-8f7b49e77638>_38(ERROR): parse income error on code: SZ000002
+2021-07-05 12:57:12,401 <ipython-input-4-8f7b49e77638>_26(INFO): running on code: SZ000002
+2021-07-05 12:57:12,515 <ipython-input-4-8f7b49e77638>_37(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'TOTAL_OPERATE_INCOME' in 'field list'")
+[SQL: update `eastmoney`.`financialindex` set TOTAL_OPERATE_INCOME=0.30329570873681533, GROSS_PROFIT=0.20410394584315272 where SECUCODE='SZ000002' and REPORT_DATE='2021-03-31']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-07-05 12:57:12,515 <ipython-input-4-8f7b49e77638>_38(ERROR): parse income error on code: SZ000002
+2021-07-05 12:58:04,571 <ipython-input-5-d442e880ba66>_26(INFO): running on code: SZ000002
+2021-07-05 12:58:04,676 <ipython-input-5-d442e880ba66>_38(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'TOTAL_OPERATE_INCOME' in 'field list'")
+[SQL: update `eastmoney`.`financialindex` set TOTAL_OPERATE_INCOME=0.30329570873681533, GROSS_PROFIT=0.20410394584315272 where SECUCODE='SZ000002' and REPORT_DATE='2021-03-31']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-07-05 12:58:04,678 <ipython-input-5-d442e880ba66>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 13:00:13,018 <ipython-input-6-f3804af51602>_27(INFO): running on code: SZ000002
+2021-07-05 13:00:19,662 <ipython-input-6-f3804af51602>_39(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'TOTAL_OPERATE_INCOME' in 'field list'")
+[SQL: update `eastmoney`.`financialindex` set TOTAL_OPERATE_INCOME=0.30329570873681533, GROSS_PROFIT=0.20410394584315272 where SECUCODE='SZ000002' and REPORT_DATE='2021-03-31']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-07-05 13:00:19,663 <ipython-input-6-f3804af51602>_40(ERROR): parse income error on code: SZ000002
+2021-07-05 13:00:29,522 <ipython-input-9-f3804af51602>_27(INFO): running on code: SZ000002
+2021-07-05 13:04:20,167 <ipython-input-9-f3804af51602>_39(ERROR): (pymysql.err.OperationalError) (1054, "Unknown column 'TOTAL_OPERATE_INCOME' in 'field list'")
+[SQL: update `eastmoney`.`financialindex` set TOTAL_OPERATE_INCOME=0.30329570873681533, GROSS_PROFIT=0.20410394584315272 where SECUCODE='SZ000002' and REPORT_DATE='2021-03-31']
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-07-05 13:04:20,168 <ipython-input-9-f3804af51602>_40(ERROR): parse income error on code: SZ000002
+2021-07-05 13:04:40,649 <ipython-input-12-d442e880ba66>_26(INFO): running on code: SZ000002

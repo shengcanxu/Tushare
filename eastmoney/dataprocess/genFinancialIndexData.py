@@ -83,18 +83,124 @@ def gatherIncomeYoY(jsonSql, code, incomedf):
 
 
 # 获得income表的毛利率
-def gatherGrossProfit(jsonSql, code, incomedf):
-    dataGetter.createColunnIfNotExists('financialindex', 'GROSS_PROFIT', type='double')
-    
-    def calcGrossProfit(x):
-        return x[2] / float(x[1])
+def gatherGrossProfitRate(jsonSql, code, incomedf):
+    dataGetter.createColunnIfNotExists('financialindex', 'GROSS_PROFIT_RATE', type='double')
 
-    datadf = incomedf[['REPORT_DATE', 'OPERATE_INCOME', 'OPERATE_COST']]
+    datadf = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME', 'OPERATE_COST']]
     for index, item in datadf.iterrows():
-        datadf.loc[index, 'GROSS_PROFIT'] = 1.0 - item['OPERATE_COST'] / float(item['OPERATE_INCOME'])
+        datadf.loc[index, 'GROSS_PROFIT_RATE'] = 1.0 - item['OPERATE_COST'] / float(item['TOTAL_OPERATE_INCOME'])
     
-    grofitProfit = datadf[['REPORT_DATE', 'GROSS_PROFIT']]
-    composeJsonSql(jsonSql, code, grofitProfit)
+    rate = datadf[['REPORT_DATE', 'GROSS_PROFIT_RATE']]
+    composeJsonSql(jsonSql, code, rate)
+
+
+# 获得净利率
+def gatherNetProfitRate(jsonSql, code, incomedf):
+    dataGetter.createColunnIfNotExists('financialindex', 'NETPROFIT_RATE', type='double')
+    
+    datadf = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME', 'NETPROFIT']]
+    for index, item in datadf.iterrows():
+        datadf.loc[index, 'NETPROFIT_RATE'] = item['NETPROFIT'] / float(item['TOTAL_OPERATE_INCOME'])
+    
+    rate = datadf[['REPORT_DATE', 'NETPROFIT_RATE']]
+    composeJsonSql(jsonSql, code, rate)
+
+
+# 获得运营利润率
+def gatherOperateProfitRate(jsonSql, code, incomedf):
+    dataGetter.createColunnIfNotExists('financialindex', 'OPERATE_PROFIT_RATE', type='double')
+    
+    datadf = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME', 'OPERATE_PROFIT']]
+    for index, item in datadf.iterrows():
+        datadf.loc[index, 'OPERATE_PROFIT_RATE'] = item['OPERATE_PROFIT'] / float(item['TOTAL_OPERATE_INCOME'])
+    
+    rate = datadf[['REPORT_DATE', 'OPERATE_PROFIT_RATE']]
+    composeJsonSql(jsonSql, code, rate)
+
+
+# 获得利润率
+def gatherProfitRate(jsonSql, code, incomedf):
+    dataGetter.createColunnIfNotExists('financialindex', 'PROFIT_RATE', type='double')
+    
+    datadf = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME', 'TOTAL_PROFIT']]
+    for index, item in datadf.iterrows():
+        datadf.loc[index, 'PROFIT_RATE'] = item['TOTAL_PROFIT'] / float(item['TOTAL_OPERATE_INCOME'])
+    
+    rate = datadf[['REPORT_DATE', 'PROFIT_RATE']]
+    composeJsonSql(jsonSql, code, rate)
+
+
+# 获得营业税占收入比率
+def gatherOperateTaxRate(jsonSql, code, incomedf):
+    dataGetter.createColunnIfNotExists('financialindex', 'OPERATE_TAX_RATE', type='double')
+    
+    datadf = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME', 'OPERATE_TAX_ADD']]
+    for index, item in datadf.iterrows():
+        datadf.loc[index, 'OPERATE_TAX_RATE'] = item['OPERATE_TAX_ADD'] / float(item['TOTAL_OPERATE_INCOME'])
+    
+    rate = datadf[['REPORT_DATE', 'OPERATE_TAX_RATE']]
+    composeJsonSql(jsonSql, code, rate)
+
+
+# 获得营销成本占收入比率
+def gatherSalesRate(jsonSql, code, incomedf):
+    dataGetter.createColunnIfNotExists('financialindex', 'SALES_RATE', type='double')
+    
+    datadf = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME', 'SALE_EXPENSE']]
+    for index, item in datadf.iterrows():
+        datadf.loc[index, 'SALES_RATE'] = item['SALE_EXPENSE'] / float(item['TOTAL_OPERATE_INCOME'])
+    
+    rate = datadf[['REPORT_DATE', 'SALES_RATE']]
+    composeJsonSql(jsonSql, code, rate)
+
+
+# 获得管理成本占收入比率
+def gatherManageRate(jsonSql, code, incomedf):
+    dataGetter.createColunnIfNotExists('financialindex', 'MANAGE_RATE', type='double')
+    
+    datadf = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME', 'MANAGE_EXPENSE']]
+    for index, item in datadf.iterrows():
+        datadf.loc[index, 'MANAGE_RATE'] = item['MANAGE_EXPENSE'] / float(item['TOTAL_OPERATE_INCOME'])
+    
+    rate = datadf[['REPORT_DATE', 'MANAGE_RATE']]
+    composeJsonSql(jsonSql, code, rate)
+
+
+# 获得财务成本占收入比率
+def gatherFinanceRate(jsonSql, code, incomedf):
+    dataGetter.createColunnIfNotExists('financialindex', 'FINANCE_RATE', type='double')
+    
+    datadf = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME', 'FINANCE_EXPENSE']]
+    for index, item in datadf.iterrows():
+        datadf.loc[index, 'FINANCE_RATE'] = item['FINANCE_EXPENSE'] / float(item['TOTAL_OPERATE_INCOME'])
+    
+    rate = datadf[['REPORT_DATE', 'FINANCE_RATE']]
+    composeJsonSql(jsonSql, code, rate)
+
+
+# 获得研发成本占收入比率
+def gatherResearchRate(jsonSql, code, incomedf):
+    dataGetter.createColunnIfNotExists('financialindex', 'RESEARCH_RATE', type='double')
+    
+    datadf = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME', 'RESEARCH_EXPENSE']]
+    for index, item in datadf.iterrows():
+        datadf.loc[index, 'RESEARCH_RATE'] = item['RESEARCH_EXPENSE'] / float(item['TOTAL_OPERATE_INCOME'])
+    
+    rate = datadf[['REPORT_DATE', 'RESEARCH_RATE']]
+    composeJsonSql(jsonSql, code, rate)
+
+
+# 获得所得税占收入比率
+def gatherIncomeTaxRate(jsonSql, code, incomedf):
+    dataGetter.createColunnIfNotExists('financialindex', 'INCOME_TAX_RATE', type='double')
+    
+    datadf = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME', 'INCOME_TAX']]
+    for index, item in datadf.iterrows():
+        datadf.loc[index, 'INCOME_TAX_RATE'] = item['INCOME_TAX'] / float(item['TOTAL_OPERATE_INCOME'])
+    
+    rate = datadf[['REPORT_DATE', 'INCOME_TAX_RATE']]
+    composeJsonSql(jsonSql, code, rate)
+
 
 
 # %% __main__
@@ -128,8 +234,17 @@ for item in stockList:
         
         jsonSql = {}
 
-        gatherIncomeYoY(jsonSql, code, incomedf)
-        gatherGrossProfit(jsonSql, code, incomedf)
+        # gatherIncomeYoY(jsonSql, code, incomedf)
+        # gatherGrossProfitRate(jsonSql, code, incomedf)
+        # gatherNetProfitRate(jsonSql, code, incomedf)
+        # gatherOperateProfitRate(jsonSql, code, incomedf)
+        # gatherProfitRate(jsonSql, code, incomedf)
+        # gatherOperateTaxRate(jsonSql, code, incomedf)
+        # gatherSalesRate(jsonSql, code, incomedf)
+        # gatherManageRate(jsonSql, code, incomedf)
+        # gatherFinanceRate(jsonSql, code, incomedf)
+        # gatherResearchRate(jsonSql, code, incomedf)
+        gatherIncomeTaxRate(jsonSql, code, incomedf)
 
         executeUpdateSql(jsonSql)
 
