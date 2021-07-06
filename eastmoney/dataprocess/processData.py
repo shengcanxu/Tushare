@@ -144,7 +144,6 @@ def genYoYDatas(datadf, columns=[]):
         df = datadf[['REPORT_DATE', col]]
         df = _genYoYData(df)
         newDF[col] = df[col]
-
     return newDF
 
 
@@ -162,6 +161,39 @@ def _genYoYData(datadf):
             copydf.iloc[index, 1] = None
 
     return copydf
+
+
+# 计算年期间平均值(期初值+期末值)/2
+def genYearAvgData(datadf, columns=[]):
+    if len(columns) == 0:
+        columns = datadf.columns
+    if 'REPORT_DATE' not in columns:
+        FileLogger.error("REPORT_DATE must be in datadf!")
+
+    newDF = pd.DataFrame({})
+    for col in columns:
+        if col in TEXTCOLUMNS:
+            newDF[col] = datadf[col]
+            continue
+        df = datadf[['REPORT_DATE', col]]
+        df = _genYearAvgData(df)
+        newDF[col] = df[col]
+    return newDF
+
+
+def _genYearAvgData(datadf):
+    def add1YearFunc(x):
+        date = datetime.datetime.strptime(x, "%Y-%m-%d")
+        return '%d-%02d-%02d' % (date.year+1, date.month, date.day)
+
+    datadf2 = datadf.copy()
+    datadf2.columns = ['REPORT_DATE', 'LAST']
+    datadf2['REPORT_DATE'] = datadf2['REPORT_DATE'].map(add1YearFunc)
+    mergedb = pd.merge(datadf, datadf2, how='left', on='REPORT_DATE')
+    print(mergedb)
+    for index, row in mergedb.iterrows():
+        mergedb.iloc[index, 1] = (row[1] + row[2]) / 2.0 
+    return mergedb.iloc[:, 0:2]
 
 
 # 将table的名字变成中文名
@@ -205,7 +237,7 @@ def formatData4Show(datadf, percentColumns=[]):
         elif x >= 10000:
             return "{:.1f}万".format(x/10000)
         else:
-            return "{:.1f}".format(x)
+            return "{:.2f}".format(x)
 
     def formatPercent(x):
         if x is None or math.isnan(x):
@@ -226,6 +258,7 @@ def formatData4Show(datadf, percentColumns=[]):
     return copydf
 
 
+
 # %% main function
 datadf = dataGetter.getDataFromIncome('SZ000002', ['REPORT_DATE', 'TOTAL_OPERATE_COST', 'TOTAL_OPERATE_INCOME'])
 print(datadf)
@@ -238,4 +271,9 @@ newDF = formatData4Show(genYoYDatas(datadf), percentColumns=['TOTAL_OPERATE_COST
 print(newDF)
 
 # %%
+datadf
 
+# %%
+newdf = genYearAvgData(datadf)
+newdf
+# %%
