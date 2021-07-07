@@ -192,9 +192,9 @@ def getOperateFeeRate(code, incomedf):
 
 # 获得资产周转率
 def getAssetTurnoverRate(code, balancedf, incomedf):
-    datadf = pd.merge(balancedf[['REPORT_DATE', 'TOTAL_ASSETS']], incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME']], how='left', on='REPORT_DATE')
-    for index, item in datadf.iterrows():
-        datadf.loc[index, 'ASSET_TURNOVER_RATE'] = item['TOTAL_OPERATE_INCOME'] / float(item['TOTAL_ASSETS'])
+    balance = processor.genYearAvgData(balancedf[['REPORT_DATE', 'TOTAL_ASSETS']])
+    datadf = pd.merge(balance, incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME']], how='left', on='REPORT_DATE')
+    datadf['ASSET_TURNOVER_RATE'] = datadf.apply(lambda x: x['TOTAL_OPERATE_INCOME'] / float(x['TOTAL_ASSETS']), axis=1)
     rate = datadf[['REPORT_DATE', 'ASSET_TURNOVER_RATE']]
     return rate
 
@@ -218,24 +218,24 @@ def getEquityMultiplier(code, balancedf):
 
 # 获得净资产收益率ROE
 def getROE(code, balancedf, incomedf):
-    netProfitRate = getNetProfitRate(code, incomedf)
-    assetTurnoverRate = getAssetTurnoverRate(code, balancedf, incomedf)
-    multiplier = getEquityMultiplier(code, balancedf)
-    datadf = pd.merge(netProfitRate, assetTurnoverRate, how='left', on='REPORT_DATE')
-    datadf = pd.merge(datadf, multiplier, how='left', on='REPORT_DATE')
-    for index, item in datadf.iterrows():
-        datadf.loc[index, 'ROE'] = item['NETPROFIT_RATE'] * item['ASSET_TURNOVER_RATE'] * item['EQUITY_MULTIPLIER']
+    balance = processor.genYearAvgData(balancedf[['REPORT_DATE', 'TOTAL_EQUITY']])
+    datadf = pd.merge(balance, incomedf[['REPORT_DATE', 'NETPROFIT']], how='left', on='REPORT_DATE')
+    datadf['ROE'] = datadf.apply(lambda x: x['NETPROFIT'] / float(x['TOTAL_EQUITY']), axis=1)
     rate = datadf[['REPORT_DATE', 'ROE']]
     return rate
 
 
 # 获得资产收益率ROA
 def getROA(code, balancedf, incomedf):
-    netProfitRate = getNetProfitRate(code, incomedf)
-    assetTurnoverRate = getAssetTurnoverRate(code, balancedf, incomedf)
-    datadf = pd.merge(netProfitRate, assetTurnoverRate, how='left', on='REPORT_DATE')
-    for index, item in datadf.iterrows():
-        datadf.loc[index, 'ROA'] = item['NETPROFIT_RATE'] * item['ASSET_TURNOVER_RATE']
+    # netProfitRate = getNetProfitRate(code, incomedf)
+    # assetTurnoverRate = getAssetTurnoverRate(code, balancedf, incomedf)
+    # datadf = pd.merge(netProfitRate, assetTurnoverRate, how='left', on='REPORT_DATE')
+    # datadf['ROA'] = datadf.apply(lambda x: x['NETPROFIT_RATE'] * x['ASSET_TURNOVER_RATE'], axis=1)
+    # rate = datadf[['REPORT_DATE', 'ROA']]
+    # return rate
+    balance = processor.genYearAvgData(balancedf[['REPORT_DATE', 'TOTAL_ASSETS']])
+    datadf = pd.merge(balance, incomedf[['REPORT_DATE', 'NETPROFIT']], how='left', on='REPORT_DATE')
+    datadf['ROA'] = datadf.apply(lambda x: x['NETPROFIT'] / float(x['TOTAL_ASSETS']), axis=1)
     rate = datadf[['REPORT_DATE', 'ROA']]
     return rate
 
@@ -260,22 +260,24 @@ def getNetAssetLiabRate(code, balancedf):
 
 # 获得应收账款周转率: 营业收入 / ((期初应收账款-期末应收账款)/2)
 def getReceivableTurnoverRate(code, balancedf, incomedf):
-    def add1YearFunc(x):
-        date = datetime.datetime.strptime(x, "%Y-%m-%d")
-        return '%d-%02d-%02d' % (date.year+1, date.month, date.day)
-
     income = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME']]
-    balance = balancedf[['REPORT_DATE', 'NOTE_ACCOUNTS_RECE']]
-    balance2 = balance.rename(columns={"NOTE_ACCOUNTS_RECE": "NOTE_ACCOUNTS_RECE2"})
-    balance2['REPORT_DATE'] = balance2['REPORT_DATE'].map(add1YearFunc)
-    datadf = pd.merge(income, balance, how='left', on='REPORT_DATE')
-    datadf = pd.merge(datadf, balance2, how='left', on='REPORT_DATE')
-    print(datadf)
-    for index, item in datadf.iterrows():
-        datadf.loc[index, 'RECE_TURNOVER_RATE'] = item['TOTAL_OPERATE_INCOME'] / ((item['NOTE_ACCOUNTS_RECE'] + item['NOTE_ACCOUNTS_RECE2']) / 2.0)
+    avgbalance = processor.genYearAvgData(balancedf[['REPORT_DATE', 'NOTE_ACCOUNTS_RECE']])
+    datadf = pd.merge(income, avgbalance, how='left', on='REPORT_DATE')
+
+    datadf['RECE_TURNOVER_RATE'] = datadf.apply(lambda x: x['TOTAL_OPERATE_INCOME'] / x['NOTE_ACCOUNTS_RECE'], axis=1)
     rate = datadf[['REPORT_DATE', 'RECE_TURNOVER_RATE']]
     return rate
 
+
+# 获得应付账款周转率: (期末.营业成本 + 期末.存货 - 期初.存货) / ((期末.应付票据及应付账款 + 期初.应付票据及应付账款) / 2)
+def getReceivableTurnoverRate(code, balancedf, incomedf):
+    income = incomedf[['REPORT_DATE', 'TOTAL_OPERATE_INCOME']]
+    avgbalance = processor.genYearAvgData(balancedf[['REPORT_DATE', 'NOTE_ACCOUNTS_RECE']])
+    datadf = pd.merge(income, avgbalance, how='left', on='REPORT_DATE')
+
+    datadf['RECE_TURNOVER_RATE'] = datadf.apply(lambda x: x['TOTAL_OPERATE_INCOME'] / x['NOTE_ACCOUNTS_RECE'], axis=1)
+    rate = datadf[['REPORT_DATE', 'RECE_TURNOVER_RATE']]
+    return rate
 
 
 
@@ -321,7 +323,7 @@ for item in stockList:
         # rate = getROA(code, balancedf, incomedf)
         # rate = getCurrentAssetLiabRate(code, balancedf)
         # rate = getNetAssetLiabRate(code, balancedf)
-        rate = getReceivableTurnoverRate(code, balancedf, incomedf)
+        # rate = getReceivableTurnoverRate(code, balancedf, incomedf)
 
         formateddf = processor.formatData4Show(rate, percentColumns=rate.columns)
         # formateddf = processor.formatData4Show(rate)

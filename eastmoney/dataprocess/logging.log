@@ -4202,3 +4202,162 @@
 (Background on this error at: http://sqlalche.me/e/13/e3q8)
 2021-07-05 13:04:20,168 <ipython-input-9-f3804af51602>_40(ERROR): parse income error on code: SZ000002
 2021-07-05 13:04:40,649 <ipython-input-12-d442e880ba66>_26(INFO): running on code: SZ000002
+2021-07-05 13:05:59,003 <ipython-input-13-8f7b49e77638>_26(INFO): running on code: SZ000002
+2021-07-05 13:13:03,720 <ipython-input-16-20bbbcfe15ef>_26(INFO): running on code: SZ000002
+2021-07-05 13:13:03,748 <ipython-input-16-20bbbcfe15ef>_37(ERROR): 'OPERATE_INCOME'
+2021-07-05 13:13:03,750 <ipython-input-16-20bbbcfe15ef>_38(ERROR): parse income error on code: SZ000002
+2021-07-05 13:14:38,709 <ipython-input-19-20bbbcfe15ef>_26(INFO): running on code: SZ000002
+2021-07-05 13:16:52,579 <ipython-input-22-2546c1e8200d>_26(INFO): running on code: SZ000002
+2021-07-05 13:16:52,611 <ipython-input-22-2546c1e8200d>_38(ERROR): 'NETPROFIT'
+2021-07-05 13:16:52,613 <ipython-input-22-2546c1e8200d>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 13:17:22,011 <ipython-input-25-2546c1e8200d>_26(INFO): running on code: SZ000002
+2021-07-05 13:17:22,014 <ipython-input-25-2546c1e8200d>_38(ERROR): 'OPERATE_COST'
+2021-07-05 13:17:22,015 <ipython-input-25-2546c1e8200d>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 13:18:06,187 <ipython-input-28-2546c1e8200d>_26(INFO): running on code: SZ000002
+2021-07-05 13:23:22,009 <ipython-input-31-50ad52e1f5c6>_26(INFO): running on code: SZ000002
+2021-07-05 13:29:06,389 <ipython-input-34-18157c596452>_26(INFO): running on code: SZ000002
+2021-07-05 13:33:38,388 <ipython-input-37-e297b9e5bb36>_26(INFO): running on code: SZ000002
+2021-07-05 14:38:49,399 <ipython-input-40-5d903f117b15>_26(INFO): running on code: SZ000002
+2021-07-05 14:42:59,164 <ipython-input-43-ce2e8079d856>_26(INFO): running on code: SZ000002
+2021-07-05 16:53:56,335 <ipython-input-47-5ad6e6204f2a>_26(INFO): running on code: SZ000002
+2021-07-05 16:54:50,149 <ipython-input-48-4c6bcb0e1cda>_26(INFO): running on code: SZ000002
+2021-07-05 16:57:53,799 <ipython-input-49-0d909c1b6265>_14(INFO): running on code: SZ000002
+2021-07-05 16:58:32,837 <ipython-input-50-688145c00576>_14(INFO): running on code: SZ000002
+2021-07-05 16:58:51,292 <ipython-input-51-5e95fa577ede>_14(INFO): running on code: SZ000002
+2021-07-05 17:05:05,787 <ipython-input-54-bc2d2b0d6132>_14(INFO): running on code: SZ000002
+2021-07-05 17:05:58,932 <ipython-input-55-ea5ffe5f3cce>_14(INFO): running on code: SZ000002
+2021-07-05 17:06:05,943 <ipython-input-58-ea5ffe5f3cce>_14(INFO): running on code: SZ000002
+2021-07-05 17:07:15,914 <ipython-input-61-ea5ffe5f3cce>_14(INFO): running on code: SZ000002
+2021-07-05 17:09:33,702 <ipython-input-64-ea5ffe5f3cce>_14(INFO): running on code: SZ000002
+2021-07-05 17:16:25,496 <ipython-input-67-ea5ffe5f3cce>_14(INFO): running on code: SZ000002
+2021-07-05 17:16:47,975 <ipython-input-70-ea5ffe5f3cce>_14(INFO): running on code: SZ000002
+2021-07-05 17:19:09,941 <ipython-input-73-ea5ffe5f3cce>_14(INFO): running on code: SZ000002
+2021-07-05 17:25:01,823 <ipython-input-76-ea5ffe5f3cce>_14(INFO): running on code: SZ000002
+2021-07-05 17:25:31,654 <ipython-input-79-df647da15c86>_14(INFO): running on code: SZ000002
+2021-07-05 17:25:31,718 <ipython-input-79-df647da15c86>_38(ERROR): 'NoneType' object has no attribute 'copy'
+2021-07-05 17:25:31,719 <ipython-input-79-df647da15c86>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 17:25:54,128 <ipython-input-80-375a05728246>_14(INFO): running on code: SZ000002
+2021-07-05 17:25:54,202 <ipython-input-80-375a05728246>_38(ERROR): 'NoneType' object has no attribute 'columns'
+2021-07-05 17:25:54,203 <ipython-input-80-375a05728246>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 17:33:39,882 <ipython-input-83-375a05728246>_14(INFO): running on code: SZ000002
+2021-07-05 17:33:39,927 <ipython-input-83-375a05728246>_38(ERROR): ('REPORT_DATE', 'OPERATE_FEE_RATE')
+2021-07-05 17:33:39,929 <ipython-input-83-375a05728246>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 17:35:31,189 <ipython-input-86-375a05728246>_14(INFO): running on code: SZ000002
+2021-07-05 17:35:31,222 <ipython-input-86-375a05728246>_38(ERROR): ('REPORT_DATE', 'OPERATE_FEE_RATE')
+2021-07-05 17:35:31,224 <ipython-input-86-375a05728246>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 17:37:07,005 <ipython-input-89-375a05728246>_14(INFO): running on code: SZ000002
+2021-07-05 17:37:07,035 <ipython-input-89-375a05728246>_38(ERROR): ('REPORT_DATE', 'OPERATE_FEE_RATE')
+2021-07-05 17:37:07,036 <ipython-input-89-375a05728246>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 17:37:51,577 <ipython-input-92-375a05728246>_14(INFO): running on code: SZ000002
+2021-07-05 17:37:51,605 <ipython-input-92-375a05728246>_38(ERROR): ('REPORT_DATE', 'OPERATE_FEE_RATE')
+2021-07-05 17:37:51,607 <ipython-input-92-375a05728246>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 17:38:45,128 <ipython-input-94-052c7439e991>_14(INFO): running on code: SZ000002
+2021-07-05 17:39:13,290 <ipython-input-97-375a05728246>_14(INFO): running on code: SZ000002
+2021-07-05 17:39:13,320 <ipython-input-97-375a05728246>_38(ERROR): ('REPORT_DATE', 'OPERATE_FEE_RATE')
+2021-07-05 17:39:13,322 <ipython-input-97-375a05728246>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 17:39:26,456 <ipython-input-100-375a05728246>_14(INFO): running on code: SZ000002
+2021-07-05 17:39:26,486 <ipython-input-100-375a05728246>_38(ERROR): ('REPORT_DATE', 'OPERATE_FEE_RATE')
+2021-07-05 17:39:26,488 <ipython-input-100-375a05728246>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 17:39:42,568 <ipython-input-3-375a05728246>_14(INFO): running on code: SZ000002
+2021-07-05 17:39:42,609 <ipython-input-3-375a05728246>_38(ERROR): ('REPORT_DATE', 'OPERATE_FEE_RATE')
+2021-07-05 17:39:42,611 <ipython-input-3-375a05728246>_39(ERROR): parse income error on code: SZ000002
+2021-07-05 17:40:31,072 <ipython-input-6-375a05728246>_14(INFO): running on code: SZ000002
+2021-07-05 19:24:49,747 <ipython-input-9-1d221d02b4c2>_14(INFO): running on code: SZ000002
+2021-07-05 19:24:49,786 <ipython-input-9-1d221d02b4c2>_41(ERROR): "['TOTAL_ASSETS'] not in index"
+2021-07-05 19:24:49,788 <ipython-input-9-1d221d02b4c2>_42(ERROR): parse income error on code: SZ000002
+2021-07-05 19:25:23,972 <ipython-input-10-818097e26788>_14(INFO): running on code: SZ000002
+2021-07-05 19:26:23,314 <ipython-input-13-ec298dc3ee53>_14(INFO): running on code: SZ000002
+2021-07-05 19:26:48,443 <ipython-input-14-818097e26788>_14(INFO): running on code: SZ000002
+2021-07-05 19:28:37,575 <ipython-input-17-818097e26788>_14(INFO): running on code: SZ000002
+2021-07-05 19:29:59,781 <ipython-input-18-818097e26788>_14(INFO): running on code: SZ000002
+2021-07-05 20:31:03,377 <ipython-input-21-725752af4db9>_14(INFO): running on code: SZ000002
+2021-07-05 20:39:30,302 <ipython-input-24-53574e11dec3>_14(INFO): running on code: SZ000002
+2021-07-05 20:40:38,247 <ipython-input-25-5685ecca7353>_14(INFO): running on code: SZ000002
+2021-07-05 20:40:45,071 <ipython-input-28-5685ecca7353>_14(INFO): running on code: SZ000002
+2021-07-05 20:40:58,888 <ipython-input-2-5685ecca7353>_14(INFO): running on code: SZ000002
+2021-07-05 20:40:58,923 <ipython-input-2-5685ecca7353>_43(ERROR): name 'getEquityMultiplier' is not defined
+2021-07-05 20:40:58,924 <ipython-input-2-5685ecca7353>_44(ERROR): parse income error on code: SZ000002
+2021-07-05 20:41:03,546 <ipython-input-6-5685ecca7353>_14(INFO): running on code: SZ000002
+2021-07-05 20:45:26,261 <ipython-input-9-372bfbe1527d>_14(INFO): running on code: SZ000002
+2021-07-05 20:45:26,321 <ipython-input-9-372bfbe1527d>_44(ERROR): 'NoneType' object has no attribute 'copy'
+2021-07-05 20:45:26,322 <ipython-input-9-372bfbe1527d>_45(ERROR): parse income error on code: SZ000002
+2021-07-05 20:47:52,496 <ipython-input-12-372bfbe1527d>_14(INFO): running on code: SZ000002
+2021-07-05 20:48:06,881 <ipython-input-13-ac94d9451e37>_14(INFO): running on code: SZ000002
+2021-07-06 10:03:17,709 <ipython-input-16-ac94d9451e37>_14(INFO): running on code: SZ000002
+2021-07-06 10:03:17,714 DBHelper.py_18(ERROR): (pymysql.err.OperationalError) (2006, "MySQL server has gone away (ConnectionAbortedError(10053, '你的主机中的软件中止了一个已建立的连接。', None, 10053, None))")
+[SQL: select * from  `eastmoney`.`income` where SECUCODE = 'SZ000002' and REPORT_DATE between '1990-12-10' and '2021-07-06' order by REPORT_DATE desc]
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-07-06 10:03:17,716 DBHelper.py_19(ERROR): read from db error!
+2021-07-06 10:03:17,717 <ipython-input-16-ac94d9451e37>_44(ERROR): 'NoneType' object has no attribute 'columns'
+2021-07-06 10:03:17,718 <ipython-input-16-ac94d9451e37>_45(ERROR): parse income error on code: SZ000002
+2021-07-06 10:04:25,109 <ipython-input-19-ac94d9451e37>_14(INFO): running on code: SZ000002
+2021-07-06 10:04:25,221 <ipython-input-19-ac94d9451e37>_44(ERROR): 'NETPROFIT'
+2021-07-06 10:04:25,223 <ipython-input-19-ac94d9451e37>_45(ERROR): parse income error on code: SZ000002
+2021-07-06 10:06:44,003 <ipython-input-22-ac94d9451e37>_14(INFO): running on code: SZ000002
+2021-07-06 10:06:44,083 <ipython-input-22-ac94d9451e37>_44(ERROR): 'NETPROFIT'
+2021-07-06 10:06:44,084 <ipython-input-22-ac94d9451e37>_45(ERROR): parse income error on code: SZ000002
+2021-07-06 10:08:38,673 <ipython-input-25-ac94d9451e37>_14(INFO): running on code: SZ000002
+2021-07-06 10:21:12,670 <ipython-input-26-200760c8c78b>_14(INFO): running on code: SZ000002
+2021-07-06 10:21:39,027 <ipython-input-27-169c48e5de9f>_14(INFO): running on code: SZ000002
+2021-07-06 10:34:46,256 <ipython-input-28-a888793a888f>_14(INFO): running on code: SZ000002
+2021-07-06 10:36:05,234 <ipython-input-29-1ddccbdc5b37>_14(INFO): running on code: SZ000002
+2021-07-06 10:39:20,018 <ipython-input-30-ac94d9451e37>_14(INFO): running on code: SZ000002
+2021-07-06 10:41:42,069 <ipython-input-33-ac94d9451e37>_14(INFO): running on code: SZ000002
+2021-07-06 10:42:02,179 <ipython-input-36-ac94d9451e37>_14(INFO): running on code: SZ000002
+2021-07-06 10:58:01,706 <ipython-input-37-886288e08e75>_15(INFO): running on code: SZ300144
+2021-07-06 10:58:24,002 <ipython-input-40-886288e08e75>_15(INFO): running on code: SZ300144
+2021-07-06 10:59:59,811 <ipython-input-41-79f144c04231>_15(INFO): running on code: SZ300144
+2021-07-06 14:10:08,737 <ipython-input-44-a495470164fa>_15(INFO): running on code: SZ300144
+2021-07-06 14:13:48,354 <ipython-input-47-0dbc154076a9>_15(INFO): running on code: SZ300144
+2021-07-06 14:14:07,622 <ipython-input-48-9a070b6efa74>_15(INFO): running on code: SZ300144
+2021-07-06 14:14:36,569 <ipython-input-49-de5758018064>_15(INFO): running on code: SZ000002
+2021-07-06 14:23:01,475 <ipython-input-52-47720679d83c>_15(INFO): running on code: SZ000002
+2021-07-06 14:25:11,897 <ipython-input-55-3f5126040808>_15(INFO): running on code: SZ000002
+2021-07-06 16:02:11,652 <ipython-input-58-433aa7080cf2>_15(INFO): running on code: SZ000002
+2021-07-06 16:02:11,683 <ipython-input-58-433aa7080cf2>_49(ERROR): 'ACCOUNTS_PAYABLE'
+2021-07-06 16:02:11,684 <ipython-input-58-433aa7080cf2>_50(ERROR): parse income error on code: SZ000002
+2021-07-06 16:03:02,457 <ipython-input-61-433aa7080cf2>_15(INFO): running on code: SZ000002
+2021-07-06 16:03:02,486 <ipython-input-61-433aa7080cf2>_49(ERROR): 'ACCOUNTS_PAYABLE'
+2021-07-06 16:03:02,486 <ipython-input-61-433aa7080cf2>_50(ERROR): parse income error on code: SZ000002
+2021-07-06 16:03:18,711 <ipython-input-64-433aa7080cf2>_15(INFO): running on code: SZ000002
+2021-07-06 16:03:18,741 <ipython-input-64-433aa7080cf2>_49(ERROR): 'ACCOUNTS_PAYABLE'
+2021-07-06 16:03:18,742 <ipython-input-64-433aa7080cf2>_50(ERROR): parse income error on code: SZ000002
+2021-07-06 16:03:41,816 <ipython-input-67-433aa7080cf2>_15(INFO): running on code: SZ000002
+2021-07-06 16:03:41,849 <ipython-input-67-433aa7080cf2>_49(ERROR): 'ACCOUNTS_PAYABLE'
+2021-07-06 16:03:41,851 <ipython-input-67-433aa7080cf2>_50(ERROR): parse income error on code: SZ000002
+2021-07-06 16:06:15,256 <ipython-input-70-433aa7080cf2>_15(INFO): running on code: SZ000002
+2021-07-06 16:06:15,293 <ipython-input-70-433aa7080cf2>_49(ERROR): 'ACCOUNTS_PAYABLE'
+2021-07-06 16:06:15,294 <ipython-input-70-433aa7080cf2>_50(ERROR): parse income error on code: SZ000002
+2021-07-06 16:07:19,571 <ipython-input-73-433aa7080cf2>_15(INFO): running on code: SZ000002
+2021-07-06 16:07:19,605 <ipython-input-73-433aa7080cf2>_49(ERROR): 'ACCOUNTS_PAYABLE'
+2021-07-06 16:07:19,607 <ipython-input-73-433aa7080cf2>_50(ERROR): parse income error on code: SZ000002
+2021-07-06 16:07:58,467 <ipython-input-76-433aa7080cf2>_15(INFO): running on code: SZ000002
+2021-07-06 16:08:35,624 <ipython-input-79-433aa7080cf2>_15(INFO): running on code: SZ000002
+2021-07-06 16:14:04,423 <ipython-input-82-41ab5ad8df9c>_15(INFO): running on code: SZ000002
+2021-07-06 16:26:30,720 <ipython-input-85-41ab5ad8df9c>_15(INFO): running on code: SZ000002
+2021-07-06 17:00:12,379 <ipython-input-124-41ab5ad8df9c>_15(INFO): running on code: SZ000002
+2021-07-06 17:02:41,495 <ipython-input-127-41ab5ad8df9c>_15(INFO): running on code: SZ000002
+2021-07-06 17:02:41,525 <ipython-input-127-41ab5ad8df9c>_49(ERROR): module 'eastmoney.dataprocess.processData' has no attribute 'genYearAvgData'
+2021-07-06 17:02:41,526 <ipython-input-127-41ab5ad8df9c>_50(ERROR): parse income error on code: SZ000002
+2021-07-06 17:03:20,253 <ipython-input-3-41ab5ad8df9c>_15(INFO): running on code: SZ000002
+2021-07-06 17:03:49,309 <ipython-input-4-41ab5ad8df9c>_15(INFO): running on code: SZ000002
+2021-07-06 17:04:01,449 <ipython-input-5-0b2e200d06e1>_15(INFO): running on code: SZ000002
+2021-07-06 17:04:30,123 <ipython-input-3-41ab5ad8df9c>_15(INFO): running on code: SZ000002
+2021-07-06 17:10:14,596 <ipython-input-4-90f2f7ad8125>_15(INFO): running on code: SZ000002
+2021-07-06 17:27:59,373 <ipython-input-30-41ab5ad8df9c>_15(INFO): running on code: SZ000002
+2021-07-06 17:31:02,642 <ipython-input-33-41ab5ad8df9c>_15(INFO): running on code: SZ000002
+2021-07-06 17:39:19,912 <ipython-input-36-5aca55cb4abc>_15(INFO): running on code: SZ000002
+2021-07-06 17:39:19,941 processData.py_171(ERROR): REPORT_DATE must be in datadf!
+2021-07-06 17:39:19,982 <ipython-input-36-5aca55cb4abc>_49(ERROR): 'NETPROFIT'
+2021-07-06 17:39:19,983 <ipython-input-36-5aca55cb4abc>_50(ERROR): parse income error on code: SZ000002
+2021-07-06 17:40:39,950 <ipython-input-39-5aca55cb4abc>_15(INFO): running on code: SZ000002
+2021-07-06 17:40:39,976 processData.py_171(ERROR): REPORT_DATE must be in datadf!
+2021-07-06 17:40:40,008 <ipython-input-39-5aca55cb4abc>_49(ERROR): 'NETPROFIT'
+2021-07-06 17:40:40,009 <ipython-input-39-5aca55cb4abc>_50(ERROR): parse income error on code: SZ000002
+2021-07-06 17:41:31,467 <ipython-input-42-5aca55cb4abc>_15(INFO): running on code: SZ000002
+2021-07-06 17:41:31,499 processData.py_171(ERROR): REPORT_DATE must be in datadf!
+2021-07-06 17:41:31,532 <ipython-input-42-5aca55cb4abc>_49(ERROR): 'NETPROFIT'
+2021-07-06 17:41:31,532 <ipython-input-42-5aca55cb4abc>_50(ERROR): parse income error on code: SZ000002
+2021-07-06 17:43:07,575 <ipython-input-45-5aca55cb4abc>_15(INFO): running on code: SZ000002
+2021-07-06 17:48:40,842 <ipython-input-48-14fcf12cd920>_15(INFO): running on code: SZ000002
+2021-07-06 17:53:57,463 <ipython-input-51-1701e91620c7>_15(INFO): running on code: SZ000002

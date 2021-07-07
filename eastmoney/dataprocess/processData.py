@@ -9,6 +9,46 @@ import eastmoney.dataprocess.DBHelper as dataGetter
 import math
 
 
+TEXTCOLUMNS = ['SECUCODE', 'SECURITY_NAME_ABBR', 'REPORT_DATE', 'REPORT_TYPE', 'UPDATE_DATE', 'CURRENCY', 'OPTION_TYPE']
+
+
+# 时间增加1年， 仅内部使用
+def _add1Year(x):
+    date = datetime.datetime.strptime(x, "%Y-%m-%d")
+    return '%d-%02d-%02d' % (date.year+1, date.month, date.day)
+
+
+# 时间增加1Q， 仅内部使用
+def _add1Quarter(x):
+    date = datetime.datetime.strptime(x, "%Y-%m-%d")
+    lastDate = '1990-03-31'
+    if date.month == 3 and date.day == 31:
+        lastDate = '%d-06-30' % date.year
+    elif date.month == 6 and date.day == 30:
+        lastDate = '%d-09-30' % date.year
+    elif date.month == 9 and date.day == 30:
+        lastDate = '%d-12-31' % date.year
+    elif date.month == 12 and date.day == 31:
+        lastDate = '%d-03-31' % (date.year+1)
+    return lastDate
+
+
+def _constructPairDf(datadf, newDF, columns=[]):
+    if len(columns) == 0:
+        columns = datadf.columns
+    if 'REPORT_DATE' not in columns:
+        FileLogger.error("REPORT_DATE must be in datadf!")
+
+    dfs = []
+    for col in columns:
+        if col in TEXTCOLUMNS:
+            newDF[col] = datadf[col]
+            continue
+        df = datadf[['REPORT_DATE', col]]
+        dfs.append(df)
+    return dfs
+
+
 # 仅保留年度数据
 # datadf: the data queried from database
 def keepOnlyYearData(datadf):
@@ -25,7 +65,7 @@ def keepOnlyQuarterData(datadf, quarter):
         return None
     if quarter == 1:
         return datadf[datadf['REPORT_DATE'].str.find('-03-31') != -1]
-    elif quarter == 2: 
+    elif quarter == 2:
         return datadf[datadf['REPORT_DATE'].str.find('-06-30') != -1]
     elif quarter == 3:
         return datadf[datadf['REPORT_DATE'].str.find('-09-30') != -1]
@@ -36,26 +76,14 @@ def keepOnlyQuarterData(datadf, quarter):
         return None
 
 
-TEXTCOLUMNS = ['SECUCODE', 'SECURITY_NAME_ABBR', 'REPORT_DATE', 'REPORT_TYPE', 'UPDATE_DATE', 'CURRENCY', 'OPTION_TYPE']
-
-
 # 数据库里面存储的数据是累加数据，用这个函数可以将数据变成单季度的数据
 # 如果columns有值，就是仅将columns里面的列做转换，默认全部转换
 def genQuarterDatas(datadf, columns=[]):
-    if len(columns) == 0:
-        columns = datadf.columns
-    if 'REPORT_DATE' not in columns:
-        FileLogger.error("REPORT_DATE must be in datadf!")
-
     newDF = pd.DataFrame({})
-    for col in columns:
-        if col in TEXTCOLUMNS:
-            newDF[col] = datadf[col]
-            continue
-        df = datadf[['REPORT_DATE', col]]
-        df = _genQuaterData(df)
-        newDF[col] = df[col]
-
+    dfs = _constructPairDf(datadf, newDF, columns=columns)
+    for df in dfs:
+        genDf = _genQuaterData(df)
+        newDF[genDf.columns[1]] = genDf[genDf.columns[1]]
     return newDF
 
 
@@ -79,7 +107,6 @@ def _genQuaterData(datadf):
             copydf.iloc[index, 1] = row[1] - lastRow[0][1]
         else:
             copydf.iloc[index, 1] = None
-
     return copydf
 
 
@@ -87,80 +114,62 @@ def _genQuaterData(datadf):
 # 如果columns有值，就是仅将columns里面的列做转换，默认全部转换
 # datadf is the accumulate value, will generate quarter data in this function
 def genQoQDatas(datadf, columns=[]):
-    if len(columns) == 0:
-        columns = datadf.columns
-    if 'REPORT_DATE' not in columns:
-        FileLogger.error("REPORT_DATE must be in datadf!")
-    quarterdf = genQuarterDatas(datadf)
-
-    newDF = pd.DataFrame({})
-    for col in columns:
-        if col in TEXTCOLUMNS:
-            newDF[col] = quarterdf[col]
-            continue
-        df = quarterdf[['REPORT_DATE', col]]
-        df = _genQosData(df)
-        newDF[col] = df[col]
-
-    return newDF
-
-
-def _genQosData(quarterdf):
-    copydf = quarterdf.copy()
-    for index, row in quarterdf.iterrows():
-        date = datetime.datetime.strptime(row['REPORT_DATE'], "%Y-%m-%d")
-        
-        lastDate = None
-        if date.month == 3 and date.day == 31:
-            lastDate = '%d-12-31' % (date.year-1)
-        elif date.month == 6 and date.day == 30:
-            lastDate = '%d-03-31' % date.year
-        elif date.month == 9 and date.day == 30:
-            lastDate = '%d-06-30' % date.year
-        elif date.month == 12 and date.day == 31:
-            lastDate = '%d-09-30' % date.year
-        lastRow = quarterdf[quarterdf['REPORT_DATE'] == lastDate].to_numpy()
-        if len(lastRow) > 0 and lastRow[0][1]:
-            copydf.iloc[index, 1] = row[1] / float(lastRow[0][1]) - 1
-        else:
-            copydf.iloc[index, 1] = None
-
-    return copydf
+    return genYoYQoQData(datadf, columns=columns, period='quarter')
 
 
 # 产生数据的年同比增长比例
 # 如果columns有值，就是仅将columns里面的列做转换，默认全部转换
 def genYoYDatas(datadf, columns=[]):
-    if len(columns) == 0:
-        columns = datadf.columns
-    if 'REPORT_DATE' not in columns:
-        FileLogger.error("REPORT_DATE must be in datadf!")
+    return genYoYQoQData(datadf, columns=columns, period='year')
 
+
+def genYoYQoQData(datadf, columns=[], period='year'):
     newDF = pd.DataFrame({})
-    for col in columns:
-        if col in TEXTCOLUMNS:
-            newDF[col] = datadf[col]
-            continue
-        df = datadf[['REPORT_DATE', col]]
-        df = _genYoYData(df)
-        newDF[col] = df[col]
+    dfs = _constructPairDf(datadf, newDF, columns=columns)
+    for df in dfs:
+        genDf = _genYoYQoQData(df, period=period)
+        newDF[genDf.columns[1]] = genDf[genDf.columns[1]]
     return newDF
 
 
 # datadf一定是[REPORT_DATE, column]
-def _genYoYData(datadf):
-    copydf = datadf.copy()
-    for index, row in datadf.iterrows():
-        date = datetime.datetime.strptime(row['REPORT_DATE'], "%Y-%m-%d")
-        
-        lastDate = '%d-%02d-%02d' % (date.year-1, date.month, date.day)
-        lastRow = datadf[datadf['REPORT_DATE'] == lastDate].to_numpy()
-        if len(lastRow) > 0 and lastRow[0][1]:
-            copydf.iloc[index, 1] = row[1] / float(lastRow[0][1]) - 1
+def _genYoYQoQData(datadf, period='year'):
+    def func(x):
+        if x[2] is None or x[2] == 0 or math.isnan(x[2]):
+            return None
         else:
-            copydf.iloc[index, 1] = None
+            return x[1] / float(x[2]) - 1
+    datadf2 = datadf.copy()
+    datadf2.columns = ['REPORT_DATE', 'LAST']
+    if period == 'year':
+        datadf2['REPORT_DATE'] = datadf2['REPORT_DATE'].map(_add1Year)
+    else:
+        datadf2['REPORT_DATE'] = datadf2['REPORT_DATE'].map(_add1Quarter)
+    mergedf = pd.merge(datadf, datadf2, how='left', on='REPORT_DATE')
+    mergedf[mergedf.columns[1]] = mergedf.apply(func, axis=1)
+    return mergedf.iloc[:, 0:2]
 
-    return copydf
+
+# 计算年/季度增长量：期末值 - 期初值. period= 'year' / 'quarter'
+def genGrowNumber(datadf, columns=[], period='year'):
+    newDF = pd.DataFrame({})
+    dfs = _constructPairDf(datadf, newDF, columns=columns)
+    for df in dfs:
+        genDf = _genGrowNumber(df, period=period)
+        newDF[genDf.columns[1]] = genDf[genDf.columns[1]]
+    return newDF
+
+
+def _genGrowNumber(datadf, period='year'):
+    datadf2 = datadf.copy()
+    datadf2.columns = ['REPORT_DATE', 'LAST']
+    if period == 'year':
+        datadf2['REPORT_DATE'] = datadf2['REPORT_DATE'].map(_add1Year)
+    else:
+        datadf2['REPORT_DATE'] = datadf2['REPORT_DATE'].map(_add1Quarter)
+    mergedf = pd.merge(datadf, datadf2, how='left', on='REPORT_DATE')
+    mergedf[mergedf.columns[1]] = mergedf.apply(lambda x: x[1] - x[2], axis=1)
+    return mergedf.iloc[:, 0:2]
 
 
 # 计算年期间平均值(期初值+期末值)/2
@@ -189,11 +198,9 @@ def _genYearAvgData(datadf):
     datadf2 = datadf.copy()
     datadf2.columns = ['REPORT_DATE', 'LAST']
     datadf2['REPORT_DATE'] = datadf2['REPORT_DATE'].map(add1YearFunc)
-    mergedb = pd.merge(datadf, datadf2, how='left', on='REPORT_DATE')
-    print(mergedb)
-    for index, row in mergedb.iterrows():
-        mergedb.iloc[index, 1] = (row[1] + row[2]) / 2.0 
-    return mergedb.iloc[:, 0:2]
+    mergedf = pd.merge(datadf, datadf2, how='left', on='REPORT_DATE')
+    mergedf[mergedf.columns[1]] = mergedf.apply(lambda x: (x[1]+x[2])/2.0, axis=1)
+    return mergedf.iloc[:, 0:2]
 
 
 # 将table的名字变成中文名
@@ -274,6 +281,10 @@ print(newDF)
 datadf
 
 # %%
-newdf = genYearAvgData(datadf)
+newdf = genYoYDatas(datadf)
 newdf
+
+# %%
+a= genGrowNumber(datadf, period='quarter')
+a
 # %%
