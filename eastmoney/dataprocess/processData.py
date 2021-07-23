@@ -35,17 +35,18 @@ def _add1Quarter(x):
 
 def _constructPairDf(datadf, newDF, columns=[]):
     if len(columns) == 0:
-        columns = datadf.columns
+        for col in datadf.columns:
+            if col not in TEXTCOLUMNS:
+                columns.append(col)
     if 'REPORT_DATE' not in columns:
         FileLogger.error("REPORT_DATE must be in datadf!")
 
     dfs = []
-    for col in columns:
-        if col in TEXTCOLUMNS:
+    for col in datadf.columns:
+        if col not in columns:
             newDF[col] = datadf[col]
-            continue
-        df = datadf[['REPORT_DATE', col]]
-        dfs.append(df)
+        else:
+            dfs.append(datadf[['REPORT_DATE', col]])
     return dfs
 
 
@@ -173,31 +174,22 @@ def _genGrowNumber(datadf, period='year'):
 
 
 # 计算年期间平均值(期初值+期末值)/2
-def genYearAvgData(datadf, columns=[]):
-    if len(columns) == 0:
-        columns = datadf.columns
-    if 'REPORT_DATE' not in columns:
-        FileLogger.error("REPORT_DATE must be in datadf!")
-
+def genYearAvgData(datadf, columns=[], period='year'):
     newDF = pd.DataFrame({})
-    for col in columns:
-        if col in TEXTCOLUMNS:
-            newDF[col] = datadf[col]
-            continue
-        df = datadf[['REPORT_DATE', col]]
-        df = _genYearAvgData(df)
-        newDF[col] = df[col]
+    dfs = _constructPairDf(datadf, newDF, columns=columns)
+    for df in dfs:
+        genDf = _genYearAvgData(df, period=period)
+        newDF[genDf.columns[1]] = genDf[genDf.columns[1]]
     return newDF
 
 
-def _genYearAvgData(datadf):
-    def add1YearFunc(x):
-        date = datetime.datetime.strptime(x, "%Y-%m-%d")
-        return '%d-%02d-%02d' % (date.year+1, date.month, date.day)
-
+def _genYearAvgData(datadf, period='year'):
     datadf2 = datadf.copy()
     datadf2.columns = ['REPORT_DATE', 'LAST']
-    datadf2['REPORT_DATE'] = datadf2['REPORT_DATE'].map(add1YearFunc)
+    if period == 'year':
+        datadf2['REPORT_DATE'] = datadf2['REPORT_DATE'].map(_add1Year)
+    else:
+        datadf2['REPORT_DATE'] = datadf2['REPORT_DATE'].map(_add1Quarter)
     mergedf = pd.merge(datadf, datadf2, how='left', on='REPORT_DATE')
     mergedf[mergedf.columns[1]] = mergedf.apply(lambda x: (x[1]+x[2])/2.0, axis=1)
     return mergedf.iloc[:, 0:2]
