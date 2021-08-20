@@ -1,4 +1,3 @@
-# %%
 # 用于生成三张报表中不存在的一些指标，如毛利率，现净比
 # 生成表格的语句
 # CREATE TABLE `financialindex` (
@@ -16,12 +15,12 @@ from helper.logger import FileLogger
 import eastmoney.dataprocess.DBHelper as dataGetter
 import eastmoney.dataprocess.processData as processor
 import math
+import time
 
 
 ENGINE = create_engine("mysql+pymysql://root:4401821211@localhost:3306/eastmoney?charset=utf8")
 
 
-# %%
 # 如果数据不存在，先insert一条记录
 def addFinIndexBasicObject(basicRecord):
     sqlstr = "insert into `eastmoney`.`financialindex`(SECUCODE,SECURITY_NAME_ABBR,REPORT_DATE) values('%s','%s','%s')"
@@ -192,11 +191,11 @@ def getOperateFeeRate(code, incomedf):
 
 # 获得资产周转率
 def getAssetTurnoverRate(code, balancedf, incomedf):
-    datadf = balancedf[['TOTAL_ASSETS']]
-    datadf = processor.genAvgData(datadf, period='year')
+    datadf = balancedf[['TOTAL_ASSETS']].copy()
+    datadf = processor.genAvgData(datadf, columns=['TOTAL_ASSETS'], period='year')
     datadf['TOTAL_OPERATE_INCOME'] = incomedf['TOTAL_OPERATE_INCOME']
     datadf['ASSET_TURNOVER_RATE'] = datadf.apply(lambda x: x['TOTAL_OPERATE_INCOME'] / float(x['TOTAL_ASSETS']), axis=1)
-    rate = datadf['ASSET_TURNOVER_RATE']
+    rate = datadf[['ASSET_TURNOVER_RATE']]
     return rate
 
 
@@ -213,23 +212,22 @@ def getAssetLiabilityRate(code, balancedf):
 def getEquityMultiplier(code, balancedf):
     rate = getAssetLiabilityRate(code, balancedf)
     rate['EQUITY_MULTIPLIER'] = rate['ASSET_LIAB_RATE'].map(lambda x: 1.0/(1-x))
-    rate = rate[['EQUITY_MULTIPLIER']]
-    return rate
+    return rate[['EQUITY_MULTIPLIER']]
     
 
 # 获得净资产收益率ROE
 def getROE(code, balancedf, incomedf):
     datadf = balancedf[['TOTAL_EQUITY']]
-    datadf = processor.genAvgData(datadf, period='year')
+    datadf = processor.genAvgData(datadf, columns=['TOTAL_EQUITY'], period='year')
     datadf['NETPROFIT'] = incomedf['NETPROFIT']
     datadf['ROE'] = datadf.apply(lambda x: x['NETPROFIT'] / float(x['TOTAL_EQUITY']), axis=1)
-    rate = datadf['ROE']
+    rate = datadf[['ROE']]
     return rate
 
 
 # 获得ROE分析表格， 分析净利润率，权益乘数，和资产周转率
 def getROEAnalyse(code, balancedf, incomedf):
-    roe = getROE(code, balancedf, incomedf) 
+    roe = getROE(code, balancedf, incomedf)
     profit = getProfitRate(code, incomedf)
     turnover = getAssetTurnoverRate(code, balancedf, incomedf)
     multiplier = getEquityMultiplier(code, balancedf)
@@ -244,10 +242,10 @@ def getROEAnalyse(code, balancedf, incomedf):
 # 获得资产收益率ROA
 def getROA(code, balancedf, incomedf):
     datadf = balancedf[['TOTAL_ASSETS']]
-    datadf = processor.genAvgData(datadf, period='year')
+    datadf = processor.genAvgData(datadf, columns=['TOTAL_ASSETS'], period='year')
     datadf['NETPROFIT'] = incomedf['NETPROFIT']
     datadf['ROA'] = datadf.apply(lambda x: x['NETPROFIT'] / float(x['TOTAL_ASSETS']), axis=1)
-    rate = datadf['ROA']
+    rate = datadf[['ROA']]
     return rate
 
 
@@ -272,41 +270,41 @@ def getNetAssetLiabRate(code, balancedf):
 # 获得应收账款周转率: 营业收入 / ((期初应收账款-期末应收账款)/2)
 def getReceivableTurnoverRate(code, balancedf, incomedf):
     datadf = balancedf[['NOTE_ACCOUNTS_RECE']]
-    datadf = processor.genAvgData(datadf, period='year')
+    datadf = processor.genAvgData(datadf, columns=['NOTE_ACCOUNTS_RECE'], period='year')
     datadf['TOTAL_OPERATE_INCOME'] = incomedf['TOTAL_OPERATE_INCOME']
     datadf['RECE_TURNOVER_RATE'] = datadf.apply(lambda x: x['TOTAL_OPERATE_INCOME'] / float(x['NOTE_ACCOUNTS_RECE']), axis=1)
-    rate = datadf['RECE_TURNOVER_RATE']
+    rate = datadf[['RECE_TURNOVER_RATE']]
     return rate
 
 
 # 获得应付账款周转率: (期末.营业成本 + 期末.存货 - 期初.存货) / ((期末.应付票据及应付账款 + 期初.应付票据及应付账款) / 2)
 def getPayableTurnoverRate(code, balancedf, incomedf):
     datadf = balancedf[['INVENTORY', 'NOTE_ACCOUNTS_PAYABLE']]
-    datadf = processor.genAvgData(datadf, period='year')
+    datadf = processor.genAvgData(datadf, columns=['NOTE_ACCOUNTS_PAYABLE'], period='year')
+    datadf = processor.genGrowNumber(datadf, columns=['INVENTORY'], period='year')
     datadf['TOTAL_OPERATE_COST'] = incomedf['TOTAL_OPERATE_COST']
     datadf['PAYABLE_TURNOVER_RATE'] = datadf.apply(lambda x: (x['TOTAL_OPERATE_COST'] + x['INVENTORY']) / float(x['NOTE_ACCOUNTS_PAYABLE']), axis=1)
-    rate = datadf['PAYABLE_TURNOVER_RATE']
+    rate = datadf[['PAYABLE_TURNOVER_RATE']]
     return rate
 
 
+if __name__ == "__main__":
+    stockdf = pd.read_csv("C:/project/Tushare/eastmoney/codewithcompanytype.csv")
+    stockList = stockdf[['ts_code', 'companytype']].to_numpy()
 
-# %% __main__
-stockdf = pd.read_csv("C:/project/Tushare/eastmoney/codewithcompanytype.csv")
-stockList = stockdf[['ts_code', 'companytype']].to_numpy()
+    stockList = [['SZ000002', 4]]
+    # stockList = [['SZ300144', 4]]
 
-stockList = [['SZ000002', 4]]
-# stockList = [['SZ300144', 4]]
+    # add the base info into DB
+    for item in stockList:
+        code = item[0]
+        companyType = item[1]
+        # need to process companyType 1-3
+        if companyType != 4:
+            continue
 
-# add the base info into DB
-for item in stockList:
-    code = item[0]
-    companyType = item[1]
-    # need to process companyType 1-3
-    if companyType != 4:
-        continue
-
-    FileLogger.info("running on code: %s" % code)
-    try:
+        FileLogger.info("running on code: %s" % code)
+        # try:
         incomedf = dataGetter.getDataFromIncome(code)
         incomedf = incomedf.set_index("REPORT_DATE")
         incomedf = processor.keepOnlyYearData(incomedf).fillna(0)
@@ -335,26 +333,16 @@ for item in stockList:
         # rate = getCurrentAssetLiabRate(code, balancedf)
         # rate = getNetAssetLiabRate(code, balancedf)
         # rate = getReceivableTurnoverRate(code, balancedf, incomedf)
-        # rate = getPayableTurnoverRate(code, balancedf, incomedf)
-        rate = getROEAnalyse(code, balancedf, incomedf)
+        rate = getPayableTurnoverRate(code, balancedf, incomedf)
+        # rate = getROEAnalyse(code, balancedf, incomedf)
 
         # formateddf = processor.formatData4Show(rate, percentColumns=rate.columns)
         # formateddf = processor.formatData4Show(rate)
         # print(formateddf)
         print(rate)
 
-    except Exception as ex:
-            FileLogger.error(ex)
-            FileLogger.error("parse income error on code: %s" % code)
-            time.sleep(3)
+        # except Exception as ex:
+        #         FileLogger.error(ex)
+        #         FileLogger.error("parse income error on code: %s" % code)
+        #         time.sleep(3)
 
-
-# %%
-rate = rate.set_index("REPORT_DATE")
-rate
-# %%
-tt = rate[rate.index.str.find('-12-31') != -1]
-tt
-# %%
-rate.index.name
-# %%

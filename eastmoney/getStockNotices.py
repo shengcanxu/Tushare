@@ -106,14 +106,9 @@ if __name__ == "__main__":
     
     # stockList = [{"orgId":"9900002701","category":"A股","code":"002127","pinyin":"njds","zwjc":"南极电商"}]
 
-    start = False
     for stock in stockList:
         FileLogger.info("running on stock: %s(%s)" % (stock["zwjc"], stock["code"]))
-        if stock["code"] == '300398':
-            start = True
-        if start is False:
-            continue
-        
+ 
         try:
             crawlStockNotices(stock["code"], stock["orgId"])
             time.sleep(1)

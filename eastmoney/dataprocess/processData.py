@@ -1,4 +1,3 @@
-# %%
 import sys
 sys.path.append("C:/project/Tushare")
 import pandas as pd
@@ -170,6 +169,7 @@ def genGrowNumber(datadf, columns=[], period='year'):
 # 计算年期间平均值(期初值+期末值)/2
 def genAvgData(datadf, columns=[], period='year'):
     newDF = datadf.copy()
+    datadfcopy = datadf.copy()
     columns = _refineColumns(datadf, columns)
     for column in columns:
         if period == 'year':
@@ -177,9 +177,8 @@ def genAvgData(datadf, columns=[], period='year'):
         else:
             newDF['last'] = _getLastQuarter(newDF[column])
 
-        df = newDF[[column, 'last']]
-        datadf[column] = df.apply(lambda x: (x[0]+x[1])/2.0, axis=1)
-    return datadf
+        datadfcopy[column] = newDF[[column, 'last']].apply(lambda x: (x[0]+x[1])/2.0, axis=1)
+    return datadfcopy
 
 
 # 将table的名字变成中文名
@@ -244,26 +243,13 @@ def formatData4Show(datadf, percentColumns=[]):
     return copydf
 
 
-# %% main function
-datadf = dataGetter.getDataFromIncome('SZ000002', ['REPORT_DATE', 'TOTAL_OPERATE_COST', 'TOTAL_OPERATE_INCOME'])
+if __name__ == "__main__":
+    datadf = dataGetter.getDataFromIncome('SZ000002', ['REPORT_DATE', 'TOTAL_OPERATE_COST', 'TOTAL_OPERATE_INCOME'])
 
-# newDF = genQuarterDatas(datadf)
-newDF = formatData4Show(genYoYDatas(datadf), percentColumns=['TOTAL_OPERATE_COST','TOTAL_OPERATE_INCOME'])
-# newDF = mapIncomeColumnName(datadf)
-# newDF = mapIncomeColumnName(formatData4Show(datadf))
-# newDF = formatData4Show(genQoQDatas(datadf), percentColumns=['TOTAL_OPERATE_COST','TOTAL_OPERATE_INCOME'])
+    # newDF = genQuarterDatas(datadf)
+    newDF = formatData4Show(genYoYDatas(datadf), percentColumns=['TOTAL_OPERATE_COST','TOTAL_OPERATE_INCOME'])
+    # newDF = mapIncomeColumnName(datadf)
+    # newDF = mapIncomeColumnName(formatData4Show(datadf))
+    # newDF = formatData4Show(genQoQDatas(datadf), percentColumns=['TOTAL_OPERATE_COST','TOTAL_OPERATE_INCOME'])
 
 
-
-# %%
-datadf
-
-# %%
-newdf = genYoYDatas(datadf)
-newdf
-
-# %%
-datadf
-# %%
-
-# %%
