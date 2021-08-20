@@ -10,7 +10,7 @@ from helper.logger import FileLogger
 import time
 import json
 import pandas as pd
-
+from helper.util import getJsonFromFile, write2File
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.62 Safari/537.36",
@@ -69,35 +69,6 @@ def crawlStockNotices(code, orgId):
         content = json.dumps(records)
         path = "C:/project/stockdata/StockNotices/%s.json" % code
         write2File(path, content)
-
-
-def write2File(filePath, content, mode="w+", encoding='utf8') -> bool:
-    try:
-        fp = open(filePath, mode=mode, encoding=encoding)
-        fp.write(content)
-        fp.flush()
-        fp.close()
-        return True
-    except Exception as ex:
-        FileLogger.error("write to file error on path: %s" % filePath)
-        FileLogger.error(ex)
-        return False
-
-
-# get json object from file
-def getJsonFromFile(filePath):
-    try:
-        fp = open(filePath, mode='r', encoding='UTF8')
-        text = fp.read()
-        if text:
-            jsonObjects = json.loads(text)
-            return jsonObjects
-        else:
-            return []
-
-    except Exception as ex:
-        FileLogger.error(ex)
-        return []
 
 
 if __name__ == "__main__":

@@ -10,6 +10,7 @@ from helper.logger import FileLogger
 import time
 import json
 import pandas as pd
+from helper.util import write2File
 
 
 HEADERS = {
@@ -62,19 +63,6 @@ def crawlBalance(code, companyType):
         content = json.dumps(records)
         path = "C:/project/stockdata/EastMoneyBalance/%s.json" % code
         write2File(path, content)
-
-
-def write2File(filePath, content, mode="w+") -> bool:
-    try:
-        fp = open(filePath, mode)
-        fp.write(content)
-        fp.flush()
-        fp.close()
-        return True
-    except Exception as ex:
-        FileLogger.error("write to file error on path: %s" % filePath)
-        FileLogger.error(ex)
-        return False
 
 
 if __name__ == "__main__":

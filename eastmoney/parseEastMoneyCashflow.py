@@ -20,30 +20,10 @@ import json
 import pandas as pd
 from sqlalchemy import create_engine
 import eastmoney.dataprocess.DBHelper as dataGetter
+from helper.util import getJsonFromFile
 
 
 ENGINE = create_engine("mysql+pymysql://root:4401821211@localhost:3306/eastmoney?charset=utf8")
-
-
-# read file from filePath
-def readFile(filePath):
-    try:
-        fp = open(filePath, 'r')
-        content = fp.read()
-        return content
-    except Exception as ex:
-        FileLogger.error(ex)
-        return False
-
-
-# get json object from file
-def getJsonFromFile(path):
-    text = readFile(path)
-    if text:
-        jsonObjects = json.loads(text)
-        return jsonObjects
-    else:
-        return []
 
 
 # change XXXXXX.SZ to SZXXXXXX
