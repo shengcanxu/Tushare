@@ -13,7 +13,7 @@ engine = create_engine(
 
 def getCashflowOnCode(tsCode, tushare, dbEngine):
     try:
-        stockCashflow = tushare.cashflow(ts_code=tsCode, start_date='19901210', end_date='20210228')
+        stockCashflow = tushare.cashflow(ts_code=tsCode, start_date='20210228', end_date='20210722')
         df = stockCashflow.drop_duplicates(['ts_code', 'end_date', 'report_type'])
         df = df.set_index(["ts_code", "end_date"])
 

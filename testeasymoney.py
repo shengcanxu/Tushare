@@ -71,7 +71,7 @@ columnnamedf = pd.read_csv("C:/project/Tushare/eastmoney/columnName.csv")
 columnnamedf.to_sql(name="columnname", con=engine, if_exists="append")
 
 # %%
-from eastmoney.dataprocess.getDataFromDB import getDataFromIncome
+from eastmoney.dataprocess.DBHelper import getDataFromIncome
 datadf = getDataFromIncome('SZ000002', ['REPORT_DATE', 'TOTAL_OPERATE_COST'])
 datadf
 

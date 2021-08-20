@@ -13,7 +13,7 @@ engine = create_engine(
 
 def getBalanceOnCode(tsCode, tushare, dbEngine):
     try:
-        stockBalance = tushare.balancesheet(ts_code=tsCode, start_date='19901210', end_date='20210228')
+        stockBalance = tushare.balancesheet(ts_code=tsCode, start_date='20210228', end_date='20210722')
         df = stockBalance.drop_duplicates(['ts_code', 'end_date', 'report_type'])
         df = df.set_index(["ts_code", "end_date"])
 
