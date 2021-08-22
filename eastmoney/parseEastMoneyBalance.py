@@ -18,6 +18,7 @@ from helper.logger import FileLogger
 import time
 import json
 import pandas as pd
+import numpy as np
 from sqlalchemy import create_engine
 import eastmoney.dataprocess.DBHelper as dataGetter
 from helper.util import getJsonFromFile

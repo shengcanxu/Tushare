@@ -1,5 +1,7 @@
 from helper.logger import FileLogger
 import json
+import requests
+import re
 
 
 # write content to file in filepath
@@ -17,9 +19,9 @@ def write2File(filePath, content, mode="w+", encoding='utf8') -> bool:
 
 
 # read file from filePath
-def readFile(filePath):
+def readFile(filePath, encoding='utf8'):
     try:
-        fp = open(filePath, 'r')
+        fp = open(filePath, mode='r', encoding=encoding)
         content = fp.read()
         return content
     except Exception as ex:
@@ -35,3 +37,15 @@ def getJsonFromFile(path):
         return jsonObjects
     else:
         return []
+
+
+# download file and save in folder
+def downloadFile(url, filePath):
+    try:
+        r = requests.get(url)
+        with open(filePath, "wb") as fp:
+            fp.write(r.content)
+    except Exception as ex:
+        FileLogger.error("downloadfile error on path: %s" % url)
+        FileLogger.error(ex)
+        return False

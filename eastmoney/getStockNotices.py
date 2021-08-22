@@ -9,6 +9,7 @@ from requests_html import HTMLSession
 from helper.logger import FileLogger
 import time
 import json
+import os.path
 import pandas as pd
 from helper.util import getJsonFromFile, write2File
 
@@ -60,7 +61,8 @@ def crawlStockNotices(code, orgId):
             if r.content:
                 jsonContent = json.loads(r.content)
                 announcements = jsonContent["announcements"]
-                records.extend(announcements)
+                if announcements is not None and len(announcements) > 0:
+                    records.extend(announcements)
                 FileLogger.info("get records on pageNum: %d" % pageNum)
         
         FileLogger.info("get %d records on code: %s" % (len(records), code))
@@ -79,7 +81,10 @@ if __name__ == "__main__":
 
     for stock in stockList:
         FileLogger.info("running on stock: %s(%s)" % (stock["zwjc"], stock["code"]))
- 
+        filePath = "C:/project/stockdata/StockNotices/%s.json" % stock['code']
+        if(os.path.exists(filePath)): 
+            continue
+        
         try:
             crawlStockNotices(stock["code"], stock["orgId"])
             time.sleep(1)
